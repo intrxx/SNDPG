@@ -13,7 +13,7 @@ class SNDPG_API ASNCharacterBase : public ACharacter
 
 public:
 	// Sets default values for this character's properties
-	ASNCharacterBase();
+	ASNCharacterBase(const FObjectInitializer& ObjectInitializer);
 
 protected:
 	// Called when the game starts or when spawned

@@ -96,7 +96,6 @@ Content/DATA
 Content/Characters
 Content/StarterContent
 
-# End of https://www.toptal.com/developers/gitignore/api/unrealengine
 .idea
 Plugins/Developer/Riderlink
 Plugins/Developer/RiderLink/
