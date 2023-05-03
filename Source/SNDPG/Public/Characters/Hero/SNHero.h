@@ -3,7 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "Characters/SNCharacterBase.h"
+#include "Input/SNInputConfig.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "SNHero.generated.h"
 
 /**
@@ -34,5 +37,11 @@ protected:
 	USNInputConfig* InputConfig;
 	
 	FSNAbilitySet_GrantedHandles* GrantedHandles;
-	
+
+private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* CameraComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* SpringArmComp;
 };
