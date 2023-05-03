@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Characters/SNCharacterBase.h"
 #include "Input/SNInputConfig.h"
+#include "InputActionValue.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "SNHero.generated.h"
 
@@ -24,17 +25,26 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
+	virtual void BeginPlay() override;
+	
 	void AddCharacterAttributes();
 	void AddCharacterAbilitiesAndEffects();
 
 	void InputAbilityInputTagPressed(FGameplayTag InputTag);
 	void InputAbilityInputTagReleased(FGameplayTag InputTag);
+
+	void Move(const FInputActionValue& Value);
+	void Look(const FInputActionValue& Value);
 	
+protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
 	USNAbilitySet* AbilitySet;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
 	USNInputConfig* InputConfig;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
+	class UInputMappingContext* DefaultMappingContext;
 	
 	FSNAbilitySet_GrantedHandles* GrantedHandles;
 
