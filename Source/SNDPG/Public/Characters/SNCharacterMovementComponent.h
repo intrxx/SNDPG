@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/MovementComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "SNCharacterMovementComponent.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SNDPG_API USNCharacterMovementComponent : public UMovementComponent
+class SNDPG_API USNCharacterMovementComponent : public UCharacterMovementComponent
 {
 	GENERATED_BODY()
 
