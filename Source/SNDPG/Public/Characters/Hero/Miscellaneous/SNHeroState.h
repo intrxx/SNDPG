@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2023 Michal Oginski.
 
 #pragma once
 
@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "SNHeroState.generated.h"
 
+class USNAbilitySystemComponent;
 /**
  * 
  */
@@ -18,20 +19,10 @@ class SNDPG_API ASNHeroState : public APlayerState, public IAbilitySystemInterfa
 public:
 	ASNHeroState();
 
-	class UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	//class USNArenaAttributeSet* GetAttributeSet() const;
-
-	/**
-	* Getters for attributes from GAttributeSet.
-	*/
-
-	//UFUNCTION(BlueprintCallable, Category = "PlayerState|Attributes")
-	//float GetHealth() const;
+	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 protected:
 	UPROPERTY()
-	class USNAbilitySystemComponent* AbilitySystemComponent;
-
-	//UPROPERTY()
-	//class USNArenaAttributeSet* AttributeSet;
+	USNAbilitySystemComponent* AbilitySystemComponent;
+	
 };

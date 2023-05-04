@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2023 Michal Oginski.
 
 #pragma once
 
@@ -13,5 +13,7 @@ UCLASS()
 class SNDPG_API ANSGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+	ANSGameMode();
 	
 };

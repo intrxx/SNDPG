@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2023 Michal Oginski.
 
 #include "GAS/SNAbilitySet.h"
 #include "GAS/SNAbilitySystemComponent.h"
@@ -26,11 +26,11 @@ void FSNAbilitySet_GrantedHandles::AddAttributeSet(UAttributeSet* Set)
 	GrantedAttributeSets.Add(Set);
 }
 
-void FSNAbilitySet_GrantedHandles::TakeFromAbilitySystem(USNAbilitySystemComponent* SNASC)
+void FSNAbilitySet_GrantedHandles::TakeFromAbilitySystem(USNAbilitySystemComponent* InASC)
 {
-	check(SNASC);
+	check(InASC);
 
-	if (!SNASC->IsOwnerActorAuthoritative())
+	if (!InASC->IsOwnerActorAuthoritative())
 	{
 		// Must be authoritative to give or take ability sets.
 		return;
@@ -40,7 +40,7 @@ void FSNAbilitySet_GrantedHandles::TakeFromAbilitySystem(USNAbilitySystemCompone
 	{
 		if (Handle.IsValid())
 		{
-			SNASC->ClearAbility(Handle);
+			InASC->ClearAbility(Handle);
 		}
 	}
 
@@ -48,13 +48,13 @@ void FSNAbilitySet_GrantedHandles::TakeFromAbilitySystem(USNAbilitySystemCompone
 	{
 		if (Handle.IsValid())
 		{
-			SNASC->RemoveActiveGameplayEffect(Handle);
+			InASC->RemoveActiveGameplayEffect(Handle);
 		}
 	}
 
 	for (UAttributeSet* Set : GrantedAttributeSets)
 	{
-		SNASC->RemoveSpawnedAttribute(Set);
+		InASC->RemoveSpawnedAttribute(Set);
 	}
 
 	AbilitySpecHandles.Reset();
@@ -66,19 +66,19 @@ USNAbilitySet::USNAbilitySet()
 {
 }
 
-void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* SNASC,
+void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* InASC,
 	FSNAbilitySet_GrantedHandles* OutGrantedHandles, UObject* SourceObject) const
 {
-	check(SNASC);
+	check(InASC);
 
-	if (!SNASC->IsOwnerActorAuthoritative())
+	if (!InASC->IsOwnerActorAuthoritative())
 	{
 		// Must be authoritative to give or take ability sets.
 		return;
 	}
 
 	// Grant the gameplay abilities.
-	if(SNASC->bAbilitiesGiven == false)
+	if(InASC->bAbilitiesGiven == false)
 	{
 		for (int32 AbilityIndex = 0; AbilityIndex < GrantedGameplayAbilities.Num(); ++AbilityIndex)
 		{
@@ -96,7 +96,7 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* SNASC,
 			AbilitySpec.SourceObject = SourceObject;
 			AbilitySpec.DynamicAbilityTags.AddTag(AbilityToGrant.InputTag);
 
-			const FGameplayAbilitySpecHandle AbilitySpecHandle = SNASC->GiveAbility(AbilitySpec);
+			const FGameplayAbilitySpecHandle AbilitySpecHandle = InASC->GiveAbility(AbilitySpec);
 
 			if (OutGrantedHandles)
 			{
@@ -104,7 +104,7 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* SNASC,
 			}
 		}
 	}
-	SNASC->bAbilitiesGiven = true;
+	InASC->bAbilitiesGiven = true;
 
 	// Grant the gameplay effects.
 	for (int32 EffectIndex = 0; EffectIndex < GrantedGameplayEffects.Num(); ++EffectIndex)
@@ -118,7 +118,7 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* SNASC,
 		}
 
 		const UGameplayEffect* GameplayEffect = EffectToGrant.GameplayEffect->GetDefaultObject<UGameplayEffect>();
-		const FActiveGameplayEffectHandle GameplayEffectHandle = SNASC->ApplyGameplayEffectToSelf(GameplayEffect, EffectToGrant.EffectLevel, SNASC->MakeEffectContext());
+		const FActiveGameplayEffectHandle GameplayEffectHandle = InASC->ApplyGameplayEffectToSelf(GameplayEffect, EffectToGrant.EffectLevel, InASC->MakeEffectContext());
 
 		if (OutGrantedHandles)
 		{
@@ -127,7 +127,7 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* SNASC,
 	}
 
 	// Grant the attribute sets.
-	if(SNASC->bAttributesGiven == false)
+	if(InASC->bAttributesGiven == false)
 	{
 		for (int32 SetIndex = 0; SetIndex < GrantedAttributes.Num(); ++SetIndex)
 		{
@@ -139,8 +139,8 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* SNASC,
 				continue;
 			}
 
-			UAttributeSet* NewSet = NewObject<UAttributeSet>(SNASC->GetOwner(), SetToGrant.AttributeSet);
-			SNASC->AddAttributeSetSubobject(NewSet);
+			UAttributeSet* NewSet = NewObject<UAttributeSet>(InASC->GetOwner(), SetToGrant.AttributeSet);
+			InASC->AddAttributeSetSubobject(NewSet);
 
 			if (OutGrantedHandles)
 			{
@@ -148,5 +148,5 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* SNASC,
 			}
 		}
 	}
-	SNASC->bAttributesGiven = true;
+	InASC->bAttributesGiven = true;
 }

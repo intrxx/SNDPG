@@ -1,14 +1,18 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2023 Michal Oginski.
 
 
 #include "Characters/Hero/SNHero.h"
 #include "GAS/SNAbilitySystemComponent.h"
 #include "Characters/SNCharacterMovementComponent.h"
+#include "Camera/CameraComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "Components/CapsuleComponent.h"
 #include "GameplayTags/SNGameplayTags.h"
+#include "GAS/SNAbilitySet.h"
 #include "Input/SNEnhancedInputComponent.h"
 
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
@@ -56,8 +60,6 @@ void ASNHero::PossessedBy(AController* NewController)
 	AbilitySystemComponent = Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 
 	PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS,this);
-	
-	//AttributeSet = Cast<USNArenaAttributeSet>(PS->GetAttributeSet());
 	
 	//TODO For now initialize here, later on I can make delegate when whole initialization process starts and then bind it to that delegate in this class's constructor
 	

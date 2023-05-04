@@ -1,18 +1,23 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2023 Michal Oginski.
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Camera/CameraComponent.h"
 #include "Characters/SNCharacterBase.h"
-#include "Input/SNInputConfig.h"
+#include "GameplayTagContainer.h"
 #include "InputActionValue.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Miscellaneous/SNBasicAttributesComponent.h"
 #include "SNHero.generated.h"
 
+class USNInputConfig;
+class UCameraComponent;
+class USNAbilitySet;
+class USpringArmComponent;
+class USNBasicAttributesComponent;
+
 /**
- * 
+ *  ASNHero
+ *
+ *  Base class for all hero type characters in this project
  */
 UCLASS()
 class SNDPG_API ASNHero : public ASNCharacterBase
@@ -45,8 +50,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
 	class UInputMappingContext* DefaultMappingContext;
-	
-	FSNAbilitySet_GrantedHandles* GrantedHandles;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
