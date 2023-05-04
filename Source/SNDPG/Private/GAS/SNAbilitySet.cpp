@@ -62,8 +62,7 @@ void FSNAbilitySet_GrantedHandles::TakeFromAbilitySystem(USNAbilitySystemCompone
 	GrantedAttributeSets.Reset();
 }
 
-USNAbilitySet::USNAbilitySet(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+USNAbilitySet::USNAbilitySet()
 {
 }
 
@@ -79,29 +78,33 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* SNASC,
 	}
 
 	// Grant the gameplay abilities.
-	for (int32 AbilityIndex = 0; AbilityIndex < GrantedGameplayAbilities.Num(); ++AbilityIndex)
+	if(SNASC->bAbilitiesGiven == false)
 	{
-		const FSNAbilitySet_GameplayAbility& AbilityToGrant = GrantedGameplayAbilities[AbilityIndex];
-
-		if (!IsValid(AbilityToGrant.Ability))
+		for (int32 AbilityIndex = 0; AbilityIndex < GrantedGameplayAbilities.Num(); ++AbilityIndex)
 		{
-			UE_LOG(LogTemp, Error, TEXT("GrantedGameplayAbilities[%d] on ability set [%s] is not valid."), AbilityIndex, *GetNameSafe(this));
-			continue;
-		}
+			const FSNAbilitySet_GameplayAbility& AbilityToGrant = GrantedGameplayAbilities[AbilityIndex];
 
-		USNGameplayAbility* AbilityCDO = AbilityToGrant.Ability->GetDefaultObject<USNGameplayAbility>();
+			if (!IsValid(AbilityToGrant.Ability))
+			{
+				UE_LOG(LogTemp, Error, TEXT("GrantedGameplayAbilities[%d] on ability set [%s] is not valid."), AbilityIndex, *GetNameSafe(this));
+				continue;
+			}
 
-		FGameplayAbilitySpec AbilitySpec(AbilityCDO, AbilityToGrant.AbilityLevel);
-		AbilitySpec.SourceObject = SourceObject;
-		AbilitySpec.DynamicAbilityTags.AddTag(AbilityToGrant.InputTag);
+			USNGameplayAbility* AbilityCDO = AbilityToGrant.Ability->GetDefaultObject<USNGameplayAbility>();
 
-		const FGameplayAbilitySpecHandle AbilitySpecHandle = SNASC->GiveAbility(AbilitySpec);
+			FGameplayAbilitySpec AbilitySpec(AbilityCDO, AbilityToGrant.AbilityLevel);
+			AbilitySpec.SourceObject = SourceObject;
+			AbilitySpec.DynamicAbilityTags.AddTag(AbilityToGrant.InputTag);
 
-		if (OutGrantedHandles)
-		{
-			OutGrantedHandles->AddAbilitySpecHandle(AbilitySpecHandle);
+			const FGameplayAbilitySpecHandle AbilitySpecHandle = SNASC->GiveAbility(AbilitySpec);
+
+			if (OutGrantedHandles)
+			{
+				OutGrantedHandles->AddAbilitySpecHandle(AbilitySpecHandle);
+			}
 		}
 	}
+	SNASC->bAbilitiesGiven = true;
 
 	// Grant the gameplay effects.
 	for (int32 EffectIndex = 0; EffectIndex < GrantedGameplayEffects.Num(); ++EffectIndex)
@@ -124,22 +127,26 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* SNASC,
 	}
 
 	// Grant the attribute sets.
-	for (int32 SetIndex = 0; SetIndex < GrantedAttributes.Num(); ++SetIndex)
+	if(SNASC->bAttributesGiven == false)
 	{
-		const FSNAbilitySet_AttributeSet& SetToGrant = GrantedAttributes[SetIndex];
-
-		if (!IsValid(SetToGrant.AttributeSet))
+		for (int32 SetIndex = 0; SetIndex < GrantedAttributes.Num(); ++SetIndex)
 		{
-			UE_LOG(LogTemp, Error, TEXT("GrantedAttributes[%d] on ability set [%s] is not valid"), SetIndex, *GetNameSafe(this));
-			continue;
-		}
+			const FSNAbilitySet_AttributeSet& SetToGrant = GrantedAttributes[SetIndex];
 
-		UAttributeSet* NewSet = NewObject<UAttributeSet>(SNASC->GetOwner(), SetToGrant.AttributeSet);
-		SNASC->AddAttributeSetSubobject(NewSet);
+			if (!IsValid(SetToGrant.AttributeSet))
+			{
+				UE_LOG(LogTemp, Error, TEXT("GrantedAttributes[%d] on ability set [%s] is not valid"), SetIndex, *GetNameSafe(this));
+				continue;
+			}
 
-		if (OutGrantedHandles)
-		{
-			OutGrantedHandles->AddAttributeSet(NewSet);
+			UAttributeSet* NewSet = NewObject<UAttributeSet>(SNASC->GetOwner(), SetToGrant.AttributeSet);
+			SNASC->AddAttributeSetSubobject(NewSet);
+
+			if (OutGrantedHandles)
+			{
+				//OutGrantedHandles->AddAttributeSet(NewSet);
+			}
 		}
 	}
+	SNASC->bAttributesGiven = true;
 }

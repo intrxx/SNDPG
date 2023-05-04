@@ -23,19 +23,17 @@ public:
 	/**
 	* Getters for attributes from GAttributeSet
 	**/
-	UFUNCTION(BlueprintCallable, Category = "SN|Character|Attributes")
-	float GetHealth() const;
+	//UFUNCTION(BlueprintCallable, Category = "SN|Character|Attributes")
+	//float GetHealth() const;
 
-	UFUNCTION(BlueprintCallable, Category = "SN|Character|Attributes")
-	float GetMaxHealth() const;
+	//UFUNCTION(BlueprintCallable, Category = "SN|Character|Attributes")
+	//float GetMaxHealth() const;
 	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	TWeakObjectPtr<class USNAbilitySystemComponent> AbilitySystemComponent;
-	TWeakObjectPtr<class USNArenaAttributeSet> AttributeSet;
-
-public:	
+	//TWeakObjectPtr<class USNArenaAttributeSet> AttributeSet;
 	
 };

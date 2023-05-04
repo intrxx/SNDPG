@@ -119,7 +119,7 @@ class SNDPG_API USNAbilitySet : public UPrimaryDataAsset
 
 public:
 
-	USNAbilitySet(const FObjectInitializer& ObjectInitializer);
+	USNAbilitySet();
 
 	// Grants the ability set to the specified ability system component.
 	// The returned handles can be used later to take away anything that was granted.

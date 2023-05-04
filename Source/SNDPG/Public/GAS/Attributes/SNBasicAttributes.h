@@ -3,25 +3,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GAS/SNAbilitySystemComponent.h"
 #include "GAS/Attributes/SNMainAttributeSet.h"
-#include "SNArenaAttributeSet.generated.h"
+#include "SNBasicAttributes.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class SNDPG_API USNArenaAttributeSet : public USNMainAttributeSet
+UCLASS(BlueprintType)
+class SNDPG_API USNBasicAttributes : public USNMainAttributeSet
 {
 	GENERATED_BODY()
 
 public:
-	USNArenaAttributeSet();
-
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	USNBasicAttributes();
 	
-	ATTRIBUTE_ACCESSORS(USNArenaAttributeSet, Health);
-	ATTRIBUTE_ACCESSORS(USNArenaAttributeSet, MaxHealth);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Health);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, MaxHealth);
 
 protected:
 	UFUNCTION()
@@ -38,7 +35,7 @@ protected:
 	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;
 
 	void ClampAttribute(const FGameplayAttribute& Attribute, float& NewValue) const;
-
+	
 private:
 	// The current health attribute.  The health will be capped by the max health attribute.  Health is hidden from modifiers so only executions can modify it.
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "SN|Health", Meta = (HideFromModifiers, AllowPrivateAccess = true))

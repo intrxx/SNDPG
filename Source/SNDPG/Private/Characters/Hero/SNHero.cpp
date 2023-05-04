@@ -6,6 +6,7 @@
 #include "Characters/SNCharacterMovementComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
+#include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "Components/CapsuleComponent.h"
 #include "GameplayTags/SNGameplayTags.h"
 #include "Input/SNEnhancedInputComponent.h"
@@ -42,7 +43,26 @@ ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	CameraComponent->SetupAttachment(SpringArmComp, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
+	AttributesComponent = CreateDefaultSubobject<USNBasicAttributesComponent>(TEXT("BasicAttributesComponent"));
+}
+
+void ASNHero::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
 	
+	ASNHeroState* PS = Cast<ASNHeroState>(GetPlayerState());
+	check(PS);
+
+	AbilitySystemComponent = Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent());
+
+	PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS,this);
+	
+	//AttributeSet = Cast<USNArenaAttributeSet>(PS->GetAttributeSet());
+	
+	//TODO For now initialize here, later on I can make delegate when whole initialization process starts and then bind it to that delegate in this class's constructor
+	
+	AbilitySet->GiveToAbilitySystem(Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent()), nullptr, this);
+	AttributesComponent->InitializeWithAbilitySystem(Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent()));
 }
 
 void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -68,10 +88,11 @@ void ASNHero::BeginPlay()
 	{
 		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Added IMC"));
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	
 }
 
 void ASNHero::InputAbilityInputTagPressed(FGameplayTag InputTag)
@@ -111,12 +132,5 @@ void ASNHero::Look(const FInputActionValue& Value)
 	}
 }
 
-void ASNHero::AddCharacterAttributes()
-{
-}
-
-void ASNHero::AddCharacterAbilitiesAndEffects()
-{
-}
 
 

@@ -8,6 +8,7 @@
 #include "Input/SNInputConfig.h"
 #include "InputActionValue.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Miscellaneous/SNBasicAttributesComponent.h"
 #include "SNHero.generated.h"
 
 /**
@@ -24,12 +25,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void PossessedBy(AController* NewController) override;
+
 protected:
 	virtual void BeginPlay() override;
 	
-	void AddCharacterAttributes();
-	void AddCharacterAbilitiesAndEffects();
-
 	void InputAbilityInputTagPressed(FGameplayTag InputTag);
 	void InputAbilityInputTagReleased(FGameplayTag InputTag);
 
@@ -54,4 +54,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* SpringArmComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	USNBasicAttributesComponent* AttributesComponent;
 };

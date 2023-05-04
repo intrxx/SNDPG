@@ -3,7 +3,6 @@
 
 #include "Characters/SNCharacterBase.h"
 #include "Characters/SNCharacterMovementComponent.h"
-#include "GAS/Attributes/SNArenaAttributeSet.h"
 #include "GAS/SNAbilitySystemComponent.h"
 
 // Sets default values
@@ -12,7 +11,7 @@ ASNCharacterBase::ASNCharacterBase(const FObjectInitializer& ObjectInitializer)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	PrimaryActorTick.bStartWithTickEnabled = false;
+	//PrimaryActorTick.bStartWithTickEnabled = false;
 
 }
 
@@ -20,7 +19,7 @@ UAbilitySystemComponent* ASNCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent.Get();
 }
-
+/*
 float ASNCharacterBase::GetHealth() const
 {
 	if(AttributeSet.IsValid())
@@ -38,7 +37,7 @@ float ASNCharacterBase::GetMaxHealth() const
 	}
 	return 0.f;
 }
-
+*/
 // Called when the game starts or when spawned
 void ASNCharacterBase::BeginPlay()
 {
