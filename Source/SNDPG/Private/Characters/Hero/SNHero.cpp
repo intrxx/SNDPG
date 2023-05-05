@@ -65,6 +65,15 @@ void ASNHero::PossessedBy(AController* NewController)
 	
 	AbilitySet->GiveToAbilitySystem(Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent()), nullptr, this);
 	AttributesComponent->InitializeWithAbilitySystem(Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent()));
+	
+	//FOR DEBUG
+	TArray<FGameplayAbilitySpec> ActivableAbilities;
+	ActivableAbilities = PS->GetAbilitySystemComponent()->GetActivatableAbilities();
+	for(FGameplayAbilitySpec Abilities : ActivableAbilities)
+	{
+		FString AbilityName = Abilities.Ability->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("Active ability: %s"), *AbilityName);
+	}
 }
 
 void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

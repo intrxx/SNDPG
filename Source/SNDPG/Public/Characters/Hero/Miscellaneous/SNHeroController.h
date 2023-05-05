@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "SNHeroController.generated.h"
 
+class ASNHeroState;
+class USNAbilitySystemComponent;
 /**
  * 
  */
@@ -16,5 +18,15 @@ class SNDPG_API ASNHeroController : public APlayerController
 	
 public:
 	ASNHeroController();
+
+	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController")
+	ASNHeroState* GetSNPlayerState() const;
+	
+	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController")
+	USNAbilitySystemComponent* GetSNAbilitySystemComponent() const; 
+
+protected:
+	virtual void PreProcessInput(const float DeltaTime, const bool bGamePaused) override;
+	virtual void PostProcessInput(const float DeltaTime, const bool bGamePaused) override;
 	
 };

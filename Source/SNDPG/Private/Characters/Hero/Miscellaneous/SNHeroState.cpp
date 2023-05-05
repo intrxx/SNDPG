@@ -17,5 +17,5 @@ ASNHeroState::ASNHeroState()
 
 UAbilitySystemComponent* ASNHeroState::GetAbilitySystemComponent() const
 {
-	return AbilitySystemComponent;
+	return GetSNAbilitySystemComponent();
 }

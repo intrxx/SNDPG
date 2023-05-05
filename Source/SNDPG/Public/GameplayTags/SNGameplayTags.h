@@ -17,8 +17,12 @@ public:
 	static FGameplayTag FindTagByString(FString TagString, bool bMatchPartialString = false);
 
 public:
+	// Input
 	FGameplayTag Input_Move;
 	FGameplayTag Input_Look;
+
+	// Abilities
+	FGameplayTag Ability_Input_Melee;
 
 protected:
 	void AddAllTags(UGameplayTagsManager& Manager);

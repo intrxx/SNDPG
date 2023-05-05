@@ -31,6 +31,15 @@ public:
 
 	ESNAbilityActivationPolicy GetActivationPolicy() const {return ActivationPolicy;}
 
+	void TryActivateAbilityOnSpawn(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) const;
+
+protected:
+	virtual void OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
+
+	/** Called when this ability is granted to the ability system component. */
+	UFUNCTION(BlueprintImplementableEvent, Category = Ability, DisplayName = "OnAbilityAdded")
+	void K2_OnAbilityAdded();
+
 protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability Activation")
