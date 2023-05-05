@@ -2,6 +2,10 @@
 
 
 #include "GAS/SNGameplayAbility.h"
+
+#include "Characters/SNCharacterMovementComponent.h"
+#include "Characters/Hero/SNHero.h"
+#include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "GAS/SNAbilitySystemComponent.h"
 
 USNGameplayAbility::USNGameplayAbility(const FObjectInitializer& ObjectInitializer)
@@ -9,8 +13,38 @@ USNGameplayAbility::USNGameplayAbility(const FObjectInitializer& ObjectInitializ
 {
 }
 
+USNAbilitySystemComponent* USNGameplayAbility::GetSNAbilitySystemComponentFromActorInfo() const
+{
+	return (CurrentActorInfo ? Cast<USNAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent.Get()) : nullptr);
+}
+
+ASNHeroController* USNGameplayAbility::GetSNPlayerControllerFromActorInfo() const
+{
+	return (CurrentActorInfo ? Cast<ASNHeroController>(CurrentActorInfo->PlayerController.Get()) : nullptr);
+}
+
+ASNHero* USNGameplayAbility::GetSNHeroFromActorInfo() const
+{
+	return (CurrentActorInfo ? Cast<ASNHero>(CurrentActorInfo->AvatarActor.Get()) : nullptr);
+}
+
+USNCharacterMovementComponent* USNGameplayAbility::GetSNCharacterMoveCompFromActorInfo()
+{
+	return (CurrentActorInfo ? Cast<USNCharacterMovementComponent>(CurrentActorInfo->MovementComponent.Get()) : nullptr);
+}
+
+void USNGameplayAbility::LockCharacterInPlace()
+{
+	GetSNPlayerControllerFromActorInfo()->SetIgnoreMoveInput(true);
+}
+
+void USNGameplayAbility::UnlockCharacter()
+{
+	GetSNPlayerControllerFromActorInfo()->ResetIgnoreInputFlags();
+}
+
 void USNGameplayAbility::TryActivateAbilityOnSpawn(const FGameplayAbilityActorInfo* ActorInfo,
-	const FGameplayAbilitySpec& Spec) const
+                                                   const FGameplayAbilitySpec& Spec) const
 {
 	const bool bIsPredicting = (Spec.ActivationInfo.ActivationMode == EGameplayAbilityActivationMode::Predicting);
 

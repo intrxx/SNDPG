@@ -6,6 +6,10 @@
 #include "Abilities/GameplayAbility.h"
 #include "SNGameplayAbility.generated.h"
 
+class USNCharacterMovementComponent;
+class ASNHero;
+class ASNHeroController;
+class USNAbilitySystemComponent;
 /**
  * Defines how ability is meant to activate
  */
@@ -30,6 +34,24 @@ public:
 	USNGameplayAbility(const FObjectInitializer& ObjectInitializer);
 
 	ESNAbilityActivationPolicy GetActivationPolicy() const {return ActivationPolicy;}
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Ability")
+	USNAbilitySystemComponent* GetSNAbilitySystemComponentFromActorInfo() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Ability")
+	ASNHeroController* GetSNPlayerControllerFromActorInfo() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Ability")
+	ASNHero* GetSNHeroFromActorInfo() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Ability")
+	USNCharacterMovementComponent* GetSNCharacterMoveCompFromActorInfo();
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Ability")
+	void LockCharacterInPlace();
+	
+	UFUNCTION(BlueprintCallable, Category = "SN|Ability")
+	void UnlockCharacter();
 
 	void TryActivateAbilityOnSpawn(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) const;
 
