@@ -46,7 +46,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Ability")
 	USNCharacterMovementComponent* GetSNCharacterMoveCompFromActorInfo();
-
+	
 	UFUNCTION(BlueprintCallable, Category = "SN|Ability")
 	void LockCharacterInPlace();
 	
