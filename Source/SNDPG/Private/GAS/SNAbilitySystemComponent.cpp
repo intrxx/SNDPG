@@ -147,6 +147,18 @@ void USNAbilitySystemComponent::ClearAbilityInput()
 	InputHeldSpecHandles.Reset();
 }
 
+void USNAbilitySystemComponent::ReceivedDamage(USNAbilitySystemComponent* SourceASC, float UnmitigatedDamage,
+	float MitigatedDamage)
+{
+	ReceivedDamageDelegate.Broadcast(SourceASC, UnmitigatedDamage, MitigatedDamage);
+}
+
+void USNAbilitySystemComponent::ReceivedHeal(USNAbilitySystemComponent* SourceASC, float UnmitigatedHeal,
+	float MitigatedHeal)
+{
+	ReceivedHealDelegate.Broadcast(SourceASC, UnmitigatedHeal, MitigatedHeal);
+}
+
 void USNAbilitySystemComponent::AbilitySpecInputPressed(FGameplayAbilitySpec& Spec)
 {
 	Super::AbilitySpecInputPressed(Spec);

@@ -24,6 +24,9 @@ public:
 	// Abilities
 	FGameplayTag Ability_Input_Melee;
 
+	// Data
+	FGameplayTag HitTag_HeroMelee;
+
 protected:
 	void AddAllTags(UGameplayTagsManager& Manager);
 	void AddTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment);

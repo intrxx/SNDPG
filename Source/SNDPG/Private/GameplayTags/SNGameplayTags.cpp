@@ -42,6 +42,7 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Input_Move, "Input.Move", "Move input.");
 	AddTag(Input_Look, "Input.Look", "Look input.");
 	AddTag(Ability_Input_Melee, "Ability.Input.Melee", "Melee ability input.");
+	AddTag(HitTag_HeroMelee, "Ability.Data.HitTag.HeroMelee", "Tag used by notify to trigger event");
 }
 
 void FSNGameplayTags::AddTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment)

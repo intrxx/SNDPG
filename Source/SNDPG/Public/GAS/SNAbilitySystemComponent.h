@@ -9,6 +9,9 @@
 /**
  * 
  */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReceivedDamageDelegate, USNAbilitySystemComponent*, SourceASC, float, UnmitigatedDamage, float, MitigatedDamage);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReceivedHealDelegate, USNAbilitySystemComponent*, SourceASC, float, UnmitigatedHeal, float, MitigatedHeal);
+
 UCLASS()
 class SNDPG_API USNAbilitySystemComponent : public UAbilitySystemComponent
 {
@@ -22,9 +25,14 @@ public:
 	void ProcessAbilityInput(float DeltaTime, bool bGamePaused);
 	void ClearAbilityInput();
 
+	virtual void ReceivedDamage(USNAbilitySystemComponent* SourceASC, float UnmitigatedDamage, float MitigatedDamage);
+	virtual void ReceivedHeal(USNAbilitySystemComponent* SourceASC, float UnmitigatedHeal, float MitigatedHeal);
 public:
 	bool bAbilitiesGiven = false;
 	bool bAttributesGiven = false;
+
+	FReceivedDamageDelegate ReceivedDamageDelegate;
+	FReceivedHealDelegate ReceivedHealDelegate;
 
 protected:
 	virtual void AbilitySpecInputPressed(FGameplayAbilitySpec& Spec) override;

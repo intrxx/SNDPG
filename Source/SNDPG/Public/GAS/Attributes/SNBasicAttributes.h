@@ -21,6 +21,9 @@ public:
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, MaxHealth);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Resource);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, MaxResource);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Healing);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Damage);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Armor);
 
 protected:
 	UFUNCTION()
@@ -45,18 +48,27 @@ protected:
 private:
 	bool bOutOfHealth = false;
 	
-private:
 	// The current health attribute.  The health will be capped by the max health attribute.  Health is hidden from modifiers so only executions can modify it.
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "SN|Health", Meta = (HideFromModifiers, AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "SN|BasicAttributes", Meta = (HideFromModifiers, AllowPrivateAccess = true))
 	FGameplayAttributeData Health;
 
 	// The current max health attribute.  Max health is an attribute since gameplay effects can modify it.
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "SN|Health", Meta = (AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData MaxHealth;
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resource, Category = "SN|Resource", Meta = (AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resource, Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData Resource;
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxResource, Category = "SN|Resource", Meta = (AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxResource, Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData MaxResource;
+
+public:
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData Healing;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData Armor;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData Damage;
 };
