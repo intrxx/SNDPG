@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GAS/SNAbilitySystemComponent.h"
 #include "SNBasicAttributesComponent.generated.h"
 
 class USNAbilitySystemComponent;
@@ -46,11 +47,14 @@ public:
 	// Uninitialize the component, clearing any references to the ability system.
 	UFUNCTION(BlueprintCallable, Category = "Lyra|Health")
 	void UninitializeFromAbilitySystem();
-
+	
 	// Returns the current health value.
 	UFUNCTION(BlueprintCallable, Category = "Lyra|Health")
 	float GetHealth() const;
-
+	
+	UFUNCTION(BlueprintCallable, Category = "Lyra|Health")
+	FGameplayAttribute GetHealthAttributes() const;
+	
 	// Returns the current maximum health value.
 	UFUNCTION(BlueprintCallable, Category = "Lyra|Health")
 	float GetMaxHealth() const;

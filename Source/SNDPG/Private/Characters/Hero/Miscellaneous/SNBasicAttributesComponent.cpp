@@ -62,6 +62,11 @@ float USNBasicAttributesComponent::GetHealth() const
 	return (BasicAttributes ? BasicAttributes->GetHealth() : 0.0f);
 }
 
+FGameplayAttribute USNBasicAttributesComponent::GetHealthAttributes() const
+{
+	return BasicAttributes->GetHealthAttribute();
+}
+
 float USNBasicAttributesComponent::GetMaxHealth() const
 {
 	return (BasicAttributes ? BasicAttributes->GetMaxHealth() : 0.0f);

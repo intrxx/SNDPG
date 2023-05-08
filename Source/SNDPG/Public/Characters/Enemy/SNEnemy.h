@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Characters/SNCharacterBase.h"
+#include "GameplayEffectTypes.h"
 #include "SNEnemy.generated.h"
 
+class USNBasicAttributesComponent;
+class USNAbilitySet;
 /**
  * 
  */
@@ -16,4 +19,26 @@ class SNDPG_API ASNEnemy : public ASNCharacterBase
 
 public:
 	ASNEnemy(const FObjectInitializer& ObjectInitializer);
+
+	USNAbilitySystemComponent* GetEnemyAbilitySystemComponent() const;
+
+protected:
+	virtual void BeginPlay() override;
+
+	// Attribute changed callbacks
+	virtual void HealthChanged(const FOnAttributeChangeData& Data);
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
+	USNAbilitySet* AbilitySet;
+
+	FDelegateHandle HealthChangedDelegateHandle;
+	
+private:
+	UPROPERTY()
+	USNAbilitySystemComponent* EnemyAbilitySystemComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	USNBasicAttributesComponent* AttributesComponent;
+	
 };

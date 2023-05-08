@@ -58,17 +58,16 @@ void ASNHero::PossessedBy(AController* NewController)
 	check(PS);
 
 	AbilitySystemComponent = Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent());
-
-	PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS,this);
+	AbilitySystemComponent->InitAbilityActorInfo(PS,this);
 	
 	//TODO For now initialize here, later on I can make delegate when whole initialization process starts and then bind it to that delegate in this class's constructor
 	
-	AbilitySet->GiveToAbilitySystem(Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent()), nullptr, this);
-	AttributesComponent->InitializeWithAbilitySystem(Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent()));
+	AbilitySet->GiveToAbilitySystem(Cast<USNAbilitySystemComponent>(AbilitySystemComponent), nullptr, this);
+	AttributesComponent->InitializeWithAbilitySystem(Cast<USNAbilitySystemComponent>(AbilitySystemComponent));
 	
 	//FOR DEBUG
 	TArray<FGameplayAbilitySpec> ActivableAbilities;
-	ActivableAbilities = PS->GetAbilitySystemComponent()->GetActivatableAbilities();
+	ActivableAbilities = AbilitySystemComponent->GetActivatableAbilities();
 	for(FGameplayAbilitySpec Abilities : ActivableAbilities)
 	{
 		FString AbilityName = Abilities.Ability->GetName();
