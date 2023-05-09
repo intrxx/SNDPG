@@ -9,7 +9,6 @@ ASNHeroState::ASNHeroState()
 {
 	AbilitySystemComponent = CreateDefaultSubobject<USNAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(true);
-
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Full);
 	
 	NetUpdateFrequency = 100.0f;
@@ -17,5 +16,5 @@ ASNHeroState::ASNHeroState()
 
 UAbilitySystemComponent* ASNHeroState::GetAbilitySystemComponent() const
 {
-	return GetSNAbilitySystemComponent();
+	return AbilitySystemComponent;
 }

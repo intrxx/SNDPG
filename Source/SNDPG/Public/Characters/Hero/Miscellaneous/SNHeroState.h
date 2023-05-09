@@ -18,8 +18,7 @@ class SNDPG_API ASNHeroState : public APlayerState, public IAbilitySystemInterfa
 
 public:
 	ASNHeroState();
-
-	USNAbilitySystemComponent* GetSNAbilitySystemComponent() const {return AbilitySystemComponent;}
+	
 	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 protected:

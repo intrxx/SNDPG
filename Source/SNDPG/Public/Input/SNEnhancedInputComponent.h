@@ -43,10 +43,11 @@ void USNEnhancedInputComponent::BindAbilityActions(const USNInputConfig* InputCo
 
 	for (const FSNInputAction& Action : InputConfig->AbilityInputActions)
 	{
+		/*
 		UE_LOG(LogTemp, Error, TEXT("------------------ Binding Ability Actions To Tags ------------------"));
 		UE_LOG(LogTemp, Warning, TEXT("Input Action: %s"), *Action.InputAction->GetName());
 		UE_LOG(LogTemp, Warning, TEXT("Input Tag: %s"), *Action.InputTag.ToString());
-		
+		*/
 		if (Action.InputAction && Action.InputTag.IsValid())
 		{
 			if (PressedFunc)

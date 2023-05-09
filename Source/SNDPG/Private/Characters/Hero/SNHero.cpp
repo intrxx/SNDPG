@@ -13,6 +13,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameplayTags/SNGameplayTags.h"
 #include "GAS/SNAbilitySet.h"
+#include "GAS/SNGameplayAbility.h"
 #include "Input/SNEnhancedInputComponent.h"
 
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
@@ -58,14 +59,15 @@ void ASNHero::PossessedBy(AController* NewController)
 	check(PS);
 
 	AbilitySystemComponent = Cast<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent());
-	AbilitySystemComponent->InitAbilityActorInfo(PS,this);
+	PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS,this);
 	
 	//TODO For now initialize here, later on I can make delegate when whole initialization process starts and then bind it to that delegate in this class's constructor
 	
-	AbilitySet->GiveToAbilitySystem(Cast<USNAbilitySystemComponent>(AbilitySystemComponent), nullptr, this);
-	AttributesComponent->InitializeWithAbilitySystem(Cast<USNAbilitySystemComponent>(AbilitySystemComponent));
+	AbilitySet->GiveToAbilitySystem(AbilitySystemComponent.Get(), nullptr, this);
+	AttributesComponent->InitializeWithAbilitySystem(AbilitySystemComponent.Get());
 	
 	//FOR DEBUG
+	/*
 	TArray<FGameplayAbilitySpec> ActivableAbilities;
 	ActivableAbilities = AbilitySystemComponent->GetActivatableAbilities();
 	for(FGameplayAbilitySpec Abilities : ActivableAbilities)
@@ -73,6 +75,7 @@ void ASNHero::PossessedBy(AController* NewController)
 		FString AbilityName = Abilities.Ability->GetName();
 		UE_LOG(LogTemp, Warning, TEXT("Active ability: %s"), *AbilityName);
 	}
+	*/
 }
 
 void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

@@ -7,6 +7,7 @@
 #include "GameplayEffectTypes.h"
 #include "SNEnemy.generated.h"
 
+class USNBasicAttributes;
 class USNBasicAttributesComponent;
 class USNAbilitySet;
 /**
@@ -22,6 +23,7 @@ public:
 
 	USNAbilitySystemComponent* GetEnemyAbilitySystemComponent() const;
 
+	
 protected:
 	virtual void BeginPlay() override;
 
@@ -31,13 +33,13 @@ protected:
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
 	USNAbilitySet* AbilitySet;
-
+	
 	FDelegateHandle HealthChangedDelegateHandle;
 	
-private:
 	UPROPERTY()
 	USNAbilitySystemComponent* EnemyAbilitySystemComponent;
-	
+
+private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
 	USNBasicAttributesComponent* AttributesComponent;
 	

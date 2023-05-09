@@ -35,6 +35,7 @@ void USNDamageExecutionCalculation::Execute_Implementation(const FGameplayEffect
 {
 	Super::Execute_Implementation(ExecutionParams, OutExecutionOutput);
 
+	UE_LOG(LogTemp, Error, TEXT(""))
 	UAbilitySystemComponent* TargetAbilitySystemComponent = ExecutionParams.GetTargetAbilitySystemComponent();
 	UAbilitySystemComponent* SourceAbilitySystemComponent = ExecutionParams.GetSourceAbilitySystemComponent();
 
@@ -56,7 +57,7 @@ void USNDamageExecutionCalculation::Execute_Implementation(const FGameplayEffect
 
 	float Damage = 0.0f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().DamageDef, EvaluateParameters, Damage);
-	Damage = FMath::Max<float>(Damage, 0.0f);
+	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Ability.Data.Damage")), true, -1.0f), 0.0f);
 
 	// Apply any buffs here
 	float UnmitigatedDamage = Damage;

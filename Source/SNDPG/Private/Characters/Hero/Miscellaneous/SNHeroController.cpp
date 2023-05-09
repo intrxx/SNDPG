@@ -18,7 +18,7 @@ ASNHeroState* ASNHeroController::GetSNPlayerState() const
 USNAbilitySystemComponent* ASNHeroController::GetSNAbilitySystemComponent() const
 {
 	const ASNHeroState* PS = GetSNPlayerState();
-	return PS->GetSNAbilitySystemComponent();
+	return CastChecked<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 }
 
 void ASNHeroController::PreProcessInput(const float DeltaTime, const bool bGamePaused)

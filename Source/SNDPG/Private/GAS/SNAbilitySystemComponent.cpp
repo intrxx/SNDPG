@@ -10,6 +10,8 @@ USNAbilitySystemComponent::USNAbilitySystemComponent()
 	InputPressedSpecHandles.Reset();
 	InputReleasedSpecHandles.Reset();
 	InputHeldSpecHandles.Reset();
+
+	UE_LOG(LogTemp, Warning, TEXT("Enetered ASC contructror"));
 }
 
 void USNAbilitySystemComponent::AbilityInputTagPressed(const FGameplayTag& InputTag)

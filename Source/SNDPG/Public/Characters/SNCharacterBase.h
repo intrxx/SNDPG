@@ -24,4 +24,5 @@ protected:
 	virtual void BeginPlay() override;
 
 	TWeakObjectPtr<class USNAbilitySystemComponent> AbilitySystemComponent;
+	TWeakObjectPtr<class USNBasicAttributes> AttributeSetBase;
 };
