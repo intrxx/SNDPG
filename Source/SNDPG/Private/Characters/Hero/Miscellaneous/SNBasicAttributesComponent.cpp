@@ -2,8 +2,14 @@
 
 
 #include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
+
+#include "Characters/Enemy/SNEnemy.h"
+#include "Characters/Hero/SNHero.h"
+#include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "GAS/Attributes/SNBasicAttributes.h"
 #include "GAS/SNAbilitySystemComponent.h"
+#include "UI/SNHealthBarWidget.h"
+#include "UI/SNHeroHUD.h"
 
 // Sets default values for this component's properties
 USNBasicAttributesComponent::USNBasicAttributesComponent()
@@ -46,6 +52,14 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 	}
 
 	//TODO Listen for atribute changes
+	HealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetHealthAttribute()).AddUObject(this, &ThisClass::HealthChanged);
+	MaxHealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetMaxHealthAttribute()).AddUObject(this, &ThisClass::MaxHealthChanged);
+	ResourceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetResourceAttribute()).AddUObject(this, &ThisClass::ResourceChanged);
+	MaxResourceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetMaxResourceAttribute()).AddUObject(this, &ThisClass::MaxResourceChanged);
 	
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
 	AbilitySystemComponent->SetNumericAttributeBase(USNBasicAttributes::GetHealthAttribute(), BasicAttributes->GetMaxHealth());
@@ -62,16 +76,25 @@ float USNBasicAttributesComponent::GetHealth() const
 	return (BasicAttributes ? BasicAttributes->GetHealth() : 0.0f);
 }
 
-FGameplayAttribute USNBasicAttributesComponent::GetHealthAttributes() const
-{
-	return BasicAttributes->GetHealthAttribute();
-}
-
 float USNBasicAttributesComponent::GetMaxHealth() const
 {
 	return (BasicAttributes ? BasicAttributes->GetMaxHealth() : 0.0f);
 }
 
+FGameplayAttribute USNBasicAttributesComponent::GetHealthAttributes() const
+{
+	return BasicAttributes->GetHealthAttribute();
+}
+
+float USNBasicAttributesComponent::GetResource() const
+{
+	return (BasicAttributes ? BasicAttributes->GetResource() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetMaxResource() const
+{
+	return (BasicAttributes ? BasicAttributes->GetMaxResource() : 0.0f);
+}
 
 // Called when the game starts
 void USNBasicAttributesComponent::BeginPlay()
@@ -80,5 +103,93 @@ void USNBasicAttributesComponent::BeginPlay()
 
 	// ...
 	
+}
+
+void USNBasicAttributesComponent::HealthChanged(const FOnAttributeChangeData& Data)
+{
+	float Health = Data.NewValue;
+	if(ASNEnemy* EnemyOwner = Cast<ASNEnemy>(GetOwner()))
+	{
+		USNHealthBarWidget* HealthBarWidget = EnemyOwner->GetHealthBarWidget();
+		if(HealthBarWidget)
+		{
+			HealthBarWidget->SetHealthPercentage(Health / GetMaxHealth());
+		}
+	}
+	else if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetHealth(Health);
+				HeroHUD->SetHealthPercentage(Health / GetMaxHealth());
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::MaxHealthChanged(const FOnAttributeChangeData& Data)
+{
+	float MaxHealth = Data.NewValue;
+	if(ASNEnemy* EnemyOwner = Cast<ASNEnemy>(GetOwner()))
+	{
+		USNHealthBarWidget* HealthBarWidget = EnemyOwner->GetHealthBarWidget();
+		if(HealthBarWidget)
+		{
+			HealthBarWidget->SetHealthPercentage(GetHealth() / MaxHealth);
+		}
+	}
+	else if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetMaxHealth(MaxHealth);
+				HeroHUD->SetHealthPercentage(GetHealth() / MaxHealth);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::ResourceChanged(const FOnAttributeChangeData& Data)
+{
+	float Resource = Data.NewValue;
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetResource(Resource);
+				HeroHUD->SetResourcePercentage(Resource / GetMaxResource());
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::MaxResourceChanged(const FOnAttributeChangeData& Data)
+{
+	float MaxResource = Data.NewValue;
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetResource(MaxResource);
+				HeroHUD->SetResourcePercentage(GetResource() / MaxResource);
+			}
+		}
+	}
 }
 

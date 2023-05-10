@@ -65,6 +65,9 @@ void ASNHero::PossessedBy(AController* NewController)
 	
 	AbilitySet->GiveToAbilitySystem(AbilitySystemComponent.Get(), nullptr, this);
 	AttributesComponent->InitializeWithAbilitySystem(AbilitySystemComponent.Get());
+
+	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+	PC->CreateHeroHUD();
 	
 	//FOR DEBUG
 	/*

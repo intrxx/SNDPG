@@ -3,6 +3,9 @@
 
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 
+#include "Characters/Hero/SNHero.h"
+#include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
+#include "UI/SNHeroHUD.h"
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "GAS/SNAbilitySystemComponent.h"
 
@@ -21,6 +24,34 @@ USNAbilitySystemComponent* ASNHeroController::GetSNAbilitySystemComponent() cons
 	return CastChecked<USNAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 }
 
+void ASNHeroController::CreateHeroHUD()
+{
+	if(HeroHUD)
+	{
+		return;
+	}
+
+	if(!HeroHUDClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing MainCharacterHUDClass. Fill in on the BP in PlayerController."), *FString(__FUNCTION__));
+		return;
+	}
+	ASNHero* Hero = Cast<ASNHero>(GetCharacter());
+	const USNBasicAttributesComponent* AC = USNBasicAttributesComponent::FindAttributeComponent(Hero);
+	
+	HeroHUD = CreateWidget<USNHeroHUD>(this, HeroHUDClass);
+	HeroHUD->AddToViewport();
+
+	HeroHUD->SetHealth(AC->GetHealth());
+	HeroHUD->SetMaxHealth(AC->GetMaxHealth());
+	HeroHUD->SetHealthPercentage(AC->GetHealth() / FMath::Max<float>(AC->GetMaxHealth(), 1.0f));
+
+	HeroHUD->SetResource(AC->GetResource());
+	HeroHUD->SetMaxResource(AC->GetMaxResource());
+	HeroHUD->SetResourcePercentage(AC->GetResource() / FMath::Max<float>(AC->GetMaxResource(), 1.0f));
+	
+}
+
 void ASNHeroController::PreProcessInput(const float DeltaTime, const bool bGamePaused)
 {
 	Super::PreProcessInput(DeltaTime, bGamePaused);
@@ -35,4 +66,11 @@ void ASNHeroController::PostProcessInput(const float DeltaTime, const bool bGame
 	}
 
 	Super::PostProcessInput(DeltaTime, bGamePaused);
+}
+
+void ASNHeroController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+
+	GetSNAbilitySystemComponent()->InitAbilityActorInfo(GetSNPlayerState(), InPawn);
 }

@@ -7,6 +7,8 @@
 #include "GameplayEffectTypes.h"
 #include "SNEnemy.generated.h"
 
+class UWidgetComponent;
+class USNHealthBarWidget;
 class USNBasicAttributes;
 class USNBasicAttributesComponent;
 class USNAbilitySet;
@@ -23,24 +25,35 @@ public:
 
 	USNAbilitySystemComponent* GetEnemyAbilitySystemComponent() const;
 
+	USNHealthBarWidget* GetHealthBarWidget() const {return HealthBarWidget;}
+
+public:
+	UPROPERTY(EditAnywhere, Category = "Enemy|UI")
+	FVector HealthBarPosition = FVector(0.0f, 0.0f, 100.0f);
 	
 protected:
 	virtual void BeginPlay() override;
 
-	// Attribute changed callbacks
-	virtual void HealthChanged(const FOnAttributeChangeData& Data);
+	void InitializeHealthBar();
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy|Abilities")
 	USNAbilitySet* AbilitySet;
-	
-	FDelegateHandle HealthChangedDelegateHandle;
 	
 	UPROPERTY()
 	USNAbilitySystemComponent* EnemyAbilitySystemComponent;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Enemy|UI")
+	TSubclassOf<USNHealthBarWidget> HealthBarWidgetClass;
+
+	UPROPERTY()
+	USNHealthBarWidget* HealthBarWidget;
+
+	UPROPERTY()
+	UWidgetComponent* HealthBarWidgetComponent;
+
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy|Attributes", Meta = (AllowPrivateAccess = "true"))
 	USNBasicAttributesComponent* AttributesComponent;
 	
 };

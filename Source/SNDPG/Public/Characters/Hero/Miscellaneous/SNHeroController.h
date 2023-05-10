@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "SNHeroController.generated.h"
 
+class USNBasicAttributesComponent;
+class USNHeroHUD;
 class ASNHeroState;
 class USNAbilitySystemComponent;
 /**
@@ -23,10 +25,23 @@ public:
 	ASNHeroState* GetSNPlayerState() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController")
-	USNAbilitySystemComponent* GetSNAbilitySystemComponent() const; 
+	USNAbilitySystemComponent* GetSNAbilitySystemComponent() const;
+	
+	USNHeroHUD* GetHeroHUD() const {return HeroHUD;}
 
+	void CreateHeroHUD();
+
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Hero|UI")
+	TSubclassOf<USNHeroHUD> HeroHUDClass;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Hero|UI")
+	USNHeroHUD* HeroHUD;
+	
 protected:
 	virtual void PreProcessInput(const float DeltaTime, const bool bGamePaused) override;
 	virtual void PostProcessInput(const float DeltaTime, const bool bGamePaused) override;
+
+	virtual void OnPossess(APawn* InPawn) override;
 	
 };
