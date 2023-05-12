@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Characters/SNCharacterBase.h"
 #include "GameFramework/PlayerController.h"
 #include "SNHeroController.generated.h"
 
@@ -28,8 +29,14 @@ public:
 	USNAbilitySystemComponent* GetSNAbilitySystemComponent() const;
 	
 	USNHeroHUD* GetHeroHUD() const {return HeroHUD;}
-
+	
 	void CreateHeroHUD();
+
+	void ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter);
+	
+public:
+	UPROPERTY(EditAnywhere, Category = "Hero|UI")
+	TSubclassOf<class USNFloatingDmgNumberWComponent> DamageNumberClass;
 
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Hero|UI")

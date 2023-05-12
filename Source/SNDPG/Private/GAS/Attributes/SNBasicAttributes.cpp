@@ -131,7 +131,7 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 				WasAlive = TargetAttributesComponent->IsDeadOrDying();
 			}
 
-			if (!TargetAttributesComponent->IsDeadOrDying())
+			if (TargetAttributesComponent->IsDeadOrDying())
 			{
 				UE_LOG(LogTemp, Warning, TEXT("%s is NOT alive when receiving damage"), *TargetCharacter->GetName());
 			}
@@ -182,7 +182,8 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 					ASNHeroController* PC = Cast<ASNHeroController>(SourceController);
 					if (PC)
 					{
-						//PC->ShowDamageNumber(LocalDamageDone, TargetCharacter);
+						//UE_LOG(LogTemp, Warning, TEXT("%s Showing floating number"), *TargetCharacter->GetName());
+						PC->ShowFloatingNumber(LocalDamageDone, TargetCharacter);
 					}
 				}
 

@@ -8,6 +8,7 @@
 #include "UI/SNHeroHUD.h"
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "GAS/SNAbilitySystemComponent.h"
+#include "UI/SNFloatingDmgNumberWComponent.h"
 
 ASNHeroController::ASNHeroController()
 {
@@ -50,6 +51,18 @@ void ASNHeroController::CreateHeroHUD()
 	HeroHUD->SetMaxResource(AC->GetMaxResource());
 	HeroHUD->SetResourcePercentage(AC->GetResource() / FMath::Max<float>(AC->GetMaxResource(), 1.0f));
 	
+}
+
+void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter)
+{
+	if(TargetCharacter)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s Showing floating number in swn functiron"), *TargetCharacter->GetName());
+		USNFloatingDmgNumberWComponent* FloatingText = NewObject<USNFloatingDmgNumberWComponent>(TargetCharacter, DamageNumberClass);
+		FloatingText->RegisterComponent();
+		FloatingText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		FloatingText->SetDamageText(Amount, true);
+	}
 }
 
 void ASNHeroController::PreProcessInput(const float DeltaTime, const bool bGamePaused)
