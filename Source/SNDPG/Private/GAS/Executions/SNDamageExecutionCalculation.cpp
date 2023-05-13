@@ -10,12 +10,12 @@
 struct SNDamageStatics
 {
 	DECLARE_ATTRIBUTE_CAPTUREDEF(Damage)
-	DECLARE_ATTRIBUTE_CAPTUREDEF(Armor)
+	DECLARE_ATTRIBUTE_CAPTUREDEF(Armour)
 
 	SNDamageStatics()
 	{
 		DEFINE_ATTRIBUTE_CAPTUREDEF(USNBasicAttributes, Damage, Source, true)
-		DEFINE_ATTRIBUTE_CAPTUREDEF(USNBasicAttributes, Armor, Target, true)
+		DEFINE_ATTRIBUTE_CAPTUREDEF(USNBasicAttributes, Armour, Target, true)
 	}
 };
 
@@ -27,7 +27,7 @@ static const SNDamageStatics& DamageStatics()
 USNDamageExecutionCalculation::USNDamageExecutionCalculation()
 {
 	RelevantAttributesToCapture.Add(DamageStatics().DamageDef);
-	RelevantAttributesToCapture.Add(DamageStatics().ArmorDef);
+	RelevantAttributesToCapture.Add(DamageStatics().ArmourDef);
 }
 
 void USNDamageExecutionCalculation::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
@@ -52,7 +52,7 @@ void USNDamageExecutionCalculation::Execute_Implementation(const FGameplayEffect
 	EvaluateParameters.SourceTags = SourceTags;
 
 	float Armor = 0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().ArmorDef, EvaluateParameters, Armor);
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().ArmourDef, EvaluateParameters, Armor);
 	Armor = FMath::Max<float>(Armor, 0.0f);
 
 	float Damage = 0.0f;

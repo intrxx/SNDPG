@@ -57,7 +57,6 @@ void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* Targe
 {
 	if(TargetCharacter)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s Showing floating number in swn functiron"), *TargetCharacter->GetName());
 		USNFloatingDmgNumberWComponent* FloatingText = NewObject<USNFloatingDmgNumberWComponent>(TargetCharacter, DamageNumberClass);
 		FloatingText->RegisterComponent();
 		FloatingText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);

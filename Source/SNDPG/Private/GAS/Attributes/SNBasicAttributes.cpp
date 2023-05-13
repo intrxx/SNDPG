@@ -46,6 +46,41 @@ void USNBasicAttributes::OnRep_MaxResource(const FGameplayAttributeData& OldValu
 	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, MaxResource, OldValue);
 }
 
+void USNBasicAttributes::OnRep_Experience(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Experience, OldValue);
+}
+
+void USNBasicAttributes::OnRep_MaxExperience(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, MaxExperience, OldValue);
+}
+
+void USNBasicAttributes::OnRep_CharacterLevel(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, CharacterLevel, OldValue);
+}
+
+void USNBasicAttributes::OnRep_Strength(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Strength, OldValue);
+}
+
+void USNBasicAttributes::OnRep_Faith(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Faith, OldValue);
+}
+
+void USNBasicAttributes::OnRep_Endurance(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Endurance, OldValue);
+}
+
+void USNBasicAttributes::OnRep_Armour(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Armour, OldValue);
+}
+
 bool USNBasicAttributes::PreGameplayEffectExecute(FGameplayEffectModCallbackData& Data)
 {
 	return Super::PreGameplayEffectExecute(Data);

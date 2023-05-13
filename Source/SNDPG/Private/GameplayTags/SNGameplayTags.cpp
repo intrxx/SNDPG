@@ -39,10 +39,16 @@ FGameplayTag FSNGameplayTags::FindTagByString(FString TagString, bool bMatchPart
 
 void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 {
+	// Native Input
 	AddTag(Input_Move, "Input.Move", "Move input.");
 	AddTag(Input_Look, "Input.Look", "Look input.");
+	AddTag(Input_ToggleCharacterStatus, "Input.ToggleCharacterStatus", "Toggle input for Character Status Tab.");
+
+	// Ability Input
 	AddTag(Ability_Input_Melee, "Ability.Input.Melee", "Melee ability input.");
-	AddTag(HitTag_HeroMelee, "Ability.Data.HitTag.HeroMelee", "Tag used by notify to trigger event");
+
+	// Notifiers Hit Tags
+	AddTag(HitTag_HeroMelee, "Ability.Data.HitTag.HeroMelee", "Tag used by notify to trigger event.");
 }
 
 void FSNGameplayTags::AddTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment)

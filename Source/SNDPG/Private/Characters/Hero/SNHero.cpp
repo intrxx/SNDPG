@@ -15,6 +15,7 @@
 #include "GAS/SNAbilitySet.h"
 #include "GAS/SNGameplayAbility.h"
 #include "Input/SNEnhancedInputComponent.h"
+#include "UI/SNHeroHUD.h"
 
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -94,6 +95,8 @@ void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		&ThisClass::Move);
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_Look, ETriggerEvent::Triggered, this,
 		&ThisClass::Look);
+	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleCharacterStatus, ETriggerEvent::Triggered,
+		this, &ThisClass::ToggleCharacterStatus);
 }
 
 void ASNHero::BeginPlay()
@@ -145,6 +148,27 @@ void ASNHero::Look(const FInputActionValue& Value)
 	{
 		AddControllerYawInput(LookValue.X);
 		AddControllerPitchInput(-LookValue.Y);
+	}
+}
+
+void ASNHero::ToggleCharacterStatus()
+{
+	UE_LOG(LogTemp, Warning, TEXT("toggling"));
+	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+	if(PC)
+	{
+		USNHeroHUD* HUD = PC->GetHeroHUD();
+		if(HUD)
+		{
+			if(HUD->bIsCharacterStatusVisible)
+			{
+				HUD->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = false);
+			}
+			else
+			{
+				PC->GetHeroHUD()->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = true);
+			}
+		}
 	}
 }
 
