@@ -50,8 +50,7 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 		UE_LOG(LogTemp, Error, TEXT("SNBasicAttributesComponent: Cannot initialize  omponent for owner [%s] with NULL attribute set on the ability system."), *GetNameSafe(Owner));
 		return;
 	}
-
-	//TODO Listen for atribute changes
+	
 	HealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		BasicAttributes->GetHealthAttribute()).AddUObject(this, &ThisClass::HealthChanged);
 	MaxHealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
@@ -60,6 +59,20 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 		BasicAttributes->GetResourceAttribute()).AddUObject(this, &ThisClass::ResourceChanged);
 	MaxResourceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		BasicAttributes->GetMaxResourceAttribute()).AddUObject(this, &ThisClass::MaxResourceChanged);
+	CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetCharacterLevelAttribute()).AddUObject(this, &ThisClass::CharacterLevelChanged);
+	ExperienceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetExperienceAttribute()).AddUObject(this, &ThisClass::ExperienceChanged);
+	MaxExperienceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetMaxExperienceAttribute()).AddUObject(this, &ThisClass::MaxExperienceChanged);
+	ArmourChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetArmourAttribute()).AddUObject(this, &ThisClass::ArmourChanged);
+	StrengthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetStrengthAttribute()).AddUObject(this, &ThisClass::StrengthChanged);
+	EnduranceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetEnduranceAttribute()).AddUObject(this, &ThisClass::EnduranceChanged);
+	FaithChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		BasicAttributes->GetFaithAttribute()).AddUObject(this, &ThisClass::FaithChanged);
 	
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
 	AbilitySystemComponent->SetNumericAttributeBase(USNBasicAttributes::GetHealthAttribute(), BasicAttributes->GetMaxHealth());
@@ -81,11 +94,6 @@ float USNBasicAttributesComponent::GetMaxHealth() const
 	return (BasicAttributes ? BasicAttributes->GetMaxHealth() : 0.0f);
 }
 
-FGameplayAttribute USNBasicAttributesComponent::GetHealthAttributes() const
-{
-	return BasicAttributes->GetHealthAttribute();
-}
-
 float USNBasicAttributesComponent::GetResource() const
 {
 	return (BasicAttributes ? BasicAttributes->GetResource() : 0.0f);
@@ -94,6 +102,41 @@ float USNBasicAttributesComponent::GetResource() const
 float USNBasicAttributesComponent::GetMaxResource() const
 {
 	return (BasicAttributes ? BasicAttributes->GetMaxResource() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetCharacterLevel() const
+{
+	return (BasicAttributes ? BasicAttributes->GetCharacterLevel() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetExperience() const
+{
+	return (BasicAttributes ? BasicAttributes->GetExperience() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetMaxExperience() const
+{
+	return (BasicAttributes ? BasicAttributes->GetMaxExperience() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetArmour() const
+{
+	return (BasicAttributes ? BasicAttributes->GetArmour() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetStrength() const
+{
+	return (BasicAttributes ? BasicAttributes->GetStrength() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetEndurance() const
+{
+	return (BasicAttributes ? BasicAttributes->GetEndurance() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetFaith() const
+{
+	return (BasicAttributes ? BasicAttributes->GetFaith() : 0.0f);
 }
 
 // Called when the game starts
@@ -108,6 +151,7 @@ void USNBasicAttributesComponent::BeginPlay()
 void USNBasicAttributesComponent::HealthChanged(const FOnAttributeChangeData& Data)
 {
 	float Health = Data.NewValue;
+	
 	if(ASNEnemy* EnemyOwner = Cast<ASNEnemy>(GetOwner()))
 	{
 		USNHealthBarWidget* HealthBarWidget = EnemyOwner->GetHealthBarWidget();
@@ -134,6 +178,7 @@ void USNBasicAttributesComponent::HealthChanged(const FOnAttributeChangeData& Da
 void USNBasicAttributesComponent::MaxHealthChanged(const FOnAttributeChangeData& Data)
 {
 	float MaxHealth = Data.NewValue;
+	
 	if(ASNEnemy* EnemyOwner = Cast<ASNEnemy>(GetOwner()))
 	{
 		USNHealthBarWidget* HealthBarWidget = EnemyOwner->GetHealthBarWidget();
@@ -160,6 +205,7 @@ void USNBasicAttributesComponent::MaxHealthChanged(const FOnAttributeChangeData&
 void USNBasicAttributesComponent::ResourceChanged(const FOnAttributeChangeData& Data)
 {
 	float Resource = Data.NewValue;
+	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
@@ -168,7 +214,6 @@ void USNBasicAttributesComponent::ResourceChanged(const FOnAttributeChangeData& 
 			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
 			if(HeroHUD)
 			{
-				HeroHUD->SetResource(Resource);
 				HeroHUD->SetResourcePercentage(Resource / GetMaxResource());
 			}
 		}
@@ -178,6 +223,7 @@ void USNBasicAttributesComponent::ResourceChanged(const FOnAttributeChangeData& 
 void USNBasicAttributesComponent::MaxResourceChanged(const FOnAttributeChangeData& Data)
 {
 	float MaxResource = Data.NewValue;
+	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
@@ -186,8 +232,134 @@ void USNBasicAttributesComponent::MaxResourceChanged(const FOnAttributeChangeDat
 			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
 			if(HeroHUD)
 			{
-				HeroHUD->SetResource(MaxResource);
+				HeroHUD->SetMaxResource(MaxResource);
 				HeroHUD->SetResourcePercentage(GetResource() / MaxResource);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::ExperienceChanged(const FOnAttributeChangeData& Data)
+{
+	float Experience = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetExperience(Experience);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::MaxExperienceChanged(const FOnAttributeChangeData& Data)
+{
+	float MaxExperience = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetMaxExperience(MaxExperience);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::CharacterLevelChanged(const FOnAttributeChangeData& Data)
+{
+	float CharacterLevel = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetCharacterLevel(CharacterLevel);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::ArmourChanged(const FOnAttributeChangeData& Data)
+{
+	float Armour = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetArmour(Armour);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::StrengthChanged(const FOnAttributeChangeData& Data)
+{
+	float Strength = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetStrength(Strength);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::EnduranceChanged(const FOnAttributeChangeData& Data)
+{
+	float Endurance = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetEndurance(Endurance);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::FaithChanged(const FOnAttributeChangeData& Data)
+{
+	float Faith = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetFaith(Faith);
 			}
 		}
 	}

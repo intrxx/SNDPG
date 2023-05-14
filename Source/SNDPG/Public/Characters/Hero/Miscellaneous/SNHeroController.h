@@ -28,7 +28,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController")
 	USNAbilitySystemComponent* GetSNAbilitySystemComponent() const;
 	
-	USNHeroHUD* GetHeroHUD() const {return HeroHUD;}
+	USNHeroHUD* GetHeroHUD();
 	
 	void CreateHeroHUD();
 

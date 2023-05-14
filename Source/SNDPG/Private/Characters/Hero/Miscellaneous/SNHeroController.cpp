@@ -50,7 +50,19 @@ void ASNHeroController::CreateHeroHUD()
 	HeroHUD->SetResource(AC->GetResource());
 	HeroHUD->SetMaxResource(AC->GetMaxResource());
 	HeroHUD->SetResourcePercentage(AC->GetResource() / FMath::Max<float>(AC->GetMaxResource(), 1.0f));
-	
+
+	HeroHUD->SetCharacterLevel(AC->GetCharacterLevel());
+	HeroHUD->SetExperience(AC->GetExperience());
+	HeroHUD->SetMaxExperience(AC->GetMaxExperience());
+	HeroHUD->SetArmour(AC->GetArmour());
+	HeroHUD->SetStrength(AC->GetStrength());
+	HeroHUD->SetEndurance(AC->GetEndurance());
+	HeroHUD->SetFaith(AC->GetFaith());
+}
+
+USNHeroHUD* ASNHeroController::GetHeroHUD()
+{
+	return HeroHUD;
 }
 
 void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter)

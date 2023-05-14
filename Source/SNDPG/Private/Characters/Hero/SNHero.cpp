@@ -153,7 +153,6 @@ void ASNHero::Look(const FInputActionValue& Value)
 
 void ASNHero::ToggleCharacterStatus()
 {
-	UE_LOG(LogTemp, Warning, TEXT("toggling"));
 	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
 	if(PC)
 	{
@@ -171,6 +170,7 @@ void ASNHero::ToggleCharacterStatus()
 		}
 	}
 }
+
 
 
 

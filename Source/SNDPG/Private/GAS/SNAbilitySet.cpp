@@ -112,27 +112,7 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* InASC,
 		}
 	}
 	InASC->bAbilitiesGiven = true;
-
-	// Grant the gameplay effects.
-	for (int32 EffectIndex = 0; EffectIndex < GrantedGameplayEffects.Num(); ++EffectIndex)
-	{
-		const FSNAbilitySet_GameplayEffect& EffectToGrant = GrantedGameplayEffects[EffectIndex];
-
-		if (!IsValid(EffectToGrant.GameplayEffect))
-		{
-			UE_LOG(LogTemp, Error, TEXT("GrantedGameplayEffects[%d] on ability set [%s] is not valid"), EffectIndex, *GetNameSafe(this));
-			continue;
-		}
-
-		const UGameplayEffect* GameplayEffect = EffectToGrant.GameplayEffect->GetDefaultObject<UGameplayEffect>();
-		const FActiveGameplayEffectHandle GameplayEffectHandle = InASC->ApplyGameplayEffectToSelf(GameplayEffect, EffectToGrant.EffectLevel, InASC->MakeEffectContext());
-
-		if (OutGrantedHandles)
-		{
-			OutGrantedHandles->AddGameplayEffectHandle(GameplayEffectHandle);
-		}
-	}
-
+	
 	// Grant the attribute sets.
 	if(InASC->bAttributesGiven == false)
 	{
@@ -156,4 +136,24 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* InASC,
 		}
 	}
 	InASC->bAttributesGiven = true;
+
+	// Grant the gameplay effects.
+	for (int32 EffectIndex = 0; EffectIndex < GrantedGameplayEffects.Num(); ++EffectIndex)
+	{
+		const FSNAbilitySet_GameplayEffect& EffectToGrant = GrantedGameplayEffects[EffectIndex];
+
+		if (!IsValid(EffectToGrant.GameplayEffect))
+		{
+			UE_LOG(LogTemp, Error, TEXT("GrantedGameplayEffects[%d] on ability set [%s] is not valid"), EffectIndex, *GetNameSafe(this));
+			continue;
+		}
+
+		const UGameplayEffect* GameplayEffect = EffectToGrant.GameplayEffect->GetDefaultObject<UGameplayEffect>();
+		const FActiveGameplayEffectHandle GameplayEffectHandle = InASC->ApplyGameplayEffectToSelf(GameplayEffect, EffectToGrant.EffectLevel, InASC->MakeEffectContext());
+		
+		if (OutGrantedHandles)
+		{
+			OutGrantedHandles->AddGameplayEffectHandle(GameplayEffectHandle);
+		}
+	}
 }

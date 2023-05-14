@@ -41,7 +41,7 @@ protected:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void ToggleCharacterStatus();
-	
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
 	USNAbilitySet* AbilitySet;
@@ -51,6 +51,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
 	class UInputMappingContext* DefaultMappingContext;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "SN|Attributes")
+	TSubclassOf<class UGameplayEffect> DefaultAttributeEffect;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))

@@ -25,11 +25,11 @@ public:
 
 	USNAbilitySystemComponent* GetEnemyAbilitySystemComponent() const;
 
-	USNHealthBarWidget* GetHealthBarWidget() const {return HealthBarWidget;}
+	USNHealthBarWidget* GetHealthBarWidget() {return HealthBarWidget;}
 
 public:
 	UPROPERTY(EditAnywhere, Category = "Enemy|UI")
-	FVector HealthBarPosition = FVector(0.0f, 0.0f, 100.0f);
+	FVector HealthBarPosition = FVector(0.0f, 0.0f, 120.0f);
 	
 protected:
 	virtual void BeginPlay() override;
