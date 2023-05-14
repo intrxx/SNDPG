@@ -18,7 +18,7 @@ GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
 
 // Delegate used to broadcast attribute events.
-DECLARE_MULTICAST_DELEGATE_FourParams(FLyraAttributeEvent, AActor* /*EffectInstigator*/, AActor* /*EffectCauser*/, const FGameplayEffectSpec& /*EffectSpec*/, float /*EffectMagnitude*/);
+DECLARE_MULTICAST_DELEGATE_FourParams(FSNAttributeEvent, AActor* /*EffectInstigator*/, AActor* /*EffectCauser*/, const FGameplayEffectSpec& /*EffectSpec*/, float /*EffectMagnitude*/);
 
 /**
  * USNMainAttributeSet

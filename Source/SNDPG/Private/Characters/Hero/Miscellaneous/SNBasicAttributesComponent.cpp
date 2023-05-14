@@ -73,7 +73,8 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 		BasicAttributes->GetEnduranceAttribute()).AddUObject(this, &ThisClass::EnduranceChanged);
 	FaithChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		BasicAttributes->GetFaithAttribute()).AddUObject(this, &ThisClass::FaithChanged);
-	
+
+	BasicAttributes->OnOutOfHealth.AddUObject(this, &ThisClass::HandleOutOfHealth);
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
 	AbilitySystemComponent->SetNumericAttributeBase(USNBasicAttributes::GetHealthAttribute(), BasicAttributes->GetMaxHealth());
 }
@@ -363,5 +364,12 @@ void USNBasicAttributesComponent::FaithChanged(const FOnAttributeChangeData& Dat
 			}
 		}
 	}
+}
+
+void USNBasicAttributesComponent::HandleOutOfHealth(AActor* DamageInstigator, AActor* DamageCauser,
+	const FGameplayEffectSpec& DamageEffectSpec, float DamageMagnitude)
+{
+	DeathState = ESNDeathState::DeathStarted;
+	UE_LOG(LogTemp, Error, TEXT("DYING"));
 }
 

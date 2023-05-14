@@ -17,6 +17,7 @@ USNBasicAttributes::USNBasicAttributes()
 	, MaxResource(100.f)
 	, Strength(0.0f)
 {
+	bOutOfHealth = false;
 }
 
 void USNBasicAttributes::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -186,40 +187,6 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 			SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
 
 			UE_LOG(LogTemp, Log, TEXT(" %s Damage Received: %f"), *GetOwningActor()->GetName(), LocalDamageDone);
-			/*
-			if (TargetCharacter && WasAlive)
-			{
-				// This is the log statement for damage received. Turned off for live games.
-				UE_LOG(LogTemp, Log, TEXT("%s() %s Damage Received: %f"), TEXT(__FUNCTION__), *GetOwningActor()->GetName(), LocalDamageDone);
-
-				// Play HitReact animation and sound with a multicast RPC.
-				const FHitResult* Hit = Data.EffectSpec.GetContext().GetHitResult();
-
-				if (Hit)
-				{
-					EGDHitReactDirection HitDirection = TargetCharacter->GetHitReactDirection(Data.EffectSpec.GetContext().GetHitResult()->Location);
-					switch (HitDirection)
-					{
-					case EGDHitReactDirection::Left:
-						TargetCharacter->PlayHitReact(HitDirectionLeftTag, SourceCharacter);
-						break;
-					case EGDHitReactDirection::Front:
-						TargetCharacter->PlayHitReact(HitDirectionFrontTag, SourceCharacter);
-						break;
-					case EGDHitReactDirection::Right:
-						TargetCharacter->PlayHitReact(HitDirectionRightTag, SourceCharacter);
-						break;
-					case EGDHitReactDirection::Back:
-						TargetCharacter->PlayHitReact(HitDirectionBackTag, SourceCharacter);
-						break;
-					}
-				}
-				else
-				{
-					// No hit result. Default to front.
-					TargetCharacter->PlayHitReact(HitDirectionFrontTag, SourceCharacter);
-				}
-				*/
 			
 				// Show damage number for the Source player unless it was self damage
 				if (SourceActor != TargetActor)
@@ -232,8 +199,16 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 					}
 				}
 
-				if (!TargetAttributesComponent->IsDeadOrDying())
+				if ((GetHealth() <= 0.0f) && !bOutOfHealth)
 				{
+					if(OnOutOfHealth.IsBound())
+					{
+						const FGameplayEffectContextHandle& EffectContextHandle = Data.EffectSpec.GetEffectContext();
+						AActor* Instigator = EffectContextHandle.GetOriginalInstigator();
+						AActor* Causer = EffectContextHandle.GetEffectCauser();
+
+						OnOutOfHealth.Broadcast(Instigator, Causer, Data.EffectSpec, Data.EvaluatedData.Magnitude);
+					}
 					// TargetCharacter was alive before this damage and now is not alive, give XP and Gold bounties to Source.
 					// Don't give bounty to self.
 					/*
@@ -263,6 +238,8 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 				*/
 			}
 		}
+
+		bOutOfHealth = (GetHealth() <= 0.0f);
 	}// Damage
 	else if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{

@@ -31,6 +31,9 @@ public:
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Strength);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, CharacterLevel);
 
+	// Delegate to broadcast when the health attribute reaches zero.
+	mutable FSNAttributeEvent OnOutOfHealth;
+	
 protected:
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldValue);
