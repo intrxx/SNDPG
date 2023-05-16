@@ -186,7 +186,7 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 			const float NewHealth = GetHealth() - LocalDamageDone;
 			SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
 
-			UE_LOG(LogTemp, Log, TEXT(" %s Damage Received: %f"), *GetOwningActor()->GetName(), LocalDamageDone);
+			UE_LOG(LogTemp, Log, TEXT("%s Damage Received: %f"), *GetOwningActor()->GetName(), LocalDamageDone);
 			
 				// Show damage number for the Source player unless it was self damage
 				if (SourceActor != TargetActor)
