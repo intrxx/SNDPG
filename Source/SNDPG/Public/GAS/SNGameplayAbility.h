@@ -64,6 +64,6 @@ protected:
 
 protected:
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability Activation")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Ability Activation")
 	ESNAbilityActivationPolicy ActivationPolicy;
 };

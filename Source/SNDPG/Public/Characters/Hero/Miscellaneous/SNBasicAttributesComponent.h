@@ -10,6 +10,9 @@
 
 class USNAbilitySystemComponent;
 class USNBasicAttributes;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBasicAttributes_DeathEvent, AActor*, OwningActor);
+
 /**
  * ESNDeathState
  *
@@ -54,7 +57,13 @@ public:
 	
 	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "Lyra|Attributes", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	bool IsDeadOrDying() const {return (DeathState > ESNDeathState::NotDead);}
+	
+	// Begins the death sequence for the owner.
+	virtual void StartDeath();
 
+	// Ends the death sequence for the owner.
+	virtual void FinishDeath();
+	
 	/**
 	 * Getters from Attributes
 	 */
@@ -128,6 +137,16 @@ public:
 	/**
 	 *
 	 */
+
+public:
+
+	// Delegate fired when the death sequence has started.
+	UPROPERTY(BlueprintAssignable)
+	FBasicAttributes_DeathEvent OnDeathStarted;
+
+	// Delegate fired when the death sequence has finished.
+	UPROPERTY(BlueprintAssignable)
+	FBasicAttributes_DeathEvent OnDeathFinished;
 	
 protected:
 	// Called when the game starts

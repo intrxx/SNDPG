@@ -50,6 +50,8 @@ ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	CameraComponent->bUsePawnControlRotation = false;
 
 	AttributesComponent = CreateDefaultSubobject<USNBasicAttributesComponent>(TEXT("BasicAttributesComponent"));
+	AttributesComponent->OnDeathStarted.AddDynamic(this, &ThisClass::OnDeathStarted);
+	AttributesComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
 }
 
 void ASNHero::PossessedBy(AController* NewController)

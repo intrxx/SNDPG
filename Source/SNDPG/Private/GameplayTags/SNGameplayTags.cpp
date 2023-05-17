@@ -44,6 +44,12 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Input_Look, "Input.Look", "Look input.");
 	AddTag(Input_ToggleCharacterStatus, "Input.ToggleCharacterStatus", "Toggle input for Character Status Tab.");
 
+	// Events
+	AddTag(GameplayEvent_Death, "GameplayEvent.Death", "Event that fires on Death");
+
+	// Abilities helper tags
+	AddTag(Ability_Behavior_SurvivesDeath, "Ability.Behavior.SurvivesDeath", "Abilities with this tag will not be canceled upon death");
+	
 	// Ability Input
 	AddTag(Ability_Input_Melee, "Ability.Input.Melee", "Melee ability input.");
 

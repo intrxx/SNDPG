@@ -19,6 +19,8 @@ ASNEnemy::ASNEnemy(const FObjectInitializer& ObjectInitializer)
 	AbilitySystemComponent = EnemyAbilitySystemComponent;
 	
 	AttributesComponent = CreateDefaultSubobject<USNBasicAttributesComponent>(TEXT("BasicAttributesComponent"));
+	AttributesComponent->OnDeathStarted.AddDynamic(this, &ASNCharacterBase::OnDeathStarted);
+	AttributesComponent->OnDeathFinished.AddDynamic(this, &ASNCharacterBase::OnDeathFinished);
 
 	HealthBarWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidgetComponent"));
 	HealthBarWidgetComponent->SetupAttachment(RootComponent);

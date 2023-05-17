@@ -22,6 +22,12 @@ public:
 	FGameplayTag Input_Look;
 	FGameplayTag Input_ToggleCharacterStatus;
 
+	// Events
+	FGameplayTag GameplayEvent_Death;
+
+	// Abilities helper tags
+	FGameplayTag Ability_Behavior_SurvivesDeath;
+	
 	// Abilities
 	FGameplayTag Ability_Input_Melee;
 
