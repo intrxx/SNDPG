@@ -408,7 +408,6 @@ void USNBasicAttributesComponent::StartDeath()
 	OnDeathStarted.Broadcast(Owner);
 	
 	Owner->ForceNetUpdate();
-	UE_LOG(LogTemp, Error, TEXT("DYING"));
 }
 
 void USNBasicAttributesComponent::FinishDeath()
@@ -426,6 +425,5 @@ void USNBasicAttributesComponent::FinishDeath()
 	OnDeathFinished.Broadcast(Owner);
 
 	Owner->ForceNetUpdate();
-	UE_LOG(LogTemp, Error, TEXT("DEATH FINISHED"));
 }
 

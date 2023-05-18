@@ -24,13 +24,11 @@ UAbilitySystemComponent* ASNCharacterBase::GetAbilitySystemComponent() const
 
 void ASNCharacterBase::OnDeathStarted(AActor* OwningActor)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Death started on: %s"), *GetOwner()->GetName());
 	DisableMovementAndCollision();
 }
 
 void ASNCharacterBase::OnDeathFinished(AActor* OwningActor)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Death finishing on: %s"), *GetOwner()->GetName());
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::DestroyDueToDeath);
 }
 
