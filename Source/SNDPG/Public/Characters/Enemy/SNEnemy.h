@@ -27,6 +27,14 @@ public:
 
 	USNHealthBarWidget* GetHealthBarWidget() {return HealthBarWidget;}
 
+	// Begins the death sequence for the character (disables collision, disables movement, etc...)
+	UFUNCTION()
+	virtual void OnDeathStarted(AActor* OwningActor);
+
+	// Ends the death sequence for the character (detaches controller, destroys pawn, etc...)
+	UFUNCTION()
+	virtual void OnDeathFinished(AActor* OwningActor);
+
 public:
 	UPROPERTY(EditAnywhere, Category = "Enemy|UI")
 	FVector HealthBarPosition = FVector(0.0f, 0.0f, 120.0f);
@@ -35,6 +43,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	void InitializeHealthBar();
+
+	virtual void DestroyDueToDeath() override;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy|Abilities")

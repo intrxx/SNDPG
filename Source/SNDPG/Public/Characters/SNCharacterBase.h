@@ -19,16 +19,6 @@ public:
 	// Implementing IAbilitySystemInterface
 	virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	// Begins the death sequence for the character (disables collision, disables movement, etc...)
-	UFUNCTION()
-	virtual void OnDeathStarted(AActor* OwningActor);
-
-	// Ends the death sequence for the character (detaches controller, destroys pawn, etc...)
-	UFUNCTION()
-	virtual void OnDeathFinished(AActor* OwningActor);
-
-	
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -38,10 +28,10 @@ protected:
 	void K2_OnDeathFinished();
 	
 	void DisableMovementAndCollision();
-	void DestroyDueToDeath();
 	void UninitAndDestroy();
-
 	void UninitializeAbilitySystem();
+	virtual void DestroyDueToDeath();
+	
 protected:
 
 	TWeakObjectPtr<class USNAbilitySystemComponent> AbilitySystemComponent;

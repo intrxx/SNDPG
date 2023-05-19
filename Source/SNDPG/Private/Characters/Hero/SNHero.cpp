@@ -84,6 +84,23 @@ void ASNHero::PossessedBy(AController* NewController)
 	*/
 }
 
+void ASNHero::OnDeathStarted(AActor* OwningActor)
+{
+	DisableMovementAndCollision();
+}
+
+void ASNHero::OnDeathFinished(AActor* OwningActor)
+{
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::DestroyDueToDeath);
+}
+
+void ASNHero::DestroyDueToDeath()
+{
+	Super::DestroyDueToDeath();
+
+	AttributesComponent->UninitializeFromAbilitySystem();
+}
+
 void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	USNEnhancedInputComponent* EInputComponent = Cast<USNEnhancedInputComponent>(PlayerInputComponent);

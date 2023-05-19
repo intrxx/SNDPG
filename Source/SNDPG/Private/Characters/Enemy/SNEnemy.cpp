@@ -19,8 +19,8 @@ ASNEnemy::ASNEnemy(const FObjectInitializer& ObjectInitializer)
 	AbilitySystemComponent = EnemyAbilitySystemComponent;
 	
 	AttributesComponent = CreateDefaultSubobject<USNBasicAttributesComponent>(TEXT("BasicAttributesComponent"));
-	AttributesComponent->OnDeathStarted.AddDynamic(this, &ASNCharacterBase::OnDeathStarted);
-	AttributesComponent->OnDeathFinished.AddDynamic(this, &ASNCharacterBase::OnDeathFinished);
+	AttributesComponent->OnDeathStarted.AddDynamic(this, &ThisClass::OnDeathStarted);
+	AttributesComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
 
 	HealthBarWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidgetComponent"));
 	HealthBarWidgetComponent->SetupAttachment(RootComponent);
@@ -38,6 +38,16 @@ ASNEnemy::ASNEnemy(const FObjectInitializer& ObjectInitializer)
 USNAbilitySystemComponent* ASNEnemy::GetEnemyAbilitySystemComponent() const
 {
 	return EnemyAbilitySystemComponent;
+}
+
+void ASNEnemy::OnDeathStarted(AActor* OwningActor)
+{
+	DisableMovementAndCollision();
+}
+
+void ASNEnemy::OnDeathFinished(AActor* OwningActor)
+{
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::DestroyDueToDeath);
 }
 
 void ASNEnemy::BeginPlay()
@@ -75,6 +85,13 @@ void ASNEnemy::InitializeHealthBar()
 			}
 		}
 	}
+}
+
+void ASNEnemy::DestroyDueToDeath()
+{
+	Super::DestroyDueToDeath();
+	
+	AttributesComponent->UninitializeFromAbilitySystem();
 }
 
 

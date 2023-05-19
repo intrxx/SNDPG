@@ -22,16 +22,6 @@ UAbilitySystemComponent* ASNCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent.Get();
 }
 
-void ASNCharacterBase::OnDeathStarted(AActor* OwningActor)
-{
-	DisableMovementAndCollision();
-}
-
-void ASNCharacterBase::OnDeathFinished(AActor* OwningActor)
-{
-	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::DestroyDueToDeath);
-}
-
 /*
 float ASNCharacterBase::GetHealth() const
 {
