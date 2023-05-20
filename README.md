@@ -5,5 +5,5 @@ Engineering Thesis ARPG project in Unreal Engine 5 based on Gameplay Ability Sys
 
 # Used assets
 - Main Hero: [Paragon Sevarog](https://marketplace-website-node-launcher-prod.ol.epicgames.com/ue/marketplace/en-US/product/paragon-sevarog)
-- Enviromental assets: [](https://www.unrealengine.com/marketplace/en-US/product/modular-gothic-temple-medieval-winter-snow)
+- Enviromental assets: [Modular Gothic Temple](https://www.unrealengine.com/marketplace/en-US/product/modular-gothic-temple-medieval-winter-snow)
  
