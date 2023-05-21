@@ -62,6 +62,8 @@ void USNDamageExecutionCalculation::Execute_Implementation(const FGameplayEffect
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().ArmourDef, EvaluateParameters, Armour);
 	Armour = FMath::Max<float>(Armour, 0.0f);
 
+	UE_LOG(LogTemp, Warning, TEXT("Armoud on target: %f"), Armour);
+
 	float Damage = 0.0f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().DamageDef, EvaluateParameters, Damage);
 	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Ability.Data.Damage")), true, -1.0f), 0.0f);
@@ -74,12 +76,17 @@ void USNDamageExecutionCalculation::Execute_Implementation(const FGameplayEffect
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().EnduranceDef, EvaluateParameters, Endurance);
 	Endurance = FMath::Max<float>(Endurance, 0.0f);
 	
-	// Apply any buffs here
+	// Apply buffs and debuffs below
 	float UnmitigatedDamage = Damage + StrengthBonus;
+	
+	float MitigatedDamage = UnmitigatedDamage - Endurance;
+	if(Armour > 0)
+	{
+		MitigatedDamage -= Armour/100;
+	}
 
-	//TODO Need to think of some formula to mitigate damage by armor
-	float MitigatedDamage = UnmitigatedDamage;
-
+	MitigatedDamage = FMath::RoundToFloat(MitigatedDamage);
+	
 	if(MitigatedDamage > 0.0f)
 	{
 		OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(DamageStatics().DamageProperty, EGameplayModOp::Additive, MitigatedDamage));

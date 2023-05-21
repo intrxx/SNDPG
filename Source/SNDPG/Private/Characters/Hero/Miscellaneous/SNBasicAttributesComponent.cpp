@@ -406,8 +406,6 @@ void USNBasicAttributesComponent::StartDeath()
 	check(Owner);
 
 	OnDeathStarted.Broadcast(Owner);
-	
-	Owner->ForceNetUpdate();
 }
 
 void USNBasicAttributesComponent::FinishDeath()
@@ -423,7 +421,5 @@ void USNBasicAttributesComponent::FinishDeath()
 	check(Owner);
 
 	OnDeathFinished.Broadcast(Owner);
-
-	Owner->ForceNetUpdate();
 }
 

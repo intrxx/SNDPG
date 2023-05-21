@@ -8,7 +8,7 @@
 #include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "GAS/SNAbilitySystemComponent.h"
-#include "Net/UnrealNetwork.h"
+
 
 USNBasicAttributes::USNBasicAttributes()
 	: Health(100.0f)
@@ -18,78 +18,6 @@ USNBasicAttributes::USNBasicAttributes()
 	, Strength(0.0f)
 {
 	bOutOfHealth = false;
-}
-
-void USNBasicAttributes::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Health, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, MaxHealth, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Resource, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, MaxResource, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, CharacterLevel, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Experience, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, MaxExperience, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Armour, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Strength, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Endurance, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Faith, COND_None, REPNOTIFY_Always);
-}
-
-void USNBasicAttributes::OnRep_Health(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Health, OldValue);
-}
-
-void USNBasicAttributes::OnRep_MaxHealth(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, MaxHealth, OldValue);
-}
-
-void USNBasicAttributes::OnRep_Resource(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Resource, OldValue);
-}
-
-void USNBasicAttributes::OnRep_MaxResource(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, MaxResource, OldValue);
-}
-
-void USNBasicAttributes::OnRep_Experience(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Experience, OldValue);
-}
-
-void USNBasicAttributes::OnRep_MaxExperience(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, MaxExperience, OldValue);
-}
-
-void USNBasicAttributes::OnRep_CharacterLevel(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, CharacterLevel, OldValue);
-}
-
-void USNBasicAttributes::OnRep_Strength(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Strength, OldValue);
-}
-
-void USNBasicAttributes::OnRep_Faith(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Faith, OldValue);
-}
-
-void USNBasicAttributes::OnRep_Endurance(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Endurance, OldValue);
-}
-
-void USNBasicAttributes::OnRep_Armour(const FGameplayAttributeData& OldValue)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Armour, OldValue);
 }
 
 bool USNBasicAttributes::PreGameplayEffectExecute(FGameplayEffectModCallbackData& Data)
