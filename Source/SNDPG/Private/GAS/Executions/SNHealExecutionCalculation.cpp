@@ -7,11 +7,13 @@
 
 struct SNHealStatics
 {
-	DECLARE_ATTRIBUTE_CAPTUREDEF(Healing);
-
+	FGameplayEffectAttributeCaptureDefinition HealingDef;
+	FGameplayEffectAttributeCaptureDefinition FaithDef;
+	
 	SNHealStatics()
 	{
-		DEFINE_ATTRIBUTE_CAPTUREDEF(USNBasicAttributes, Healing, Source, false);
+		HealingDef = FGameplayEffectAttributeCaptureDefinition(USNBasicAttributes::GetHealingAttribute(), EGameplayEffectAttributeCaptureSource::Source, true);
+		FaithDef = FGameplayEffectAttributeCaptureDefinition(USNBasicAttributes::GetFaithAttribute(), EGameplayEffectAttributeCaptureSource::Source, true);
 	}
 };
 
@@ -24,6 +26,7 @@ static const SNHealStatics& HealingStatics()
 USNHealExecutionCalculation::USNHealExecutionCalculation()
 {
 	RelevantAttributesToCapture.Add(HealingStatics().HealingDef);
+	RelevantAttributesToCapture.Add(HealingStatics().FaithDef);
 }
 
 void USNHealExecutionCalculation::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
@@ -50,20 +53,20 @@ void USNHealExecutionCalculation::Execute_Implementation(const FGameplayEffectCu
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(HealingStatics().HealingDef, EvaluateParameters, Healing);
 	Healing = FMath::Max<float>(Healing, 0.0f);
 
-	float UnmitigatedHealing = Healing;
-
-	float MitigatedHealing = UnmitigatedHealing;
+	float Faith = 0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(HealingStatics().FaithDef, EvaluateParameters, Faith);
+	Faith = FMath::Max<float>(Faith, 0.0f);
 	
-	if(MitigatedHealing > 0.0f)
+	float HealingDone = Healing + FMath::FRandRange(0, Faith);
+	
+	if(HealingDone > 0.0f)
 	{
-		OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(HealingStatics().HealingProperty, EGameplayModOp::Additive, MitigatedHealing));
-
-		USNAbilitySystemComponent* TargetASC = Cast<USNAbilitySystemComponent>(TargetAbilitySystemComponent);
-		check(TargetASC);
-
+		OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(USNBasicAttributes::GetHealingAttribute(), EGameplayModOp::Additive, HealingDone));
+		
 		USNAbilitySystemComponent* SourceASC = Cast<USNAbilitySystemComponent>(SourceAbilitySystemComponent);
-		check(SourceASC);
-
-		TargetASC->ReceivedHeal(SourceASC, UnmitigatedHealing, MitigatedHealing);
+		if(SourceASC)
+		{
+			SourceASC->ReceivedHeal(SourceASC, HealingDone);
+		}
 	}
 }

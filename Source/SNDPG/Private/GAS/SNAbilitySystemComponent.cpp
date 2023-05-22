@@ -155,10 +155,9 @@ void USNAbilitySystemComponent::ReceivedDamage(USNAbilitySystemComponent* Source
 	ReceivedDamageDelegate.Broadcast(SourceASC, UnmitigatedDamage, MitigatedDamage);
 }
 
-void USNAbilitySystemComponent::ReceivedHeal(USNAbilitySystemComponent* SourceASC, float UnmitigatedHeal,
-	float MitigatedHeal)
+void USNAbilitySystemComponent::ReceivedHeal(USNAbilitySystemComponent* SourceASC, float HealingDone)
 {
-	ReceivedHealDelegate.Broadcast(SourceASC, UnmitigatedHeal, MitigatedHeal);
+	ReceivedHealDelegate.Broadcast(SourceASC, HealingDone);
 }
 
 void USNAbilitySystemComponent::AbilitySpecInputPressed(FGameplayAbilitySpec& Spec)

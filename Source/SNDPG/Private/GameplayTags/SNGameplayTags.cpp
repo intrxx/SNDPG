@@ -28,7 +28,7 @@ FGameplayTag FSNGameplayTags::FindTagByString(FString TagString, bool bMatchPart
 		{
 			if(TestTag.ToString().Contains(TagString))
 			{
-				UE_LOG(LogTemp, Display, TEXT("Could not find exact match for tag [%s] but found partialo match on tag [%s]."), *TagString, *TestTag.ToString())
+				UE_LOG(LogTemp, Display, TEXT("Could not find exact match for tag [%s] but found partialo match on tag [%s]."), *TagString, *TestTag.ToString());
 				Tag = TestTag;
 				break;
 			}
@@ -52,6 +52,10 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	
 	// Ability Input
 	AddTag(Ability_Input_Melee, "Ability.Input.Melee", "Melee ability input.");
+	AddTag(Ability_Input_Healing, "Ability.Input.Healing", "Healing ability input.");
+
+	// Ability Cooldown
+	AddTag(Ability_CD_Healing, "Ability.CD.Healing", "Tag used for healing cooldown");
 
 	// Notifiers Hit Tags
 	AddTag(HitTag_HeroMelee, "Ability.Data.HitTag.HeroMelee", "Tag used by notify to trigger event.");

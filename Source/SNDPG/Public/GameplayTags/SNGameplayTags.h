@@ -30,6 +30,10 @@ public:
 	
 	// Abilities
 	FGameplayTag Ability_Input_Melee;
+	FGameplayTag Ability_Input_Healing;
+
+	// Cooldowns
+	FGameplayTag Ability_CD_Healing;
 
 	// Data
 	FGameplayTag HitTag_HeroMelee;

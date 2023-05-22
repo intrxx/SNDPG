@@ -61,25 +61,23 @@ void USNDamageExecutionCalculation::Execute_Implementation(const FGameplayEffect
 	float Armour = 0.0f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().ArmourDef, EvaluateParameters, Armour);
 	Armour = FMath::Max<float>(Armour, 0.0f);
-
-	UE_LOG(LogTemp, Warning, TEXT("Armoud on target: %f"), Armour);
-
+	
 	float Damage = 0.0f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().DamageDef, EvaluateParameters, Damage);
 	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Ability.Data.Damage")), true, -1.0f), 0.0f);
 	
-	float StrengthBonus = 0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().StrengthDef, EvaluateParameters, StrengthBonus);
-	StrengthBonus = FMath::Max<float>(StrengthBonus, 0.0f);
+	float Strength = 0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().StrengthDef, EvaluateParameters, Strength);
+	Strength = FMath::Max<float>(Strength, 0.0f);
 
 	float Endurance = 0.0f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().EnduranceDef, EvaluateParameters, Endurance);
 	Endurance = FMath::Max<float>(Endurance, 0.0f);
 	
 	// Apply buffs and debuffs below
-	float UnmitigatedDamage = Damage + StrengthBonus;
+	float UnmitigatedDamage = Damage + FMath::FRandRange(0, Strength);
 	
-	float MitigatedDamage = UnmitigatedDamage - Endurance;
+	float MitigatedDamage = UnmitigatedDamage - FMath::FRandRange(0, Endurance);
 	if(Armour > 0)
 	{
 		MitigatedDamage -= Armour/100;

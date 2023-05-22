@@ -150,6 +150,63 @@ void USNBasicAttributesComponent::BeginPlay()
 	
 }
 
+void USNBasicAttributesComponent::HandleOutOfHealth(AActor* DamageInstigator, AActor* DamageCauser,
+	const FGameplayEffectSpec& DamageEffectSpec, float DamageMagnitude)
+{
+#if WITH_SERVER_CODE
+	
+	if (AbilitySystemComponent)
+	{
+		// Send the "GameplayEvent.Death" gameplay event through the owner's ability system.  This can be used to trigger a death gameplay ability.
+		{
+			FGameplayEventData Payload;
+			Payload.EventTag = FSNGameplayTags::Get().GameplayEvent_Death;
+			Payload.Instigator = DamageInstigator;
+			Payload.Target = AbilitySystemComponent->GetAvatarActor();
+			Payload.OptionalObject = DamageEffectSpec.Def;
+			Payload.ContextHandle = DamageEffectSpec.GetEffectContext();
+			Payload.InstigatorTags = *DamageEffectSpec.CapturedSourceTags.GetAggregatedTags();
+			Payload.TargetTags = *DamageEffectSpec.CapturedTargetTags.GetAggregatedTags();
+			Payload.EventMagnitude = DamageMagnitude;
+
+			FScopedPredictionWindow NewScopedWindow(AbilitySystemComponent, true);
+			AbilitySystemComponent->HandleGameplayEvent(Payload.EventTag, &Payload);
+		}
+	}
+#endif
+}
+
+void USNBasicAttributesComponent::StartDeath()
+{
+	if (DeathState != ESNDeathState::NotDead)
+	{
+		return;
+	}
+	
+	DeathState = ESNDeathState::DeathStarted;
+
+	AActor* Owner = GetOwner();
+	check(Owner);
+
+	OnDeathStarted.Broadcast(Owner);
+}
+
+void USNBasicAttributesComponent::FinishDeath()
+{
+	if(DeathState != ESNDeathState::DeathStarted)
+	{
+		return;
+	}
+
+	DeathState = ESNDeathState::DeathFinished;
+
+	AActor* Owner = GetOwner();
+	check(Owner);
+
+	OnDeathFinished.Broadcast(Owner);
+}
+
+
 void USNBasicAttributesComponent::HealthChanged(const FOnAttributeChangeData& Data)
 {
 	float Health = Data.NewValue;
@@ -367,59 +424,4 @@ void USNBasicAttributesComponent::FaithChanged(const FOnAttributeChangeData& Dat
 	}
 }
 
-void USNBasicAttributesComponent::HandleOutOfHealth(AActor* DamageInstigator, AActor* DamageCauser,
-	const FGameplayEffectSpec& DamageEffectSpec, float DamageMagnitude)
-{
-	#if WITH_SERVER_CODE
-	
-		if (AbilitySystemComponent)
-		{
-			// Send the "GameplayEvent.Death" gameplay event through the owner's ability system.  This can be used to trigger a death gameplay ability.
-			{
-				FGameplayEventData Payload;
-				Payload.EventTag = FSNGameplayTags::Get().GameplayEvent_Death;
-				Payload.Instigator = DamageInstigator;
-				Payload.Target = AbilitySystemComponent->GetAvatarActor();
-				Payload.OptionalObject = DamageEffectSpec.Def;
-				Payload.ContextHandle = DamageEffectSpec.GetEffectContext();
-				Payload.InstigatorTags = *DamageEffectSpec.CapturedSourceTags.GetAggregatedTags();
-				Payload.TargetTags = *DamageEffectSpec.CapturedTargetTags.GetAggregatedTags();
-				Payload.EventMagnitude = DamageMagnitude;
-
-				FScopedPredictionWindow NewScopedWindow(AbilitySystemComponent, true);
-				AbilitySystemComponent->HandleGameplayEvent(Payload.EventTag, &Payload);
-			}
-		}
-	#endif
-}
-
-void USNBasicAttributesComponent::StartDeath()
-{
-	if (DeathState != ESNDeathState::NotDead)
-	{
-		return;
-	}
-	
-	DeathState = ESNDeathState::DeathStarted;
-
-	AActor* Owner = GetOwner();
-	check(Owner);
-
-	OnDeathStarted.Broadcast(Owner);
-}
-
-void USNBasicAttributesComponent::FinishDeath()
-{
-	if(DeathState != ESNDeathState::DeathStarted)
-	{
-		return;
-	}
-
-	DeathState = ESNDeathState::DeathFinished;
-
-	AActor* Owner = GetOwner();
-	check(Owner);
-
-	OnDeathFinished.Broadcast(Owner);
-}
 

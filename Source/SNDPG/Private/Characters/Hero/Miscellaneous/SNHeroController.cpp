@@ -65,14 +65,28 @@ USNHeroHUD* ASNHeroController::GetHeroHUD()
 	return HeroHUD;
 }
 
-void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter)
+void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter, bool bIsDamage)
 {
-	if(TargetCharacter)
+	if(bIsDamage)
 	{
-		USNFloatingDmgNumberWComponent* FloatingText = NewObject<USNFloatingDmgNumberWComponent>(TargetCharacter, DamageNumberClass);
-		FloatingText->RegisterComponent();
-		FloatingText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
-		FloatingText->SetDamageText(Amount, true);
+		if(TargetCharacter)
+		{
+			USNFloatingDmgNumberWComponent* FloatingText = NewObject<USNFloatingDmgNumberWComponent>(TargetCharacter, DamageNumberClass);
+			FloatingText->RegisterComponent();
+			FloatingText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+			FloatingText->SetDamageText(Amount, bIsDamage);
+		}
+	}
+	else if(!bIsDamage)
+	{
+		if(TargetCharacter)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Healing amount: %f"), Amount);
+			USNFloatingDmgNumberWComponent* FloatingText = NewObject<USNFloatingDmgNumberWComponent>(TargetCharacter, DamageNumberClass);
+			FloatingText->RegisterComponent();
+			FloatingText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+			FloatingText->SetDamageText(Amount, bIsDamage);
+		}
 	}
 }
 

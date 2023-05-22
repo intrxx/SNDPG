@@ -10,7 +10,7 @@
  * 
  */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReceivedDamageDelegate, USNAbilitySystemComponent*, SourceASC, float, UnmitigatedDamage, float, MitigatedDamage);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReceivedHealDelegate, USNAbilitySystemComponent*, SourceASC, float, UnmitigatedHeal, float, MitigatedHeal);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FReceivedHealDelegate, USNAbilitySystemComponent*, SourceASC, float, HealingDone);
 
 UCLASS()
 class SNDPG_API USNAbilitySystemComponent : public UAbilitySystemComponent
@@ -26,7 +26,7 @@ public:
 	void ClearAbilityInput();
 
 	virtual void ReceivedDamage(USNAbilitySystemComponent* SourceASC, float UnmitigatedDamage, float MitigatedDamage);
-	virtual void ReceivedHeal(USNAbilitySystemComponent* SourceASC, float UnmitigatedHeal, float MitigatedHeal);
+	virtual void ReceivedHeal(USNAbilitySystemComponent* SourceASC, float HealingDone);
 public:
 	bool bAbilitiesGiven = false;
 	bool bAttributesGiven = false;
