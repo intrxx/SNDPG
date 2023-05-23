@@ -58,6 +58,7 @@ void ASNHeroController::CreateHeroHUD()
 	HeroHUD->SetStrength(AC->GetStrength());
 	HeroHUD->SetEndurance(AC->GetEndurance());
 	HeroHUD->SetFaith(AC->GetFaith());
+	HeroHUD->SetHealingRange(AC->GetHealing(), AC->GetFaith());
 }
 
 USNHeroHUD* ASNHeroController::GetHeroHUD()
@@ -65,29 +66,16 @@ USNHeroHUD* ASNHeroController::GetHeroHUD()
 	return HeroHUD;
 }
 
-void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter, bool bIsDamage)
+void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter)
 {
-	if(bIsDamage)
+	if(TargetCharacter)
 	{
-		if(TargetCharacter)
-		{
-			USNFloatingDmgNumberWComponent* FloatingText = NewObject<USNFloatingDmgNumberWComponent>(TargetCharacter, DamageNumberClass);
-			FloatingText->RegisterComponent();
-			FloatingText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
-			FloatingText->SetDamageText(Amount, bIsDamage);
-		}
+		USNFloatingDmgNumberWComponent* FloatingText = NewObject<USNFloatingDmgNumberWComponent>(TargetCharacter, DamageNumberClass);
+		FloatingText->RegisterComponent();
+		FloatingText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		FloatingText->SetDamageText(Amount);
 	}
-	else if(!bIsDamage)
-	{
-		if(TargetCharacter)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Healing amount: %f"), Amount);
-			USNFloatingDmgNumberWComponent* FloatingText = NewObject<USNFloatingDmgNumberWComponent>(TargetCharacter, DamageNumberClass);
-			FloatingText->RegisterComponent();
-			FloatingText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
-			FloatingText->SetDamageText(Amount, bIsDamage);
-		}
-	}
+
 }
 
 void ASNHeroController::PreProcessInput(const float DeltaTime, const bool bGamePaused)

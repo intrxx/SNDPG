@@ -16,6 +16,6 @@ class SNDPG_API USNFloatingDmgNumberWComponent : public UWidgetComponent
 
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void SetDamageText(float Damage, bool bIsDamaging);
+	void SetDamageText(float Damage);
 	
 };

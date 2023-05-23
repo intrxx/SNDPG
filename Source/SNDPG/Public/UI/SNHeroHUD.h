@@ -57,6 +57,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetArmour(float Armour);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetHealingRange(float Healing, float Faith);
+
 public:
 	bool bIsCharacterStatusVisible = false;
 };

@@ -3,6 +3,7 @@
 
 #include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
 
+#include "AssetTypeCategories.h"
 #include "Characters/Enemy/SNEnemy.h"
 #include "Characters/Hero/SNHero.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
@@ -53,9 +54,9 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 	}
 	
 	HealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetHealthAttribute()).AddUObject(this, &ThisClass::HealthChanged);
+		GetHealthAttribute()).AddUObject(this, &ThisClass::HealthChanged);
 	MaxHealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetMaxHealthAttribute()).AddUObject(this, &ThisClass::MaxHealthChanged);
+		GetMaxHealthAttribute()).AddUObject(this, &ThisClass::MaxHealthChanged);
 	ResourceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		BasicAttributes->GetResourceAttribute()).AddUObject(this, &ThisClass::ResourceChanged);
 	MaxResourceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
@@ -74,6 +75,8 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 		BasicAttributes->GetEnduranceAttribute()).AddUObject(this, &ThisClass::EnduranceChanged);
 	FaithChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		BasicAttributes->GetFaithAttribute()).AddUObject(this, &ThisClass::FaithChanged);
+	HealingChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		GetHealingAttribute()).AddUObject(this, &ThisClass::HealingChanged);
 
 	BasicAttributes->OnOutOfHealth.AddUObject(this, &ThisClass::HandleOutOfHealth);
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
@@ -139,6 +142,11 @@ float USNBasicAttributesComponent::GetEndurance() const
 float USNBasicAttributesComponent::GetFaith() const
 {
 	return (BasicAttributes ? BasicAttributes->GetFaith() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetHealing() const
+{
+	return (BasicAttributes ? BasicAttributes->GetHealing() : 0.0f);
 }
 
 // Called when the game starts
@@ -419,9 +427,29 @@ void USNBasicAttributesComponent::FaithChanged(const FOnAttributeChangeData& Dat
 			if(HeroHUD)
 			{
 				HeroHUD->SetFaith(Faith);
+				HeroHUD->SetHealingRange(GetHealing(), Faith);
 			}
 		}
 	}
 }
+
+void USNBasicAttributesComponent::HealingChanged(const FOnAttributeChangeData& Data)
+{
+	float Healing = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetHealingRange(Healing, GetFaith());
+			}
+		}
+	}
+}
+
 
 

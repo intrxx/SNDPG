@@ -58,10 +58,12 @@ void USNHealExecutionCalculation::Execute_Implementation(const FGameplayEffectCu
 	Faith = FMath::Max<float>(Faith, 0.0f);
 	
 	float HealingDone = Healing + FMath::FRandRange(0, Faith);
+
+	HealingDone = FMath::RoundToFloat(HealingDone);
 	
 	if(HealingDone > 0.0f)
 	{
-		OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(USNBasicAttributes::GetHealingAttribute(), EGameplayModOp::Additive, HealingDone));
+		OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(USNBasicAttributes::GetHealthAttribute(), EGameplayModOp::Additive, HealingDone));
 		
 		USNAbilitySystemComponent* SourceASC = Cast<USNAbilitySystemComponent>(SourceAbilitySystemComponent);
 		if(SourceASC)

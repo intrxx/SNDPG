@@ -113,8 +113,6 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 			// Apply the health change and then clamp it
 			const float NewHealth = GetHealth() - LocalDamageDone;
 			SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
-
-			UE_LOG(LogTemp, Log, TEXT("%s Damage Received: %f"), *GetOwningActor()->GetName(), LocalDamageDone);
 			
 				// Show damage number for the Source player unless it was self damage
 				if (SourceActor != TargetActor)
@@ -123,7 +121,7 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 					if (PC)
 					{
 						//UE_LOG(LogTemp, Warning, TEXT("%s Showing floating number"), *TargetCharacter->GetName());
-						PC->ShowFloatingNumber(LocalDamageDone, TargetCharacter, true);
+						PC->ShowFloatingNumber(LocalDamageDone, TargetCharacter);
 					}
 				}
 
@@ -169,36 +167,6 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 
 		bOutOfHealth = (GetHealth() <= 0.0f);
 	}// Damage
-	else if(Data.EvaluatedData.Attribute == GetHealingAttribute())
-	{
-		const float HealingAmount = GetHealing();
-		
-		if(HealingAmount > 0.0f)
-		{
-			
-			bool WasAlive = true;
-			if(SourceCharacter)
-			{
-				const USNBasicAttributesComponent* SourceAttributesComponent = USNBasicAttributesComponent::FindAttributeComponent(SourceCharacter);
-				WasAlive = SourceAttributesComponent->IsDeadOrDying();
-			}
-			
-			const float OldHealth = GetHealth();
-			const float NewHealth = OldHealth + HealingAmount;
-			
-			SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
-			const float HealingDone = GetHealth() - OldHealth;
-				
-			if(SourceCharacter && WasAlive)
-			{
-				ASNHeroController* PC = Cast<ASNHeroController>(SourceController);
-				if(PC && HealingDone > 0)
-				{
-					PC->ShowFloatingNumber(HealingDone, SourceCharacter, false);
-				}
-			}
-		}
-	}
 	else if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		// Handle other health changes.

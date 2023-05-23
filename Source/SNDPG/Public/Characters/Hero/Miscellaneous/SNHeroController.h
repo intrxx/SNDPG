@@ -32,7 +32,7 @@ public:
 	
 	void CreateHeroHUD();
 
-	void ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter, bool bIsDamage);
+	void ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter);
 	
 public:
 	UPROPERTY(EditAnywhere, Category = "Hero|UI")
