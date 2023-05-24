@@ -75,10 +75,10 @@ public:
 	float GetMaxHealth() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetHealthAttribute() const {return BasicAttributes->GetHealthAttribute();}
+	FGameplayAttribute GetHealthAttribute() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetMaxHealthAttribute() const {return BasicAttributes->GetMaxHealthAttribute();}
+	FGameplayAttribute GetMaxHealthAttribute() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	float GetResource() const;
@@ -87,16 +87,16 @@ public:
 	float GetMaxResource() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetResourceAttribute() const {return BasicAttributes->GetResourceAttribute();}
+	FGameplayAttribute GetResourceAttribute() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetMaxResourceAttribute() const {return BasicAttributes->GetMaxResourceAttribute();}
+	FGameplayAttribute GetMaxResourceAttribute() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	float GetCharacterLevel() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetCharacterLevelAttribute() const {return BasicAttributes->GetCharacterLevelAttribute();}
+	FGameplayAttribute GetCharacterLevelAttribute() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	float GetExperience() const;
@@ -105,40 +105,40 @@ public:
 	float GetMaxExperience() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetExperienceAttribute() const {return BasicAttributes->GetExperienceAttribute();}
+	FGameplayAttribute GetExperienceAttribute() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetMaxExperienceAttribute() const {return BasicAttributes->GetMaxExperienceAttribute();}
+	FGameplayAttribute GetMaxExperienceAttribute() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	float GetArmour() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetArmourAttribute() const {return BasicAttributes->GetArmourAttribute();}
+	FGameplayAttribute GetArmourAttribute() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	float GetStrength() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetStrengthAttribute() const {return BasicAttributes->GetStrengthAttribute();}
+	FGameplayAttribute GetStrengthAttribute() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	float GetEndurance() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetEnduranceAttribute() const {return BasicAttributes->GetEnduranceAttribute();}
+	FGameplayAttribute GetEnduranceAttribute() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	float GetFaith() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetFaithAttribute() const {return BasicAttributes->GetFaithAttribute();}
+	FGameplayAttribute GetFaithAttribute() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	float GetHealing() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
-	FGameplayAttribute GetHealingAttribute() const {return BasicAttributes->GetHealingAttribute();}
+	FGameplayAttribute GetHealingAttribute() const;
 	
 	/**
 	 *

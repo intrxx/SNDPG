@@ -58,23 +58,23 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 	MaxHealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		GetMaxHealthAttribute()).AddUObject(this, &ThisClass::MaxHealthChanged);
 	ResourceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetResourceAttribute()).AddUObject(this, &ThisClass::ResourceChanged);
+		GetResourceAttribute()).AddUObject(this, &ThisClass::ResourceChanged);
 	MaxResourceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetMaxResourceAttribute()).AddUObject(this, &ThisClass::MaxResourceChanged);
+		GetMaxResourceAttribute()).AddUObject(this, &ThisClass::MaxResourceChanged);
 	CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetCharacterLevelAttribute()).AddUObject(this, &ThisClass::CharacterLevelChanged);
+		GetCharacterLevelAttribute()).AddUObject(this, &ThisClass::CharacterLevelChanged);
 	ExperienceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetExperienceAttribute()).AddUObject(this, &ThisClass::ExperienceChanged);
+		GetExperienceAttribute()).AddUObject(this, &ThisClass::ExperienceChanged);
 	MaxExperienceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetMaxExperienceAttribute()).AddUObject(this, &ThisClass::MaxExperienceChanged);
+		GetMaxExperienceAttribute()).AddUObject(this, &ThisClass::MaxExperienceChanged);
 	ArmourChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetArmourAttribute()).AddUObject(this, &ThisClass::ArmourChanged);
+		GetArmourAttribute()).AddUObject(this, &ThisClass::ArmourChanged);
 	StrengthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetStrengthAttribute()).AddUObject(this, &ThisClass::StrengthChanged);
+		GetStrengthAttribute()).AddUObject(this, &ThisClass::StrengthChanged);
 	EnduranceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetEnduranceAttribute()).AddUObject(this, &ThisClass::EnduranceChanged);
+		GetEnduranceAttribute()).AddUObject(this, &ThisClass::EnduranceChanged);
 	FaithChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BasicAttributes->GetFaithAttribute()).AddUObject(this, &ThisClass::FaithChanged);
+		GetFaithAttribute()).AddUObject(this, &ThisClass::FaithChanged);
 	HealingChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		GetHealingAttribute()).AddUObject(this, &ThisClass::HealingChanged);
 
@@ -97,6 +97,66 @@ float USNBasicAttributesComponent::GetHealth() const
 float USNBasicAttributesComponent::GetMaxHealth() const
 {
 	return (BasicAttributes ? BasicAttributes->GetMaxHealth() : 0.0f);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetHealthAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetHealthAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetMaxHealthAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetMaxHealthAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetResourceAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetResourceAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetMaxResourceAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetMaxResourceAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetCharacterLevelAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetCharacterLevelAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetExperienceAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetExperienceAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetMaxExperienceAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetMaxExperienceAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetArmourAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetArmourAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetStrengthAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetStrengthAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetEnduranceAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetEnduranceAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetFaithAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetFaithAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetHealingAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetHealingAttribute() : nullptr);
 }
 
 float USNBasicAttributesComponent::GetResource() const

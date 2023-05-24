@@ -30,6 +30,7 @@ public:
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Endurance);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Strength);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, CharacterLevel);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, ExperienceBounty);
 
 	// Delegate to broadcast when the health attribute reaches zero.
 	mutable FSNAttributeEvent OnOutOfHealth;
@@ -89,4 +90,7 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
 	FGameplayAttributeData Damage;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData ExperienceBounty;
 };
