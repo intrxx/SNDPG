@@ -60,6 +60,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetHealingRange(float Healing, float Faith);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetLevelUpPoints(float LevelUpPoints);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetVitality(float Vitality);
+
 public:
 	bool bIsCharacterStatusVisible = false;
 };

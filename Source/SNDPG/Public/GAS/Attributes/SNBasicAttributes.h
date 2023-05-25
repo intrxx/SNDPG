@@ -31,6 +31,8 @@ public:
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Strength);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, CharacterLevel);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, ExperienceBounty);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, LevelUpPoints);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Vitality);
 
 	// Delegate to broadcast when the health attribute reaches zero.
 	mutable FSNAttributeEvent OnOutOfHealth;
@@ -49,6 +51,7 @@ protected:
 private:
 	bool bOutOfHealth = false;
 	
+public:
 	// The current health attribute.  The health will be capped by the max health attribute.  Health is hidden from modifiers so only executions can modify it.
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData Health;
@@ -71,10 +74,12 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData CharacterLevel;
-
-public:
+	
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData Strength;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData Vitality;
 	
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData Endurance;
@@ -93,4 +98,7 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
 	FGameplayAttributeData ExperienceBounty;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData LevelUpPoints;
 };

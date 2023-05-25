@@ -15,7 +15,6 @@ USNBasicAttributes::USNBasicAttributes()
 	, MaxHealth(100.0f)
 	, Resource(100.f)
 	, MaxResource(100.f)
-	, Strength(0.0f)
 {
 	bOutOfHealth = false;
 }
@@ -157,6 +156,41 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 
 		bOutOfHealth = (GetHealth() <= 0.0f);
 	}// Damage
+	else if(Data.EvaluatedData.Attribute == GetExperienceAttribute())
+	{
+		if(GetExperience() > GetMaxExperience())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("LEVEL UP %s"), *GetOwningActor()->GetName());
+			
+			float XPOverMax = GetExperience() - GetMaxExperience();
+			SetExperience(XPOverMax);
+			
+			float NewMaxXP = GetMaxExperience() * 2.0f;
+			SetMaxExperience(NewMaxXP);
+
+			float NewLevel = GetCharacterLevel()+1;
+			SetCharacterLevel(NewLevel);
+
+			// Level up reward, giving a level up point and some health
+			UGameplayEffect* LevelUpReward = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("LevelUpReward")));
+			LevelUpReward->DurationPolicy = EGameplayEffectDurationType::Instant;
+						
+			int32 Idx = LevelUpReward->Modifiers.Num();
+			LevelUpReward->Modifiers.SetNum(Idx + 2);
+			
+			FGameplayModifierInfo& InfoPoints = LevelUpReward->Modifiers[Idx];
+			InfoPoints.ModifierMagnitude = FScalableFloat(1);
+			InfoPoints.ModifierOp = EGameplayModOp::Additive;
+			InfoPoints.Attribute = USNBasicAttributes::GetLevelUpPointsAttribute();
+
+			FGameplayModifierInfo& InfoHealth = LevelUpReward->Modifiers[Idx + 1];
+			InfoHealth.ModifierMagnitude = FScalableFloat(FMath::RoundToFloat(GetMaxHealth() / 20));
+			InfoHealth.ModifierOp = EGameplayModOp::Additive;
+			InfoHealth.Attribute = USNBasicAttributes::GetMaxHealthAttribute();
+						
+			Source->ApplyGameplayEffectToSelf(LevelUpReward, 1.0f, Source->MakeEffectContext());
+		}
+	}
 	else if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		// Handle other health changes.

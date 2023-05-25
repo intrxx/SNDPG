@@ -3,7 +3,6 @@
 
 #include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
 
-#include "AssetTypeCategories.h"
 #include "Characters/Enemy/SNEnemy.h"
 #include "Characters/Hero/SNHero.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
@@ -77,6 +76,10 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 		GetFaithAttribute()).AddUObject(this, &ThisClass::FaithChanged);
 	HealingChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		GetHealingAttribute()).AddUObject(this, &ThisClass::HealingChanged);
+	LevelUpPointsChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		GetLevelUpPointsAttribute()).AddUObject(this, &ThisClass::LevelUpPointsChanged);
+	VitalityChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		GetVitalityAttribute()).AddUObject(this, &ThisClass::Vitalitychanged);
 
 	BasicAttributes->OnOutOfHealth.AddUObject(this, &ThisClass::HandleOutOfHealth);
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
@@ -157,6 +160,26 @@ FGameplayAttribute USNBasicAttributesComponent::GetFaithAttribute() const
 FGameplayAttribute USNBasicAttributesComponent::GetHealingAttribute() const
 {
 	return (BasicAttributes ? BasicAttributes->GetHealingAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetLevelUpPointsAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetLevelUpPointsAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetVitalityAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetVitalityAttribute() : nullptr);
+}
+
+float USNBasicAttributesComponent::GetVitality() const
+{
+	return (BasicAttributes ? BasicAttributes->GetVitality() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetLevelUpPoints() const
+{
+	return (BasicAttributes ? BasicAttributes->GetLevelUpPoints() : 0.0f);
 }
 
 float USNBasicAttributesComponent::GetResource() const
@@ -506,6 +529,42 @@ void USNBasicAttributesComponent::HealingChanged(const FOnAttributeChangeData& D
 			if(HeroHUD)
 			{
 				HeroHUD->SetHealingRange(Healing, GetFaith());
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::LevelUpPointsChanged(const FOnAttributeChangeData& Data)
+{
+	float LevelUpPoints = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetLevelUpPoints(LevelUpPoints);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::Vitalitychanged(const FOnAttributeChangeData& Data)
+{
+	float Vitality = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetVitality(Vitality);
 			}
 		}
 	}

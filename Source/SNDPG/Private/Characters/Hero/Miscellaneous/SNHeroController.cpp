@@ -37,6 +37,7 @@ void ASNHeroController::CreateHeroHUD()
 		UE_LOG(LogTemp, Error, TEXT("%s() Missing MainCharacterHUDClass. Fill in on the BP in PlayerController."), *FString(__FUNCTION__));
 		return;
 	}
+	
 	ASNHero* Hero = Cast<ASNHero>(GetCharacter());
 	const USNBasicAttributesComponent* AC = USNBasicAttributesComponent::FindAttributeComponent(Hero);
 	
@@ -59,6 +60,7 @@ void ASNHeroController::CreateHeroHUD()
 	HeroHUD->SetEndurance(AC->GetEndurance());
 	HeroHUD->SetFaith(AC->GetFaith());
 	HeroHUD->SetHealingRange(AC->GetHealing(), AC->GetFaith());
+	HeroHUD->SetVitality(AC->GetVitality());
 }
 
 USNHeroHUD* ASNHeroController::GetHeroHUD()

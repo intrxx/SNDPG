@@ -139,6 +139,18 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	FGameplayAttribute GetHealingAttribute() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	float GetLevelUpPoints() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	FGameplayAttribute GetLevelUpPointsAttribute() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	float GetVitality() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	FGameplayAttribute GetVitalityAttribute() const;
 	
 	/**
 	 *
@@ -170,6 +182,8 @@ protected:
 	virtual void EnduranceChanged(const FOnAttributeChangeData& Data);
 	virtual void FaithChanged(const FOnAttributeChangeData& Data);
 	virtual void HealingChanged(const FOnAttributeChangeData& Data);
+	virtual void LevelUpPointsChanged(const FOnAttributeChangeData& Data);
+	virtual void Vitalitychanged(const FOnAttributeChangeData& Data);
 
 	virtual void HandleOutOfHealth(AActor* DamageInstigator, AActor* DamageCauser, const FGameplayEffectSpec& DamageEffectSpec, float DamageMagnitude);
 	
@@ -187,6 +201,8 @@ protected:
 	FDelegateHandle EnduranceChangedDelegateHandle;
 	FDelegateHandle FaithChangedDelegateHandle;
 	FDelegateHandle HealingChangedDelegateHandle;
+	FDelegateHandle LevelUpPointsChangedDelegateHandle;
+	FDelegateHandle VitalityChangedDelegateHandle;
 	
 	UPROPERTY()
 	USNAbilitySystemComponent* AbilitySystemComponent;
