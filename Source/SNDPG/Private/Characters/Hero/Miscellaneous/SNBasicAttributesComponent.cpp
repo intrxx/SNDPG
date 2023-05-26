@@ -79,7 +79,7 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 	LevelUpPointsChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		GetLevelUpPointsAttribute()).AddUObject(this, &ThisClass::LevelUpPointsChanged);
 	VitalityChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		GetVitalityAttribute()).AddUObject(this, &ThisClass::Vitalitychanged);
+		GetVitalityAttribute()).AddUObject(this, &ThisClass::VitalityChanged);
 
 	BasicAttributes->OnOutOfHealth.AddUObject(this, &ThisClass::HandleOutOfHealth);
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
@@ -295,6 +295,63 @@ void USNBasicAttributesComponent::FinishDeath()
 	check(Owner);
 
 	OnDeathFinished.Broadcast(Owner);
+}
+
+void USNBasicAttributesComponent::LevelUpStrength(float Amount)
+{
+	SubtractLevelUpPoints(-Amount);
+	AddLeveledUpAttribute(Amount, USNBasicAttributes::GetStrengthAttribute());
+}
+
+void USNBasicAttributesComponent::LevelUpEndurance(float Amount)
+{
+	SubtractLevelUpPoints(-Amount);
+	AddLeveledUpAttribute(Amount, USNBasicAttributes::GetEnduranceAttribute());
+}
+
+void USNBasicAttributesComponent::LevelUpFaith(float Amount)
+{
+	SubtractLevelUpPoints(-Amount);
+	AddLeveledUpAttribute(Amount, USNBasicAttributes::GetFaithAttribute());
+}
+
+void USNBasicAttributesComponent::LevelUpVitality(float Amount)
+{
+	SubtractLevelUpPoints(-Amount);
+	AddLeveledUpAttribute(Amount, USNBasicAttributes::GetVitalityAttribute());
+
+	//Increase Health by 5 for every added point to Vitality
+	AddLeveledUpAttribute(FMath::RoundToFloat((GetMaxHealth() / 50.0f) + Amount * 5.0f), USNBasicAttributes::GetMaxHealthAttribute());
+}
+
+void USNBasicAttributesComponent::SubtractLevelUpPoints(float Amount)
+{
+	// Create a dynamic instant Gameplay Effect that removes Level Up Points after clicking the level up button
+	UGameplayEffect* RemoveLevelUpPoint = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("EarningExperience")));
+	RemoveLevelUpPoint->DurationPolicy = EGameplayEffectDurationType::Instant;
+						
+	RemoveLevelUpPoint->Modifiers.SetNum(1);
+	FGameplayModifierInfo& InfoXP = RemoveLevelUpPoint->Modifiers[0];
+	InfoXP.ModifierMagnitude = FScalableFloat(Amount);
+	InfoXP.ModifierOp = EGameplayModOp::Additive;
+	InfoXP.Attribute = USNBasicAttributes::GetLevelUpPointsAttribute();
+						
+	AbilitySystemComponent->ApplyGameplayEffectToSelf(RemoveLevelUpPoint, 1.0f, AbilitySystemComponent->MakeEffectContext());
+}
+
+void USNBasicAttributesComponent::AddLeveledUpAttribute(float Amount, FGameplayAttribute AttributeToAdd)
+{
+	// Create a dynamic instant Gameplay Effect that increases Attribute
+	UGameplayEffect* IncreaseAttribute = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("EarningExperience")));
+	IncreaseAttribute->DurationPolicy = EGameplayEffectDurationType::Instant;
+						
+	IncreaseAttribute->Modifiers.SetNum(1);
+	FGameplayModifierInfo& InfoXP = IncreaseAttribute->Modifiers[0];
+	InfoXP.ModifierMagnitude = FScalableFloat(Amount);
+	InfoXP.ModifierOp = EGameplayModOp::Additive;
+	InfoXP.Attribute = AttributeToAdd;
+						
+	AbilitySystemComponent->ApplyGameplayEffectToSelf(IncreaseAttribute, 1.0f, AbilitySystemComponent->MakeEffectContext());
 }
 
 
@@ -552,7 +609,7 @@ void USNBasicAttributesComponent::LevelUpPointsChanged(const FOnAttributeChangeD
 	}
 }
 
-void USNBasicAttributesComponent::Vitalitychanged(const FOnAttributeChangeData& Data)
+void USNBasicAttributesComponent::VitalityChanged(const FOnAttributeChangeData& Data)
 {
 	float Vitality = Data.NewValue;
 	

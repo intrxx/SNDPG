@@ -55,7 +55,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	ESNDeathState GetDeathState() const { return DeathState; }
 	
-	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "Lyra|Attributes", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "SN|Attributes", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	bool IsDeadOrDying() const {return (DeathState > ESNDeathState::NotDead);}
 	
 	// Begins the death sequence for the owner.
@@ -63,6 +63,20 @@ public:
 
 	// Ends the death sequence for the owner.
 	virtual void FinishDeath();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "SN|Attributes")
+	void LevelUpStrength(float Amount);
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "SN|Attributes")
+	void LevelUpEndurance(float Amount);
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "SN|Attributes")
+	void LevelUpFaith(float Amount);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "SN|Attributes")
+	void LevelUpVitality(float Amount);
+	
+	
 	
 	/**
 	 * Getters from Attributes
@@ -183,7 +197,10 @@ protected:
 	virtual void FaithChanged(const FOnAttributeChangeData& Data);
 	virtual void HealingChanged(const FOnAttributeChangeData& Data);
 	virtual void LevelUpPointsChanged(const FOnAttributeChangeData& Data);
-	virtual void Vitalitychanged(const FOnAttributeChangeData& Data);
+	virtual void VitalityChanged(const FOnAttributeChangeData& Data);
+
+	void SubtractLevelUpPoints(float Amount);
+	void AddLeveledUpAttribute(float Amount, FGameplayAttribute AttributeToAdd);
 
 	virtual void HandleOutOfHealth(AActor* DamageInstigator, AActor* DamageCauser, const FGameplayEffectSpec& DamageEffectSpec, float DamageMagnitude);
 	

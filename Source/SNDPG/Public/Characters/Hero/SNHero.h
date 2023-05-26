@@ -52,6 +52,8 @@ protected:
 	void Look(const FInputActionValue& Value);
 	void ToggleCharacterStatus();
 
+	void SetGamePause(bool bIsPaused);
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
 	USNAbilitySet* AbilitySet;
@@ -61,6 +63,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
 	class UInputMappingContext* DefaultMappingContext;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
+	class UInputMappingContext* HUDMappingContext;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "SN|Attributes")
 	TSubclassOf<class UGameplayEffect> DefaultAttributeEffect;

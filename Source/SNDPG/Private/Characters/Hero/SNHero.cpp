@@ -13,7 +13,6 @@
 #include "Components/CapsuleComponent.h"
 #include "GameplayTags/SNGameplayTags.h"
 #include "GAS/SNAbilitySet.h"
-#include "GAS/SNGameplayAbility.h"
 #include "Input/SNEnhancedInputComponent.h"
 #include "UI/SNHeroHUD.h"
 
@@ -105,7 +104,7 @@ void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	USNEnhancedInputComponent* EInputComponent = Cast<USNEnhancedInputComponent>(PlayerInputComponent);
 	check(EInputComponent);
-
+	
 	const FSNGameplayTags& GameplayTags = FSNGameplayTags::Get();
 	TArray<uint32> BindHandles;
 	EInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::InputAbilityInputTagPressed,
@@ -126,7 +125,7 @@ void ASNHero::BeginPlay()
 	{
 		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
 		{
-			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+			Subsystem->AddMappingContext(DefaultMappingContext, 2);
 		}
 	}
 
@@ -175,18 +174,37 @@ void ASNHero::ToggleCharacterStatus()
 	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
 	if(PC)
 	{
-		USNHeroHUD* HUD = PC->GetHeroHUD();
-		if(HUD)
+		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer());
+		if(Subsystem)
 		{
-			if(HUD->bIsCharacterStatusVisible)
+			USNHeroHUD* HUD = PC->GetHeroHUD();
+			if(HUD)
 			{
-				HUD->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = false);
-			}
-			else
-			{
-				PC->GetHeroHUD()->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = true);
+				if(HUD->bIsCharacterStatusVisible)
+				{
+					HUD->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = false);
+					Subsystem->RemoveMappingContext(HUDMappingContext);
+					Subsystem->AddMappingContext(DefaultMappingContext, 0);
+					PC->SetShowMouseCursor(false);
+				}
+				else
+				{
+					PC->GetHeroHUD()->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = true);
+					Subsystem->ClearAllMappings();
+					Subsystem->AddMappingContext(HUDMappingContext, 1);
+					PC->SetShowMouseCursor(true);
+				}
 			}
 		}
+	}
+}
+
+void ASNHero::SetGamePause(bool bIsPaused)
+{
+	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+	if(PC)
+	{
+		PC->SetPause(bIsPaused);
 	}
 }
 
