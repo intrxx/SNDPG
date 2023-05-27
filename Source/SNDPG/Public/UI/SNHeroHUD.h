@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2023 Michal Oginski.
 
 #pragma once
 
@@ -26,6 +26,15 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetHealthPercentage(float HealthPercentage);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetStamina(float Stamina);
+	
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetMaxStamina(float MaxStamina);
+	
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetStaminaPercentage(float StaminaPercentage);
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetResource(float Resource);
@@ -65,6 +74,12 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetVitality(float Vitality);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetMind(float Mind);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetArcane(float Arcane);
 
 public:
 	bool bIsCharacterStatusVisible = false;

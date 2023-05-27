@@ -11,10 +11,12 @@
 
 
 USNBasicAttributes::USNBasicAttributes()
-	: Health(100.0f)
-	, MaxHealth(100.0f)
+	: Health(200.0f)
+	, MaxHealth(200.0f)
 	, Resource(100.f)
 	, MaxResource(100.f)
+	, Stamina(150.f)
+	, MaxStamina(150.f)
 {
 	bOutOfHealth = false;
 }
@@ -189,6 +191,9 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 			InfoHealth.Attribute = USNBasicAttributes::GetMaxHealthAttribute();
 						
 			Source->ApplyGameplayEffectToSelf(LevelUpReward, 1.0f, Source->MakeEffectContext());
+
+			// Heal Character after lvling up
+			SetHealth(GetMaxHealth());
 		}
 	}
 	else if (Data.EvaluatedData.Attribute == GetHealthAttribute())
@@ -202,6 +207,10 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 		// Handle mana changes.
 		SetResource(FMath::Clamp(GetResource(), 0.0f, GetMaxResource()));
 	} // Mana
+	else if(Data.EvaluatedData.Attribute == GetStaminaAttribute())
+	{
+		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetMaxStamina()));
+	}
 }
 
 void USNBasicAttributes::PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const
@@ -254,6 +263,14 @@ void USNBasicAttributes::ClampAttribute(const FGameplayAttribute& Attribute, flo
 		NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxResource());
 	}
 	else if(Attribute == GetMaxResourceAttribute())
+	{
+		NewValue = FMath::Max(NewValue, 1.0f);
+	}
+	else if(Attribute == GetStaminaAttribute())
+	{
+		NewValue = FMath::Max(NewValue, 1.0f);
+	}
+	else if(Attribute == GetMaxStaminaAttribute())
 	{
 		NewValue = FMath::Max(NewValue, 1.0f);
 	}

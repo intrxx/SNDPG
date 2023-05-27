@@ -2,7 +2,6 @@
 
 
 #include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
-
 #include "Characters/Enemy/SNEnemy.h"
 #include "Characters/Hero/SNHero.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
@@ -60,6 +59,10 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 		GetResourceAttribute()).AddUObject(this, &ThisClass::ResourceChanged);
 	MaxResourceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		GetMaxResourceAttribute()).AddUObject(this, &ThisClass::MaxResourceChanged);
+	StaminaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		GetStaminaAttribute()).AddUObject(this, &ThisClass::StaminaChanged);
+	MaxStaminaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		GetMaxStaminaAttribute()).AddUObject(this, &ThisClass::MaxStaminaChanged);
 	CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		GetCharacterLevelAttribute()).AddUObject(this, &ThisClass::CharacterLevelChanged);
 	ExperienceChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
@@ -80,6 +83,10 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 		GetLevelUpPointsAttribute()).AddUObject(this, &ThisClass::LevelUpPointsChanged);
 	VitalityChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		GetVitalityAttribute()).AddUObject(this, &ThisClass::VitalityChanged);
+	ArcaneChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		GetArcaneAttribute()).AddUObject(this, &ThisClass::ArcaneChanged);
+	MindChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		GetMindAttribute()).AddUObject(this, &ThisClass::MindChanged);
 
 	BasicAttributes->OnOutOfHealth.AddUObject(this, &ThisClass::HandleOutOfHealth);
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
@@ -100,6 +107,86 @@ float USNBasicAttributesComponent::GetHealth() const
 float USNBasicAttributesComponent::GetMaxHealth() const
 {
 	return (BasicAttributes ? BasicAttributes->GetMaxHealth() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetStamina() const
+{
+	return (BasicAttributes ? BasicAttributes->GetStamina() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetMaxStamina() const
+{
+	return (BasicAttributes ? BasicAttributes->GetMaxStamina() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetVitality() const
+{
+	return (BasicAttributes ? BasicAttributes->GetVitality() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetLevelUpPoints() const
+{
+	return (BasicAttributes ? BasicAttributes->GetLevelUpPoints() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetResource() const
+{
+	return (BasicAttributes ? BasicAttributes->GetResource() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetMaxResource() const
+{
+	return (BasicAttributes ? BasicAttributes->GetMaxResource() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetCharacterLevel() const
+{
+	return (BasicAttributes ? BasicAttributes->GetCharacterLevel() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetExperience() const
+{
+	return (BasicAttributes ? BasicAttributes->GetExperience() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetMaxExperience() const
+{
+	return (BasicAttributes ? BasicAttributes->GetMaxExperience() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetArmour() const
+{
+	return (BasicAttributes ? BasicAttributes->GetArmour() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetStrength() const
+{
+	return (BasicAttributes ? BasicAttributes->GetStrength() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetEndurance() const
+{
+	return (BasicAttributes ? BasicAttributes->GetEndurance() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetFaith() const
+{
+	return (BasicAttributes ? BasicAttributes->GetFaith() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetHealing() const
+{
+	return (BasicAttributes ? BasicAttributes->GetHealing() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetArcane() const
+{
+	return (BasicAttributes ? BasicAttributes->GetArcane() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetMind() const
+{
+	return (BasicAttributes ? BasicAttributes->GetMind() : 0.0f);
 }
 
 FGameplayAttribute USNBasicAttributesComponent::GetHealthAttribute() const
@@ -172,64 +259,23 @@ FGameplayAttribute USNBasicAttributesComponent::GetVitalityAttribute() const
 	return (BasicAttributes ? BasicAttributes->GetVitalityAttribute() : nullptr);
 }
 
-float USNBasicAttributesComponent::GetVitality() const
+FGameplayAttribute USNBasicAttributesComponent::GetStaminaAttribute() const
 {
-	return (BasicAttributes ? BasicAttributes->GetVitality() : 0.0f);
+	return (BasicAttributes ? BasicAttributes->GetStaminaAttribute() : nullptr);
 }
 
-float USNBasicAttributesComponent::GetLevelUpPoints() const
+FGameplayAttribute USNBasicAttributesComponent::GetMaxStaminaAttribute() const
 {
-	return (BasicAttributes ? BasicAttributes->GetLevelUpPoints() : 0.0f);
+	return (BasicAttributes ? BasicAttributes->GetMaxStaminaAttribute() : nullptr);
 }
 
-float USNBasicAttributesComponent::GetResource() const
+FGameplayAttribute USNBasicAttributesComponent::GetArcaneAttribute() const
 {
-	return (BasicAttributes ? BasicAttributes->GetResource() : 0.0f);
+	return (BasicAttributes ? BasicAttributes->GetArcaneAttribute() : nullptr);
 }
-
-float USNBasicAttributesComponent::GetMaxResource() const
+FGameplayAttribute USNBasicAttributesComponent::GetMindAttribute() const
 {
-	return (BasicAttributes ? BasicAttributes->GetMaxResource() : 0.0f);
-}
-
-float USNBasicAttributesComponent::GetCharacterLevel() const
-{
-	return (BasicAttributes ? BasicAttributes->GetCharacterLevel() : 0.0f);
-}
-
-float USNBasicAttributesComponent::GetExperience() const
-{
-	return (BasicAttributes ? BasicAttributes->GetExperience() : 0.0f);
-}
-
-float USNBasicAttributesComponent::GetMaxExperience() const
-{
-	return (BasicAttributes ? BasicAttributes->GetMaxExperience() : 0.0f);
-}
-
-float USNBasicAttributesComponent::GetArmour() const
-{
-	return (BasicAttributes ? BasicAttributes->GetArmour() : 0.0f);
-}
-
-float USNBasicAttributesComponent::GetStrength() const
-{
-	return (BasicAttributes ? BasicAttributes->GetStrength() : 0.0f);
-}
-
-float USNBasicAttributesComponent::GetEndurance() const
-{
-	return (BasicAttributes ? BasicAttributes->GetEndurance() : 0.0f);
-}
-
-float USNBasicAttributesComponent::GetFaith() const
-{
-	return (BasicAttributes ? BasicAttributes->GetFaith() : 0.0f);
-}
-
-float USNBasicAttributesComponent::GetHealing() const
-{
-	return (BasicAttributes ? BasicAttributes->GetHealing() : 0.0f);
+	return (BasicAttributes ? BasicAttributes->GetMindAttribute() : nullptr);
 }
 
 // Called when the game starts
@@ -300,28 +346,49 @@ void USNBasicAttributesComponent::FinishDeath()
 void USNBasicAttributesComponent::LevelUpStrength(float Amount)
 {
 	SubtractLevelUpPoints(-Amount);
-	AddLeveledUpAttribute(Amount, USNBasicAttributes::GetStrengthAttribute());
+	AddLeveledUpAttribute(Amount, GetStrengthAttribute());
 }
 
-void USNBasicAttributesComponent::LevelUpEndurance(float Amount)
+void USNBasicAttributesComponent::LevelUpArcane(float Amount)
 {
 	SubtractLevelUpPoints(-Amount);
-	AddLeveledUpAttribute(Amount, USNBasicAttributes::GetEnduranceAttribute());
+	AddLeveledUpAttribute(Amount, GetArcaneAttribute());
 }
 
 void USNBasicAttributesComponent::LevelUpFaith(float Amount)
 {
 	SubtractLevelUpPoints(-Amount);
-	AddLeveledUpAttribute(Amount, USNBasicAttributes::GetFaithAttribute());
+	AddLeveledUpAttribute(Amount, GetFaithAttribute());
 }
 
 void USNBasicAttributesComponent::LevelUpVitality(float Amount)
 {
 	SubtractLevelUpPoints(-Amount);
-	AddLeveledUpAttribute(Amount, USNBasicAttributes::GetVitalityAttribute());
+	AddLeveledUpAttribute(Amount, GetVitalityAttribute());
 
-	//Increase Health by 5 for every added point to Vitality
-	AddLeveledUpAttribute(FMath::RoundToFloat((GetMaxHealth() / 50.0f) + Amount * 5.0f), USNBasicAttributes::GetMaxHealthAttribute());
+	// Increase Health by 5 for every added point to Vitality
+	AddLeveledUpAttribute(FMath::RoundToFloat((GetMaxHealth() / 50.0f) + Amount * 5.0f), GetMaxHealthAttribute());
+	AddLeveledUpAttribute(GetMaxHealth() - GetHealth(), GetHealthAttribute());
+}
+
+void USNBasicAttributesComponent::LevelUpEndurance(float Amount)
+{
+	SubtractLevelUpPoints(-Amount);
+	AddLeveledUpAttribute(Amount, GetEnduranceAttribute());
+
+	// Increase Stamina based on endurance
+	AddLeveledUpAttribute(FMath::RoundToFloat((GetStamina() / 75.0f) + Amount * 3.0f), GetMaxStaminaAttribute());
+	AddLeveledUpAttribute(GetMaxStamina() - GetStamina(), GetStaminaAttribute());
+}
+
+void USNBasicAttributesComponent::LevelUpMind(float Amount)
+{
+	SubtractLevelUpPoints(-Amount);
+	AddLeveledUpAttribute(Amount, GetMindAttribute());
+
+	// Increase mana based on mind
+	AddLeveledUpAttribute(FMath::RoundToFloat((GetResource() / 75.0f) + Amount * 5.0f), GetMaxResourceAttribute());
+	AddLeveledUpAttribute(GetMaxResource() - GetResource(), GetResourceAttribute());
 }
 
 void USNBasicAttributesComponent::SubtractLevelUpPoints(float Amount)
@@ -441,6 +508,43 @@ void USNBasicAttributesComponent::MaxResourceChanged(const FOnAttributeChangeDat
 			{
 				HeroHUD->SetMaxResource(MaxResource);
 				HeroHUD->SetResourcePercentage(GetResource() / MaxResource);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::StaminaChanged(const FOnAttributeChangeData& Data)
+{
+	float Stamina = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetStaminaPercentage(Stamina / GetMaxStamina());
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::MaxStaminaChanged(const FOnAttributeChangeData& Data)
+{
+	float MaxStamina = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetMaxStamina(MaxStamina);
+				HeroHUD->SetStaminaPercentage(GetStamina() / MaxStamina);
 			}
 		}
 	}
@@ -622,6 +726,42 @@ void USNBasicAttributesComponent::VitalityChanged(const FOnAttributeChangeData& 
 			if(HeroHUD)
 			{
 				HeroHUD->SetVitality(Vitality);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::ArcaneChanged(const FOnAttributeChangeData& Data)
+{
+	float Arcane = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetArcane(Arcane);
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::MindChanged(const FOnAttributeChangeData& Data)
+{
+	float Mind = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetMind(Mind);
 			}
 		}
 	}

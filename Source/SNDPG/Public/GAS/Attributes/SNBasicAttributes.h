@@ -33,6 +33,10 @@ public:
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, ExperienceBounty);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, LevelUpPoints);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Vitality);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Stamina);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, MaxStamina);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Mind);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Arcane);
 
 	// Delegate to broadcast when the health attribute reaches zero.
 	mutable FSNAttributeEvent OnOutOfHealth;
@@ -65,6 +69,12 @@ public:
 
 	UPROPERTY(BlueprintReadOnly,  Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData MaxResource;
+
+	UPROPERTY(BlueprintReadOnly,  Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData Stamina;
+
+	UPROPERTY(BlueprintReadOnly,  Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData MaxStamina;
 
 	UPROPERTY(BlueprintReadOnly,  Category = "SN|BasicAttributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData Experience;
@@ -101,4 +111,10 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
 	FGameplayAttributeData LevelUpPoints;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData Arcane;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData Mind;
 };

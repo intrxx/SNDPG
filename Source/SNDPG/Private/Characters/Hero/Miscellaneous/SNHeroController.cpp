@@ -52,6 +52,10 @@ void ASNHeroController::CreateHeroHUD()
 	HeroHUD->SetMaxResource(AC->GetMaxResource());
 	HeroHUD->SetResourcePercentage(AC->GetResource() / FMath::Max<float>(AC->GetMaxResource(), 1.0f));
 
+	HeroHUD->SetStamina(AC->GetStamina());
+	HeroHUD->SetMaxStamina(AC->GetMaxStamina());
+	HeroHUD->SetStaminaPercentage(AC->GetStamina() / FMath::Max<float>(AC->GetMaxStamina(), 1.0f));
+
 	HeroHUD->SetCharacterLevel(AC->GetCharacterLevel());
 	HeroHUD->SetExperience(AC->GetExperience());
 	HeroHUD->SetMaxExperience(AC->GetMaxExperience());
@@ -61,6 +65,8 @@ void ASNHeroController::CreateHeroHUD()
 	HeroHUD->SetFaith(AC->GetFaith());
 	HeroHUD->SetHealingRange(AC->GetHealing(), AC->GetFaith());
 	HeroHUD->SetVitality(AC->GetVitality());
+	HeroHUD->SetArcane(AC->GetArcane());
+	HeroHUD->SetMind(AC->GetMind());
 }
 
 USNHeroHUD* ASNHeroController::GetHeroHUD()

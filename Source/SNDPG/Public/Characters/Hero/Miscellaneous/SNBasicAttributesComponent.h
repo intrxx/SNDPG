@@ -76,7 +76,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "SN|Attributes")
 	void LevelUpVitality(float Amount);
 	
-	
+	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "SN|Attributes")
+	void LevelUpArcane(float Amount);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "SN|Attributes")
+	void LevelUpMind(float Amount);
 	
 	/**
 	 * Getters from Attributes
@@ -165,6 +169,30 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	FGameplayAttribute GetVitalityAttribute() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	float GetStamina() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	FGameplayAttribute GetStaminaAttribute() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	float GetMaxStamina() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	FGameplayAttribute GetMaxStaminaAttribute() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	float GetArcane() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	FGameplayAttribute GetArcaneAttribute() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	float GetMind() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	FGameplayAttribute GetMindAttribute() const;
 	
 	/**
 	 *
@@ -188,6 +216,8 @@ protected:
 	virtual void MaxHealthChanged(const FOnAttributeChangeData& Data);
 	virtual void ResourceChanged(const FOnAttributeChangeData& Data);
 	virtual void MaxResourceChanged(const FOnAttributeChangeData& Data);
+	virtual void StaminaChanged(const FOnAttributeChangeData& Data);
+	virtual void MaxStaminaChanged(const FOnAttributeChangeData& Data);
 	virtual void ExperienceChanged(const FOnAttributeChangeData& Data);
 	virtual void MaxExperienceChanged(const FOnAttributeChangeData& Data);
 	virtual void CharacterLevelChanged(const FOnAttributeChangeData& Data);
@@ -198,6 +228,8 @@ protected:
 	virtual void HealingChanged(const FOnAttributeChangeData& Data);
 	virtual void LevelUpPointsChanged(const FOnAttributeChangeData& Data);
 	virtual void VitalityChanged(const FOnAttributeChangeData& Data);
+	virtual void ArcaneChanged(const FOnAttributeChangeData& Data);
+	virtual void MindChanged(const FOnAttributeChangeData& Data);
 
 	void SubtractLevelUpPoints(float Amount);
 	void AddLeveledUpAttribute(float Amount, FGameplayAttribute AttributeToAdd);
@@ -210,6 +242,8 @@ protected:
 	FDelegateHandle MaxHealthChangedDelegateHandle;
 	FDelegateHandle ResourceChangedDelegateHandle;
 	FDelegateHandle MaxResourceChangedDelegateHandle;
+	FDelegateHandle StaminaChangedDelegateHandle;
+	FDelegateHandle MaxStaminaChangedDelegateHandle;
 	FDelegateHandle ExperienceChangedDelegateHandle;
 	FDelegateHandle MaxExperienceChangedDelegateHandle;
 	FDelegateHandle CharacterLevelChangedDelegateHandle;
@@ -220,6 +254,8 @@ protected:
 	FDelegateHandle HealingChangedDelegateHandle;
 	FDelegateHandle LevelUpPointsChangedDelegateHandle;
 	FDelegateHandle VitalityChangedDelegateHandle;
+	FDelegateHandle MindChangedDelegateHandle;
+	FDelegateHandle ArcaneChangedDelegateHandle;
 	
 	UPROPERTY()
 	USNAbilitySystemComponent* AbilitySystemComponent;
