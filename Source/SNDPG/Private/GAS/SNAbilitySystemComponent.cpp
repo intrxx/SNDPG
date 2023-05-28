@@ -2,8 +2,14 @@
 
 
 #include "GAS/SNAbilitySystemComponent.h"
-
+#include "Characters/Hero/Miscellaneous/SNHeroController.h"
+#include "Characters/Hero/SNHero.h"
+#include "Characters/Hero/Miscellaneous/SNHeroState.h"
+#include "GameplayTags/SNGameplayTags.h"
 #include "GAS/SNGameplayAbility.h"
+#include "GAS/SNGameplayAbility_Melee.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 USNAbilitySystemComponent::USNAbilitySystemComponent()
 {
@@ -114,7 +120,7 @@ void USNAbilitySystemComponent::ProcessAbilityInput(float DeltaTime, bool bGameP
 	{
 		TryActivateAbility(AbilitySpecHandle);
 	}
-
+	
 	//
 	// Process all abilities that had their input released this frame.
 	//
@@ -150,7 +156,7 @@ void USNAbilitySystemComponent::ClearAbilityInput()
 }
 
 void USNAbilitySystemComponent::ReceivedDamage(USNAbilitySystemComponent* SourceASC, float UnmitigatedDamage,
-	float MitigatedDamage)
+                                               float MitigatedDamage)
 {
 	ReceivedDamageDelegate.Broadcast(SourceASC, UnmitigatedDamage, MitigatedDamage);
 }
@@ -179,3 +185,40 @@ void USNAbilitySystemComponent::AbilitySpecInputReleased(FGameplayAbilitySpec& S
 		InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, Spec.Handle, Spec.ActivationInfo.GetActivationPredictionKey());
 	}
 }
+
+void USNAbilitySystemComponent::NotifyAbilityActivated(const FGameplayAbilitySpecHandle Handle,
+	UGameplayAbility* Ability)
+{
+	Super::NotifyAbilityActivated(Handle, Ability);
+	
+	const FSNGameplayTags& GameplayTags = FSNGameplayTags::Get();
+	
+	if(Cast<USNGameplayAbility_Melee>(Ability))
+	{
+		AddLooseGameplayTag(GameplayTags.Ability_Behavior_BlockStaminaRegen, 1);
+
+		ASNHeroState* PS = Cast<ASNHeroState>(GetOwner());
+		if(PS)
+		{
+			ASNHeroController* PC = Cast<ASNHeroController>(PS->GetOwner());
+			if(PC)
+			{
+				ASNHero* Hero = Cast<ASNHero>(PC->GetCharacter());
+				if(Hero)
+				{
+					
+					Hero->RemoveStaminaBlockTag(GetTagCount(GameplayTags.Ability_Behavior_BlockStaminaRegen));
+				}
+			}	
+		}
+	}
+	
+}
+
+void USNAbilitySystemComponent::NotifyAbilityEnded(FGameplayAbilitySpecHandle Handle, UGameplayAbility* Ability,
+                                                   bool bWasCancelled)
+{
+	Super::NotifyAbilityEnded(Handle, Ability, bWasCancelled);
+	
+}
+

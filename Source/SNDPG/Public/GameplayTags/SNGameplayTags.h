@@ -27,6 +27,7 @@ public:
 
 	// Abilities helper tags
 	FGameplayTag Ability_Behavior_SurvivesDeath;
+	FGameplayTag Ability_Behavior_BlockStaminaRegen;
 	
 	// Abilities
 	FGameplayTag Ability_Input_Melee;

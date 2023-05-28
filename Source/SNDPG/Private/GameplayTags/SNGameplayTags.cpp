@@ -49,6 +49,7 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 
 	// Abilities helper tags
 	AddTag(Ability_Behavior_SurvivesDeath, "Ability.Behavior.SurvivesDeath", "Abilities with this tag will not be canceled upon death");
+	AddTag(Ability_Behavior_BlockStaminaRegen, "Ability.Behavior.BlockStaminaRegen", "Tag used to block stamina regen while attacking");
 	
 	// Ability Input
 	AddTag(Ability_Input_Melee, "Ability.Input.Melee", "Melee ability input.");

@@ -6,6 +6,7 @@
 #include "Characters/SNCharacterBase.h"
 #include "GameplayTagContainer.h"
 #include "InputActionValue.h"
+#include "GAS/SNGameplayAbility.h"
 #include "SNHero.generated.h"
 
 class USNInputConfig;
@@ -40,6 +41,9 @@ public:
 	UFUNCTION()
 	virtual void OnDeathFinished(AActor* OwningActor);
 
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+	void RemoveStaminaBlockTag(float Count);
+	
 protected:
 	virtual void BeginPlay() override;
 

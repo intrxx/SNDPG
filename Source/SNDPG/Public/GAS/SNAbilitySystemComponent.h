@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "SNGameplayAbility.h"
 #include "SNAbilitySystemComponent.generated.h"
 
 /**
@@ -18,25 +19,30 @@ class SNDPG_API USNAbilitySystemComponent : public UAbilitySystemComponent
 	GENERATED_BODY()
 public:
 	USNAbilitySystemComponent();
-
+	
 	void AbilityInputTagPressed(const FGameplayTag& InputTag);
 	void AbilityInputTagReleased(const FGameplayTag& InputTag);
 
 	void ProcessAbilityInput(float DeltaTime, bool bGamePaused);
 	void ClearAbilityInput();
-
+	
 	virtual void ReceivedDamage(USNAbilitySystemComponent* SourceASC, float UnmitigatedDamage, float MitigatedDamage);
 	virtual void ReceivedHeal(USNAbilitySystemComponent* SourceASC, float HealingDone);
 public:
 	bool bAbilitiesGiven = false;
 	bool bAttributesGiven = false;
-
+	
 	FReceivedDamageDelegate ReceivedDamageDelegate;
 	FReceivedHealDelegate ReceivedHealDelegate;
 
 protected:
 	virtual void AbilitySpecInputPressed(FGameplayAbilitySpec& Spec) override;
 	virtual void AbilitySpecInputReleased(FGameplayAbilitySpec& Spec) override;
+
+	virtual void NotifyAbilityActivated(const FGameplayAbilitySpecHandle Handle, UGameplayAbility* Ability) override;
+	virtual void NotifyAbilityEnded(FGameplayAbilitySpecHandle Handle, UGameplayAbility* Ability, bool bWasCancelled) override;
+	
+	void DelayedFunction();
 	
 protected:
 	// Handles to abilities that had their input pressed this frame.

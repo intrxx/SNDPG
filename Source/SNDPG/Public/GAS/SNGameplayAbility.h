@@ -52,7 +52,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "SN|Ability")
 	void UnlockCharacter();
-
+	
 	void TryActivateAbilityOnSpawn(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) const;
 
 protected:

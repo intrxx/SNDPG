@@ -2,7 +2,6 @@
 
 
 #include "GAS/SNGameplayAbility.h"
-
 #include "Characters/SNCharacterMovementComponent.h"
 #include "Characters/Hero/SNHero.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
