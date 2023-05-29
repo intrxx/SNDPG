@@ -4,7 +4,7 @@ Engineering Thesis ARPG project in Unreal Engine 5 based on Gameplay Ability Sys
 
 
 # Used assets
-- Main Hero: [Paragon Serath](https://www.unrealengine.com/marketplace/en-US/product/paragon-serath)
+- Main Hero: [Paragon Kwang](https://www.unrealengine.com/marketplace/en-US/product/paragon-kwang)
 - Enviromental assets: [Modular Gothic Temple](https://www.unrealengine.com/marketplace/en-US/product/modular-gothic-temple-medieval-winter-snow)
 - Enemies: [Quadruped Fantasy Creatures](https://www.unrealengine.com/marketplace/en-US/product/7f7775996f7442b187f6fa510ec9d289)
  
