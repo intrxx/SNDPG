@@ -32,7 +32,7 @@ ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	
 	UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
 	check(CapsuleComp);
-	CapsuleComp->InitCapsuleSize(44.0f, 140.0f);
+	CapsuleComp->InitCapsuleSize(38.0f, 84.0f);
 
 	USkeletalMeshComponent* MeshComp = GetMesh();
 	check(MeshComp);

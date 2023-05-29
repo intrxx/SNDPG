@@ -8,16 +8,13 @@
 #include "GameplayTags/SNGameplayTags.h"
 #include "GAS/SNGameplayAbility.h"
 #include "GAS/SNGameplayAbility_Melee.h"
-#include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetSystemLibrary.h"
 
 USNAbilitySystemComponent::USNAbilitySystemComponent()
 {
 	InputPressedSpecHandles.Reset();
 	InputReleasedSpecHandles.Reset();
 	InputHeldSpecHandles.Reset();
-
-	UE_LOG(LogTemp, Warning, TEXT("Enetered ASC contructror"));
+	
 }
 
 void USNAbilitySystemComponent::AbilityInputTagPressed(const FGameplayTag& InputTag)
@@ -190,7 +187,8 @@ void USNAbilitySystemComponent::NotifyAbilityActivated(const FGameplayAbilitySpe
 	UGameplayAbility* Ability)
 {
 	Super::NotifyAbilityActivated(Handle, Ability);
-	
+
+	// Add and remove Stamina blockage To 4 seconds after attack
 	const FSNGameplayTags& GameplayTags = FSNGameplayTags::Get();
 	
 	if(Cast<USNGameplayAbility_Melee>(Ability))
@@ -206,13 +204,11 @@ void USNAbilitySystemComponent::NotifyAbilityActivated(const FGameplayAbilitySpe
 				ASNHero* Hero = Cast<ASNHero>(PC->GetCharacter());
 				if(Hero)
 				{
-					
 					Hero->RemoveStaminaBlockTag(GetTagCount(GameplayTags.Ability_Behavior_BlockStaminaRegen));
 				}
 			}	
 		}
 	}
-	
 }
 
 void USNAbilitySystemComponent::NotifyAbilityEnded(FGameplayAbilitySpecHandle Handle, UGameplayAbility* Ability,
