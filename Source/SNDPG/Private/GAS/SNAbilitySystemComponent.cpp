@@ -7,7 +7,7 @@
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "GameplayTags/SNGameplayTags.h"
 #include "GAS/SNGameplayAbility.h"
-#include "GAS/SNGameplayAbility_Melee.h"
+#include "GAS/Abilities/SNGameplayAbility_Melee.h"
 
 USNAbilitySystemComponent::USNAbilitySystemComponent()
 {

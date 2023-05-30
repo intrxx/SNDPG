@@ -43,6 +43,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void RemoveStaminaBlockTag(float Count);
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+	void StartMeleeCombo();
 	
 protected:
 	virtual void BeginPlay() override;
