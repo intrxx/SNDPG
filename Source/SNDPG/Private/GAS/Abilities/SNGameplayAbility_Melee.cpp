@@ -2,8 +2,9 @@
 
 
 #include "GAS/Abilities/SNGameplayAbility_Melee.h"
-
+#include "ActorComponents/SNCombatComponent.h"
 #include "Characters/Hero/SNHero.h"
+#include "UI/SNHeroHUD.h"
 
 USNGameplayAbility_Melee::USNGameplayAbility_Melee(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)

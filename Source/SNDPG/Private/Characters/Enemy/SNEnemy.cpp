@@ -4,7 +4,7 @@
 #include "Characters/Enemy/SNEnemy.h"
 #include "GAS/SNAbilitySet.h"
 #include "UI/SNHealthBarWidget.h"
-#include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
+#include "ActorComponents/SNBasicAttributesComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GAS/SNAbilitySystemComponent.h"
 #include "GAS/Attributes/SNBasicAttributes.h"
@@ -21,7 +21,7 @@ ASNEnemy::ASNEnemy(const FObjectInitializer& ObjectInitializer)
 	AttributesComponent = CreateDefaultSubobject<USNBasicAttributesComponent>(TEXT("BasicAttributesComponent"));
 	AttributesComponent->OnDeathStarted.AddDynamic(this, &ThisClass::OnDeathStarted);
 	AttributesComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
-
+	
 	HealthBarWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidgetComponent"));
 	HealthBarWidgetComponent->SetupAttachment(RootComponent);
 	HealthBarWidgetComponent->SetRelativeLocation(HealthBarPosition);

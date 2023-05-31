@@ -5,7 +5,7 @@
 #include "GameplayEffectExtension.h"
 #include "GameplayEffect.h"
 #include "Characters/SNCharacterBase.h"
-#include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
+#include "ActorComponents/SNBasicAttributesComponent.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "GAS/SNAbilitySystemComponent.h"
 

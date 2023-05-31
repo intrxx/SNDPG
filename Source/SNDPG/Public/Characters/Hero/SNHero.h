@@ -9,6 +9,7 @@
 #include "GAS/SNGameplayAbility.h"
 #include "SNHero.generated.h"
 
+class USNCombatComponent;
 class USNInputConfig;
 class UCameraComponent;
 class USNAbilitySet;
@@ -44,9 +45,6 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void RemoveStaminaBlockTag(float Count);
 
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-	void StartMeleeCombo();
-	
 protected:
 	virtual void BeginPlay() override;
 
@@ -86,4 +84,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
 	USNBasicAttributesComponent* AttributesComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	USNCombatComponent* CombatComponent;
 };

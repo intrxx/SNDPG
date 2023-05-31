@@ -6,7 +6,8 @@
 #include "Characters/SNCharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
+#include "ActorComponents/SNBasicAttributesComponent.h"
+#include "ActorComponents/SNCombatComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
@@ -43,11 +44,15 @@ ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	SpringArmComp->SetupAttachment(RootComponent);
 	SpringArmComp->TargetArmLength = 600;
 	SpringArmComp->bUsePawnControlRotation = true;
-
+	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComp, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
+	CombatComponent = CreateDefaultSubobject<USNCombatComponent>(TEXT("CombatComponent"));
+	CombatComponent->AddTraceMesh(MeshComp);
+	CombatComponent->IgnoredActors.Add(this);
+	
 	AttributesComponent = CreateDefaultSubobject<USNBasicAttributesComponent>(TEXT("BasicAttributesComponent"));
 	AttributesComponent->OnDeathStarted.AddDynamic(this, &ThisClass::OnDeathStarted);
 	AttributesComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);

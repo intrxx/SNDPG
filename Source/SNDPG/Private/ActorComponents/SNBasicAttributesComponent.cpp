@@ -1,7 +1,7 @@
 // Copyright 2023 Michal Oginski.
 
 
-#include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
+#include "ActorComponents/SNBasicAttributesComponent.h"
 #include "Characters/Enemy/SNEnemy.h"
 #include "Characters/Hero/SNHero.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"

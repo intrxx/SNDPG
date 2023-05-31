@@ -4,7 +4,7 @@
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 
 #include "Characters/Hero/SNHero.h"
-#include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
+#include "ActorComponents/SNBasicAttributesComponent.h"
 #include "UI/SNHeroHUD.h"
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "GAS/SNAbilitySystemComponent.h"

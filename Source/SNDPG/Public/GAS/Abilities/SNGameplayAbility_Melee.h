@@ -6,6 +6,7 @@
 #include "GAS/SNGameplayAbility.h"
 #include "SNGameplayAbility_Melee.generated.h"
 
+class USNCombatComponent;
 /**
  * 
  */

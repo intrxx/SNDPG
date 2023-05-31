@@ -4,7 +4,7 @@
 #include "GAS/Abilities/SNGameplayAbility_Death.h"
 #include "GAS/SNAbilitySystemComponent.h"
 #include "GameplayTagsManager.h"
-#include "Characters/Hero/Miscellaneous/SNBasicAttributesComponent.h"
+#include "ActorComponents/SNBasicAttributesComponent.h"
 #include "GameplayTags/SNGameplayTags.h"
 
 USNGameplayAbility_Death::USNGameplayAbility_Death(const FObjectInitializer& ObjectInitializer)
