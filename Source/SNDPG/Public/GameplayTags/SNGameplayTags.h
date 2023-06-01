@@ -19,7 +19,8 @@ public:
 public:
 	// Input
 	FGameplayTag Input_Move;
-	FGameplayTag Input_Look;
+	FGameplayTag Input_Look_Stick;
+	FGameplayTag Input_Look_Mouse;
 	FGameplayTag Input_ToggleCharacterStatus;
 
 	// Events

@@ -41,7 +41,8 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 {
 	// Native Input
 	AddTag(Input_Move, "Input.Move", "Move input.");
-	AddTag(Input_Look, "Input.Look", "Look input.");
+	AddTag(Input_Look_Mouse, "Input.Look.Mouse", "Look input with mouse.");
+	AddTag(Input_Look_Stick, "Input.Look.Stick", "Look input with stick.");
 	AddTag(Input_ToggleCharacterStatus, "Input.ToggleCharacterStatus", "Toggle input for Character Status Tab.");
 
 	// Events

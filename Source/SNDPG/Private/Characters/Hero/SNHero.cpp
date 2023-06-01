@@ -116,8 +116,10 @@ void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		&ThisClass::InputAbilityInputTagReleased, /*out*/ BindHandles);
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_Move, ETriggerEvent::Triggered, this,
 		&ThisClass::Move);
-	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_Look, ETriggerEvent::Triggered, this,
-		&ThisClass::Look);
+	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_Look_Mouse, ETriggerEvent::Triggered, this,
+		&ThisClass::LookMouse);
+	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_Look_Stick, ETriggerEvent::Triggered, this,
+		&ThisClass::LookStick);
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleCharacterStatus, ETriggerEvent::Triggered,
 		this, &ThisClass::ToggleCharacterStatus);
 }
@@ -130,7 +132,8 @@ void ASNHero::BeginPlay()
 	{
 		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
 		{
-			Subsystem->AddMappingContext(DefaultMappingContext, 2);
+			Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
+			Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
 		}
 	}
 
@@ -163,16 +166,45 @@ void ASNHero::Move(const FInputActionValue& Value)
 	}
 }
 
-void ASNHero::Look(const FInputActionValue& Value)
+void ASNHero::LookMouse(const FInputActionValue& Value)
 {
 	const FVector2D LookValue = Value.Get<FVector2D>();
 
 	if(GetController())
 	{
-		AddControllerYawInput(LookValue.X);
-		AddControllerPitchInput(-LookValue.Y);
+		if(LookValue.X != 0.0f)
+		{
+			AddControllerYawInput(LookValue.X);
+		}
+
+		if(LookValue.Y != 0.0f)
+		{
+			AddControllerPitchInput(-LookValue.Y);
+		}
 	}
 }
+
+void ASNHero::LookStick(const FInputActionValue& Value)
+{
+	const FVector2D LookValue = Value.Get<FVector2D>();
+
+	const UWorld* World = GetWorld();
+	check(World)
+
+	if(GetController())
+	{
+		if (LookValue.X != 0.0f)
+		{
+			AddControllerYawInput(LookValue.X * Hero::LookYawRate * World->GetDeltaSeconds());
+		}
+
+		if (LookValue.Y != 0.0f)
+		{
+			AddControllerPitchInput(LookValue.Y * Hero::LookPitchRate * World->GetDeltaSeconds());
+		}
+	}
+}
+
 
 void ASNHero::ToggleCharacterStatus()
 {
@@ -189,7 +221,8 @@ void ASNHero::ToggleCharacterStatus()
 				{
 					HUD->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = false);
 					Subsystem->RemoveMappingContext(HUDMappingContext);
-					Subsystem->AddMappingContext(DefaultMappingContext, 0);
+					Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
+					Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
 					PC->SetShowMouseCursor(false);
 				}
 				else

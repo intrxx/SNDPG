@@ -16,6 +16,11 @@ class USNAbilitySet;
 class USpringArmComponent;
 class USNBasicAttributesComponent;
 
+namespace Hero
+{
+	static const float LookYawRate = 245.0f;
+	static const float LookPitchRate = 145.0f;
+}
 /**
  *  ASNHero
  *
@@ -54,7 +59,9 @@ protected:
 	void InputAbilityInputTagReleased(FGameplayTag InputTag);
 
 	void Move(const FInputActionValue& Value);
-	void Look(const FInputActionValue& Value);
+	void LookMouse(const FInputActionValue& Value);
+	void LookStick(const FInputActionValue& Value);
+	
 	void ToggleCharacterStatus();
 
 	void SetGamePause(bool bIsPaused);
@@ -67,7 +74,10 @@ protected:
 	USNInputConfig* InputConfig;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
-	class UInputMappingContext* DefaultMappingContext;
+	class UInputMappingContext* DefaultMappingContext_MNK;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
+	class UInputMappingContext* DefaultMappingContext_Gamepad;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
 	class UInputMappingContext* HUDMappingContext;
