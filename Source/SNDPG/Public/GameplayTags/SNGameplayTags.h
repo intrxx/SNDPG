@@ -31,8 +31,13 @@ public:
 	FGameplayTag Ability_Behavior_BlockStaminaRegen;
 	
 	// Abilities
-	FGameplayTag Ability_Input_Melee;
+	FGameplayTag Ability_Input_LightMelee;
+	FGameplayTag Ability_Input_HeavyMelee;
 	FGameplayTag Ability_Input_Healing;
+	FGameplayTag Ability_Input_Swirl;
+	FGameplayTag Ability_Input_Dash;
+	FGameplayTag Ability_Input_KnifeThrow;
+	FGameplayTag Ability_Input_TargetLock;
 
 	// Cooldowns
 	FGameplayTag Ability_CD_Healing;

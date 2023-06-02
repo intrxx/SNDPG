@@ -53,8 +53,13 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Ability_Behavior_BlockStaminaRegen, "Ability.Behavior.BlockStaminaRegen", "Tag used to block stamina regen while attacking");
 	
 	// Ability Input
-	AddTag(Ability_Input_Melee, "Ability.Input.Melee", "Melee ability input.");
+	AddTag(Ability_Input_LightMelee, "Ability.Input.Melee.Light", "Melee ability input.");
+	AddTag(Ability_Input_HeavyMelee, "Ability.Input.Melee.Heavy", "Melee ability input.");
 	AddTag(Ability_Input_Healing, "Ability.Input.Healing", "Healing ability input.");
+	AddTag(Ability_Input_Dash, "Ability.Input.Dash", "Dash ability input.");
+	AddTag(Ability_Input_Swirl, "Ability.Input.Swirl", "Swirl ability input.");
+	AddTag(Ability_Input_KnifeThrow, "Ability.Input.KnifeThrow", "Knife Throw ability input.");
+	AddTag(Ability_Input_TargetLock, "Ability.Input.TargetLock", "Target Lock ability input.");
 
 	// Ability Cooldown
 	AddTag(Ability_CD_Healing, "Ability.CD.Healing", "Tag used for healing cooldown");
