@@ -1,47 +1,45 @@
-// Copyright 2023 Michal Oginski.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GAS/Executions/SNDamageExecutionCalculation.h"
+#include "GAS/Executions/SNAbilityExecutionCalculation.h"
+
 #include "GAS/SNAbilitySystemComponent.h"
 #include "GAS/Attributes/SNBasicAttributes.h"
 
-
-struct SNDamageStatics
+struct SNAbilityStatics
 {
 	DECLARE_ATTRIBUTE_CAPTUREDEF(Damage);
-	
-	FGameplayEffectAttributeCaptureDefinition ArmourDef;
-	FGameplayEffectAttributeCaptureDefinition StrengthDef;
+
+	FGameplayEffectAttributeCaptureDefinition ArcaneDef;
 	FGameplayEffectAttributeCaptureDefinition EnduranceDef;
 
-	SNDamageStatics()
+	SNAbilityStatics()
 	{
 		DEFINE_ATTRIBUTE_CAPTUREDEF(USNBasicAttributes, Damage, Source, true);
 
-		ArmourDef = FGameplayEffectAttributeCaptureDefinition(USNBasicAttributes::GetArmourAttribute(), EGameplayEffectAttributeCaptureSource::Target, false);
-		StrengthDef = FGameplayEffectAttributeCaptureDefinition(USNBasicAttributes::GetStrengthAttribute(), EGameplayEffectAttributeCaptureSource::Source, true);
+		ArcaneDef = FGameplayEffectAttributeCaptureDefinition(USNBasicAttributes::GetArcaneAttribute(), EGameplayEffectAttributeCaptureSource::Source, true);
 		EnduranceDef = FGameplayEffectAttributeCaptureDefinition(USNBasicAttributes::GetEnduranceAttribute(), EGameplayEffectAttributeCaptureSource::Target, false);
 	}
 };
 
-static const SNDamageStatics& DamageStatics()
+static const SNAbilityStatics& AbilityStatics()
 {
-	static SNDamageStatics SNDamageStats;
-	return SNDamageStats;
-}
-USNDamageExecutionCalculation::USNDamageExecutionCalculation()
-{
-	RelevantAttributesToCapture.Add(DamageStatics().DamageDef);
-	RelevantAttributesToCapture.Add(DamageStatics().ArmourDef);
-	RelevantAttributesToCapture.Add(DamageStatics().StrengthDef);
-	RelevantAttributesToCapture.Add(DamageStatics().EnduranceDef);
+	static SNAbilityStatics AbilityStatics;
+	return AbilityStatics;
 }
 
-void USNDamageExecutionCalculation::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
+USNAbilityExecutionCalculation::USNAbilityExecutionCalculation()
+{
+	RelevantAttributesToCapture.Add(AbilityStatics().ArcaneDef);
+	RelevantAttributesToCapture.Add(AbilityStatics().DamageDef);
+	RelevantAttributesToCapture.Add(AbilityStatics().EnduranceDef);
+}
+
+void USNAbilityExecutionCalculation::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
 	FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
 	Super::Execute_Implementation(ExecutionParams, OutExecutionOutput);
-	
+
 	UAbilitySystemComponent* TargetAbilitySystemComponent = ExecutionParams.GetTargetAbilitySystemComponent();
 	UAbilitySystemComponent* SourceAbilitySystemComponent = ExecutionParams.GetSourceAbilitySystemComponent();
 
@@ -57,36 +55,28 @@ void USNDamageExecutionCalculation::Execute_Implementation(const FGameplayEffect
 	EvaluateParameters.TargetTags = TargetTags;
 	EvaluateParameters.SourceTags = SourceTags;
 
-	float Armour = 0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().ArmourDef, EvaluateParameters, Armour);
-	Armour = FMath::Max<float>(Armour, 0.0f);
+	float Arcane = 0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(AbilityStatics().ArcaneDef, EvaluateParameters, Arcane);
+	Arcane = FMath::Max<float>(Arcane, 0.0f);
 	
 	float Damage = 0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().DamageDef, EvaluateParameters, Damage);
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(AbilityStatics().DamageDef, EvaluateParameters, Damage);
 	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Ability.Data.Damage")), true, -1.0f), 0.0f);
 	
-	float Strength = 0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().StrengthDef, EvaluateParameters, Strength);
-	Strength = FMath::Max<float>(Strength, 0.0f);
-
 	float Endurance = 0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().EnduranceDef, EvaluateParameters, Endurance);
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(AbilityStatics().EnduranceDef, EvaluateParameters, Endurance);
 	Endurance = FMath::Max<float>(Endurance, 0.0f);
 	
 	// Apply buffs and debuffs below
-	float UnmitigatedDamage = Damage + FMath::FRandRange(0, Strength);
+	float UnmitigatedDamage = Damage + FMath::FRandRange(0, Arcane);
 	
 	float MitigatedDamage = UnmitigatedDamage - FMath::FRandRange(0, Endurance);
-	if(Armour > 0)
-	{
-		MitigatedDamage -= Armour/100;
-	}
-
+	
 	MitigatedDamage = FMath::RoundToFloat(MitigatedDamage);
 	
 	if(MitigatedDamage > 0.0f)
 	{
-		OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(DamageStatics().DamageProperty, EGameplayModOp::Additive, MitigatedDamage));
+		OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(AbilityStatics().DamageProperty, EGameplayModOp::Additive, MitigatedDamage));
 
 		USNAbilitySystemComponent* TargetASC = Cast<USNAbilitySystemComponent>(TargetAbilitySystemComponent);
 		if(TargetASC)

@@ -41,6 +41,8 @@ public:
 
 	// Cooldowns
 	FGameplayTag Ability_CD_Healing;
+	FGameplayTag Ability_CD_ManaRestoring;
+	FGameplayTag Ability_CD_SwirlSwing;
 
 	// Data
 	FGameplayTag HitTag_HeroMelee;
