@@ -55,6 +55,11 @@ public:
 	
 	void TryActivateAbilityOnSpawn(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) const;
 
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Ability Proprietes")
+	bool bShouldBlockStaminaRegen = false;
+	
+
 protected:
 	virtual void OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 

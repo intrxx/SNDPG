@@ -190,8 +190,9 @@ void USNAbilitySystemComponent::NotifyAbilityActivated(const FGameplayAbilitySpe
 
 	// Add and remove Stamina blockage To 4 seconds after attack
 	const FSNGameplayTags& GameplayTags = FSNGameplayTags::Get();
-	
-	if(Cast<USNGameplayAbility_Melee>(Ability))
+
+	USNGameplayAbility* SNAbility = Cast<USNGameplayAbility>(Ability);
+	if(SNAbility && SNAbility->bShouldBlockStaminaRegen)
 	{
 		AddLooseGameplayTag(GameplayTags.Ability_Behavior_BlockStaminaRegen, 1);
 

@@ -65,6 +65,8 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Ability_CD_Healing, "Ability.CD.Healing", "Tag used for healing cooldown");
 	AddTag(Ability_CD_ManaRestoring, "Ability.CD.ManaRestoring", "Tag used for Mana Restoring cooldown");
 	AddTag(Ability_CD_SwirlSwing, "Ability.CD.SwirlSwing", "Tag used for Swirl Swing cooldown");
+	AddTag(Ability_CD_Dash, "Ability.CD.Dash", "Tag used for Dash cooldown");
+	AddTag(Ability_CD_KnifeThrow, "Ability.CD.KnifeThrow", "Tag used for KnifeThrow cooldown");
 
 	// Notifiers Hit Tags
 	AddTag(HitTag_HeroMelee, "Ability.Data.HitTag.HeroMelee", "Tag used by notify to trigger event.");

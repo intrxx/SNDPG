@@ -63,11 +63,6 @@ void USNCombatComponent::EndTrace()
 	OnEndAttack.Broadcast();
 }
 
-void USNCombatComponent::SetupDebug(const bool bInDebug)
-{
-	bEnableDebug = bInDebug;
-}
-
 void USNCombatComponent::AddTraceMesh(UPrimitiveComponent* Mesh)
 {
 	if(!IsValid(Mesh))
@@ -87,11 +82,6 @@ void USNCombatComponent::RemoveTraceMesh(UPrimitiveComponent* Mesh)
 	}
 
 	TrackedMeshes.Remove(Mesh);
-}
-
-void USNCombatComponent::ClearAllMeshes()
-{
-	TrackedMeshes.Empty();
 }
 
 void USNCombatComponent::RefreshIgnoredActors()
@@ -131,7 +121,6 @@ void USNCombatComponent::GetPreviousPoints(const int32 Index, FVector& OutStart,
 {
 	if(Index < 0 || Index >= PreviousStarts.Num() || Index >= PreviousEnds.Num())
 	{
-		UE_LOG(LogTemp, Error, TEXT("Chujowy precious point!"));
 		return;
 	}
 

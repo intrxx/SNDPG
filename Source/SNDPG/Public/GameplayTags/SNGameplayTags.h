@@ -43,6 +43,8 @@ public:
 	FGameplayTag Ability_CD_Healing;
 	FGameplayTag Ability_CD_ManaRestoring;
 	FGameplayTag Ability_CD_SwirlSwing;
+	FGameplayTag Ability_CD_KnifeThrow;
+	FGameplayTag Ability_CD_Dash;
 
 	// Data
 	FGameplayTag HitTag_HeroMelee;

@@ -76,18 +76,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void EndTrace();
-
-	UFUNCTION(BlueprintCallable, Category = "Combat")
-	void SetupDebug(UPARAM(DisplayName="Debug") const bool bInDebug);
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void AddTraceMesh(UPrimitiveComponent* Mesh);
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void RemoveTraceMesh(UPrimitiveComponent* Mesh);
-
-	UFUNCTION(BlueprintCallable, Category = "Combat")
-	void ClearAllMeshes();
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void RefreshIgnoredActors();
