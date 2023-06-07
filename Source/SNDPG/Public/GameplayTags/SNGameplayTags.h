@@ -39,6 +39,15 @@ public:
 	FGameplayTag Ability_Input_KnifeThrow;
 	FGameplayTag Ability_Input_TargetLock;
 
+	// Ability tags
+	FGameplayTag Ability_LightMelee;
+	FGameplayTag Ability_HeavyMelee;
+	FGameplayTag Ability_Healing;
+	FGameplayTag Ability_SwirlSwing;
+	FGameplayTag Ability_Dash;
+	FGameplayTag Ability_KnifeThrow;
+	FGameplayTag Ability_TargetLock;
+
 	// Cooldowns
 	FGameplayTag Ability_CD_Healing;
 	FGameplayTag Ability_CD_ManaRestoring;

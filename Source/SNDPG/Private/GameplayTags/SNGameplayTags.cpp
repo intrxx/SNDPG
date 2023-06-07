@@ -61,6 +61,15 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Ability_Input_KnifeThrow, "Ability.Input.KnifeThrow", "Knife Throw ability input.");
 	AddTag(Ability_Input_TargetLock, "Ability.Input.TargetLock", "Target Lock ability input.");
 
+	// Ability tags
+	AddTag(Ability_Dash, "Ability.Owned.Dash", "Dash owned tag.");
+	AddTag(Ability_Healing, "Ability.Owned.Healing", "Healing owned tag.");
+	AddTag(Ability_HeavyMelee, "Ability.Owned.HeavyMelee", "HeavyMelee owned tag.");
+	AddTag(Ability_LightMelee, "Ability.Owned.LightMelee", "LightMelee owned tag.");
+	AddTag(Ability_KnifeThrow, "Ability.Owned.KnifeThrow", "KnifeThrow owned tag.");
+	AddTag(Ability_SwirlSwing, "Ability.Owned.SwirlSwing", "SwirlSwing owned tag.");
+	AddTag(Ability_TargetLock, "Ability.Owned.TargetLock", "TargetLock owned tag.");
+
 	// Ability Cooldown
 	AddTag(Ability_CD_Healing, "Ability.CD.Healing", "Tag used for healing cooldown");
 	AddTag(Ability_CD_ManaRestoring, "Ability.CD.ManaRestoring", "Tag used for Mana Restoring cooldown");
