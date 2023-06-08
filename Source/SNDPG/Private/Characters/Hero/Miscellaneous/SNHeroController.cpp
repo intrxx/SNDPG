@@ -63,10 +63,17 @@ void ASNHeroController::CreateHeroHUD()
 	HeroHUD->SetStrength(AC->GetStrength());
 	HeroHUD->SetEndurance(AC->GetEndurance());
 	HeroHUD->SetFaith(AC->GetFaith());
-	HeroHUD->SetHealingRange(AC->GetHealing(), AC->GetFaith());
 	HeroHUD->SetVitality(AC->GetVitality());
 	HeroHUD->SetArcane(AC->GetArcane());
 	HeroHUD->SetMind(AC->GetMind());
+
+	// Set Damage/Healing ranges
+	HeroHUD->SetHealingRange(AC->GetHealing(), AC->GetFaith());
+	HeroHUD->SetR1Range(Hero->R1BaseDamage, AC->GetStrength());
+	HeroHUD->SetR2Range(Hero->R2BaseDamage, AC->GetStrength());
+	HeroHUD->SetL1Range(Hero->L1BaseDamage, AC->GetStrength());
+	HeroHUD->SetWeaponSpellDamage(Hero->WeaponSpellDamage, AC->GetArcane());
+	
 }
 
 USNHeroHUD* ASNHeroController::GetHeroHUD()

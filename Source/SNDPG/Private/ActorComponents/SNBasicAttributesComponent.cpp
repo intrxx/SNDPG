@@ -635,6 +635,9 @@ void USNBasicAttributesComponent::StrengthChanged(const FOnAttributeChangeData& 
 			if(HeroHUD)
 			{
 				HeroHUD->SetStrength(Strength);
+				HeroHUD->SetR1Range(HeroOwner->R1BaseDamage, Strength);
+				HeroHUD->SetR2Range(HeroOwner->R2BaseDamage, Strength);
+				HeroHUD->SetL1Range(HeroOwner->L1BaseDamage, Strength);
 			}
 		}
 	}
@@ -744,6 +747,7 @@ void USNBasicAttributesComponent::ArcaneChanged(const FOnAttributeChangeData& Da
 			if(HeroHUD)
 			{
 				HeroHUD->SetArcane(Arcane);
+				HeroHUD->SetWeaponSpellDamage(HeroOwner->WeaponSpellDamage, Arcane);
 			}
 		}
 	}

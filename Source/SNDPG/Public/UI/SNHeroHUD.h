@@ -65,10 +65,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetArmour(float Armour);
-
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void SetHealingRange(float Healing, float Faith);
-
+	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetLevelUpPoints(float LevelUpPoints);
 
@@ -80,6 +77,21 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetArcane(float Arcane);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetHealingRange(float Healing, float Faith);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetR1Range(float R1Damage, float Strength);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetR2Range(float R2Damage, float Strength);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetL1Range(float L1Damage, float Strength);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetWeaponSpellDamage(float WeaponSpellDamage, float Arcane);
 
 public:
 	bool bIsCharacterStatusVisible = false;

@@ -21,6 +21,7 @@ namespace Hero
 	static const float LookYawRate = 245.0f;
 	static const float LookPitchRate = 145.0f;
 }
+
 /**
  *  ASNHero
  *
@@ -50,6 +51,27 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void RemoveStaminaBlockTag(float Count);
 
+public:
+	/*
+	 * Just a place holder really, in the future the damage should come from items.
+	 * TODO Change it to the Weapon Damage in HeroController and BasicAttributesComponent.
+	 */
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|AbilitiesBaseDamage")
+	float R1BaseDamage = 50.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|AbilitiesBaseDamage")
+	float R2BaseDamage = 100.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|AbilitiesBaseDamage")
+	float L1BaseDamage = 30.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|AbilitiesBaseDamage")
+	float WeaponSpellDamage = 200.0f;
+
+	/*
+	 */
+	
 protected:
 	virtual void BeginPlay() override;
 
