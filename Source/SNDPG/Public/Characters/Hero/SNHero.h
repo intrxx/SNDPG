@@ -9,6 +9,7 @@
 #include "GAS/SNGameplayAbility.h"
 #include "SNHero.generated.h"
 
+class USNInventoryComponent;
 class USNCombatComponent;
 class USNInputConfig;
 class UCameraComponent;
@@ -50,6 +51,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void RemoveStaminaBlockTag(float Count);
+
+	UFUNCTION(BlueprintCallable, Category = "SN|InventorySystem")
+	void UseItem(class USNItemBase* ItemToUse);
 
 public:
 	/*
@@ -119,4 +123,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
 	USNCombatComponent* CombatComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	USNInventoryComponent* InventoryComponent;
 };

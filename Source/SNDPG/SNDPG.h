@@ -1,4 +1,4 @@
-        // Copyright 2023 Michal Oginski.
+// Copyright 2023 Michal Oginski.
 
 #pragma once
 

@@ -15,6 +15,8 @@
 #include "GameplayTags/SNGameplayTags.h"
 #include "GAS/SNAbilitySet.h"
 #include "Input/SNEnhancedInputComponent.h"
+#include "InventorySystem/SNInventoryComponent.h"
+#include "InventorySystem/SNItemBase.h"
 #include "UI/SNHeroHUD.h"
 
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
@@ -56,6 +58,9 @@ ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	AttributesComponent = CreateDefaultSubobject<USNBasicAttributesComponent>(TEXT("BasicAttributesComponent"));
 	AttributesComponent->OnDeathStarted.AddDynamic(this, &ThisClass::OnDeathStarted);
 	AttributesComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
+
+	InventoryComponent = CreateDefaultSubobject<USNInventoryComponent>(TEXT("InventoryComponent"));
+	InventoryComponent->InventoryCapacity = 30;
 }
 
 void ASNHero::PossessedBy(AController* NewController)
@@ -98,6 +103,15 @@ void ASNHero::OnDeathFinished(AActor* OwningActor)
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::DestroyDueToDeath);
 }
 
+void ASNHero::UseItem(USNItemBase* ItemToUse)
+{
+	if(ItemToUse)
+	{
+		ItemToUse->Use(this);
+		ItemToUse->OnUse(this); //BP Event 
+	}
+}
+
 void ASNHero::DestroyDueToDeath()
 {
 	Super::DestroyDueToDeath();
@@ -136,8 +150,6 @@ void ASNHero::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
 		}
 	}
-
-	
 }
 
 void ASNHero::InputAbilityInputTagPressed(FGameplayTag InputTag)

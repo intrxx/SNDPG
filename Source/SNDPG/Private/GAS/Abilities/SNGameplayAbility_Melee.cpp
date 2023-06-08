@@ -1,10 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2023 Michal Oginski.
 
 
 #include "GAS/Abilities/SNGameplayAbility_Melee.h"
-#include "ActorComponents/SNCombatComponent.h"
 #include "Characters/Hero/SNHero.h"
-#include "UI/SNHeroHUD.h"
 
 USNGameplayAbility_Melee::USNGameplayAbility_Melee(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -15,11 +13,6 @@ void USNGameplayAbility_Melee::ActivateAbility(const FGameplayAbilitySpecHandle 
                                                const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                                const FGameplayEventData* TriggerEventData)
 {
-	ASNHero* Hero = Cast<ASNHero>(GetSNHeroFromActorInfo());
-	if(Hero)
-	{
-		//Hero->StartMeleeCombo();
-	}
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
 
