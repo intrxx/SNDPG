@@ -1,8 +1,8 @@
-// Copyright 2023 Michal Oginski.
+// Copyright 2023 Michał Ogiński.
 
 
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
-
+#include "UI/SNInventoryWidget.h"
 #include "Characters/Hero/SNHero.h"
 #include "ActorComponents/SNBasicAttributesComponent.h"
 #include "UI/SNHeroHUD.h"
@@ -76,9 +76,23 @@ void ASNHeroController::CreateHeroHUD()
 	
 }
 
-USNHeroHUD* ASNHeroController::GetHeroHUD()
+void ASNHeroController::CreateInventoryUI()
 {
-	return HeroHUD;
+	if(InventoryWidget)
+	{
+		return;
+	}
+
+	if(!InventoryWidgetClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing InventoryWidgetClass. Fill in on the BP in PlayerController."), *FString(__FUNCTION__));
+		return;
+	}
+
+	ASNHero* Hero = Cast<ASNHero>(GetCharacter());
+
+	InventoryWidget = CreateWidget<USNInventoryWidget>(this, InventoryWidgetClass);
+	InventoryWidget->AddToViewport();
 }
 
 void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter)

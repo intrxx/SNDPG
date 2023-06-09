@@ -1,4 +1,4 @@
-// Copyright 2023 Michal Oginski.
+// Copyright 2023 Michał Ogiński.
 
 
 #include "Characters/Hero/SNHero.h"
@@ -79,7 +79,10 @@ void ASNHero::PossessedBy(AController* NewController)
 	AttributesComponent->InitializeWithAbilitySystem(AbilitySystemComponent.Get());
 
 	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+	check(PC);
+	
 	PC->CreateHeroHUD();
+	PC->CreateInventoryUI();
 	
 	//FOR DEBUG
 	/*
@@ -136,6 +139,8 @@ void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		&ThisClass::LookStick);
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleCharacterStatus, ETriggerEvent::Triggered,
 		this, &ThisClass::ToggleCharacterStatus);
+	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleInventory, ETriggerEvent::Triggered,
+		this, &ThisClass::ToggleInventory);
 }
 
 void ASNHero::BeginPlay()
@@ -235,18 +240,20 @@ void ASNHero::ToggleCharacterStatus()
 					Subsystem->RemoveMappingContext(HUDMappingContext);
 					Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
 					Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
-					PC->SetShowMouseCursor(false);
 				}
 				else
 				{
 					PC->GetHeroHUD()->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = true);
 					Subsystem->ClearAllMappings();
 					Subsystem->AddMappingContext(HUDMappingContext, 1);
-					PC->SetShowMouseCursor(true);
 				}
 			}
 		}
 	}
+}
+
+void ASNHero::ToggleInventory()
+{
 }
 
 void ASNHero::SetGamePause(bool bIsPaused)

@@ -47,7 +47,11 @@ bool USNInventoryComponent::RemoveItem(USNItemBase* ItemToRemove)
 void USNInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	for(auto& Item : DefaultItems)
+	{
+		AddItem(Item);
+	}
 }
 
 

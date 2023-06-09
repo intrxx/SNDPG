@@ -89,6 +89,7 @@ protected:
 	void LookStick(const FInputActionValue& Value);
 	
 	void ToggleCharacterStatus();
+	void ToggleInventory();
 
 	void SetGamePause(bool bIsPaused);
 

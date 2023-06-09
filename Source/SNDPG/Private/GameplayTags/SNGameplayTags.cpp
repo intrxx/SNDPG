@@ -44,6 +44,7 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Input_Look_Mouse, "Input.Look.Mouse", "Look input with mouse.");
 	AddTag(Input_Look_Stick, "Input.Look.Stick", "Look input with stick.");
 	AddTag(Input_ToggleCharacterStatus, "Input.ToggleCharacterStatus", "Toggle input for Character Status Tab.");
+	AddTag(Input_ToggleInventory, "Input.ToggleInventory", "Toggle input for Character Inventory Tab.");
 
 	// Events
 	AddTag(GameplayEvent_Death, "GameplayEvent.Death", "Event that fires on Death");

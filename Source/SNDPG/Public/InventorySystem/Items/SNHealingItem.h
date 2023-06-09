@@ -21,7 +21,7 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SN|HealingItem")
-	USNGameplayAbility* AbilityToUse;
+	TSubclassOf<USNGameplayAbility> AbilityToUse = nullptr;
 	
 protected:
 	virtual void Use(ASNHero* Hero) override;

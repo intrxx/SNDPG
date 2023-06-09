@@ -19,6 +19,9 @@ public:
 	bool AddItem(class USNItemBase* ItemToAdd);
 	bool RemoveItem(class USNItemBase* ItemToRemove);
 
+	UFUNCTION(BlueprintPure, Category = "Inventory")
+	static USNInventoryComponent* FindInventoryComponent(const AActor* Actor) {return (Actor ? Actor->FindComponentByClass<USNInventoryComponent>() : nullptr);}
+
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "SN|InventoryComponent")
 	int32 InventoryCapacity = 0;

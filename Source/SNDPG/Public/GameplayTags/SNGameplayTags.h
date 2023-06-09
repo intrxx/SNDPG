@@ -22,6 +22,7 @@ public:
 	FGameplayTag Input_Look_Stick;
 	FGameplayTag Input_Look_Mouse;
 	FGameplayTag Input_ToggleCharacterStatus;
+	FGameplayTag Input_ToggleInventory;
 
 	// Events
 	FGameplayTag GameplayEvent_Death;
