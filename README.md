@@ -37,7 +37,7 @@ Engineering Thesis ARPG project in Unreal Engine 5.1 using Gameplay Ability Syst
 ### Combat
 - **RB** - Attack
 - **RT** - Heavy Attack
-- ** LT** - Weapon Skill
+- **LT** - Weapon Skill
 - **X** - Use Item
 
 ### Menu
