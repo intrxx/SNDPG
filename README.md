@@ -20,6 +20,7 @@ Engineering Thesis ARPG project in Unreal Engine 5.1 using Gameplay Ability Syst
 - **Shift + Left Click** - Heavy Attack
 - **R** - Weapon Skill
 - **E** - Use Item
+- **Middle Mouse Button** - Lock onto target
 
 ### Menu
 - **ESC** - Main Menu
@@ -39,6 +40,7 @@ Engineering Thesis ARPG project in Unreal Engine 5.1 using Gameplay Ability Syst
 - **RT** - Heavy Attack
 - **LT** - Weapon Skill
 - **X** - Use Item
+- **Right Stick Press** - Lock onto target
 
 ### Menu
 - **Menu button** - Main Menu
