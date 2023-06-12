@@ -18,6 +18,7 @@
 #include "InventorySystem/SNInventoryComponent.h"
 #include "InventorySystem/SNItemBase.h"
 #include "UI/SNHeroHUD.h"
+#include "UI/SNInventoryWidget.h"
 
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -254,6 +255,31 @@ void ASNHero::ToggleCharacterStatus()
 
 void ASNHero::ToggleInventory()
 {
+	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+	if(PC)
+	{
+		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer());
+		if(Subsystem)
+		{
+			USNInventoryWidget* Inventory = PC->GetInventoryUI();
+			if(Inventory)
+			{
+				if(Inventory->bIsCharacterInventoryVisible)
+				{
+					Inventory->ToggleCharacterInventory(Inventory->bIsCharacterInventoryVisible = false);
+					Subsystem->RemoveMappingContext(HUDMappingContext);
+					Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
+					Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
+				}
+				else
+				{
+					Inventory->ToggleCharacterInventory(Inventory->bIsCharacterInventoryVisible = true);
+					Subsystem->ClearAllMappings();
+					Subsystem->AddMappingContext(HUDMappingContext, 1);
+				}
+			}
+		}
+	}
 }
 
 void ASNHero::SetGamePause(bool bIsPaused)

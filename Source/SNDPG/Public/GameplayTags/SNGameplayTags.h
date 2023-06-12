@@ -1,4 +1,4 @@
-// Copyright 2023 Michal Oginski.
+// Copyright 2023 Michał Ogiński.
 
 #pragma once
 
@@ -23,6 +23,7 @@ public:
 	FGameplayTag Input_Look_Mouse;
 	FGameplayTag Input_ToggleCharacterStatus;
 	FGameplayTag Input_ToggleInventory;
+	FGameplayTag Input_ToggleInGameMenu;
 
 	// Events
 	FGameplayTag GameplayEvent_Death;
