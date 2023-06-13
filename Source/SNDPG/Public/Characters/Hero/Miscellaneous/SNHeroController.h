@@ -7,6 +7,8 @@
 #include "GameFramework/PlayerController.h"
 #include "SNHeroController.generated.h"
 
+class USNCharacterStatusWidget;
+class USNInGameMenu;
 class USNInventoryWidget;
 class USNBasicAttributesComponent;
 class USNHeroHUD;
@@ -29,15 +31,22 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController")
 	USNAbilitySystemComponent* GetSNAbilitySystemComponent() const;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController|UI")
 	USNHeroHUD* GetHeroHUD() {return HeroHUD;}
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController|UI")
 	USNInventoryWidget* GetInventoryUI() {return InventoryWidget;}
-	
+
+	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController|UI")
+	USNInGameMenu* GetInGameMenuUI() {return InGameMenuWidget;}
+
+	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController|UI")
+	USNCharacterStatusWidget* GetCharacterStatusUI() {return CharacterStatusWidget;}
 	
 	void CreateHeroHUD();
 	void CreateInventoryUI();
+	void CreateInGameMenuUI();
+	void CreateCharacterStatusUI(const USNBasicAttributesComponent* AttributesComp);
 
 	void ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter);
 	
@@ -57,6 +66,18 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Hero|UI")
 	USNInventoryWidget* InventoryWidget;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Hero|UI")
+	TSubclassOf<USNInGameMenu> InGameMenuWidgetClass;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Hero|UI")
+	USNInGameMenu* InGameMenuWidget;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Hero|UI")
+	TSubclassOf<USNCharacterStatusWidget> CharacterStatusWidgetClass;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Hero|UI")
+	USNCharacterStatusWidget* CharacterStatusWidget;
 	
 protected:
 	virtual void PreProcessInput(const float DeltaTime, const bool bGamePaused) override;

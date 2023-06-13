@@ -9,6 +9,8 @@
 #include "ActorComponents/SNBasicAttributesComponent.h"
 #include "ActorComponents/SNCombatComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "UI/SNInGameMenu.h"
+#include "UI/SNCharacterStatusWidget.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "Components/CapsuleComponent.h"
@@ -17,7 +19,6 @@
 #include "Input/SNEnhancedInputComponent.h"
 #include "InventorySystem/SNInventoryComponent.h"
 #include "InventorySystem/SNItemBase.h"
-#include "UI/SNHeroHUD.h"
 #include "UI/SNInventoryWidget.h"
 
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
@@ -83,7 +84,6 @@ void ASNHero::PossessedBy(AController* NewController)
 	check(PC);
 	
 	PC->CreateHeroHUD();
-	PC->CreateInventoryUI();
 	
 	//FOR DEBUG
 	/*
@@ -116,6 +116,21 @@ void ASNHero::UseItem(USNItemBase* ItemToUse)
 	}
 }
 
+void ASNHero::ApplyGameplayInputMappings()
+{
+	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+	if(PC)
+	{
+		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer());
+		if(Subsystem)
+		{
+			Subsystem->ClearAllMappings();
+			Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
+			Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
+		}
+	}
+}
+
 void ASNHero::DestroyDueToDeath()
 {
 	Super::DestroyDueToDeath();
@@ -142,6 +157,8 @@ void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		this, &ThisClass::ToggleCharacterStatus);
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleInventory, ETriggerEvent::Triggered,
 		this, &ThisClass::ToggleInventory);
+	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleInGameMenu, ETriggerEvent::Triggered,
+		this, &ThisClass::ToggleInGameMenu);
 }
 
 void ASNHero::BeginPlay()
@@ -232,19 +249,19 @@ void ASNHero::ToggleCharacterStatus()
 		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer());
 		if(Subsystem)
 		{
-			USNHeroHUD* HUD = PC->GetHeroHUD();
-			if(HUD)
+			USNCharacterStatusWidget* Status = PC->GetCharacterStatusUI();
+			if(Status)
 			{
-				if(HUD->bIsCharacterStatusVisible)
+				if(Status->bIsCharacterStatusVisible)
 				{
-					HUD->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = false);
+					Status->ToggleCharacterStatus(Status->bIsCharacterStatusVisible = false);
 					Subsystem->RemoveMappingContext(HUDMappingContext);
 					Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
 					Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
 				}
 				else
 				{
-					PC->GetHeroHUD()->ToggleCharacterStatusEvent(HUD->bIsCharacterStatusVisible = true);
+					Status->ToggleCharacterStatus(Status->bIsCharacterStatusVisible = true);
 					Subsystem->ClearAllMappings();
 					Subsystem->AddMappingContext(HUDMappingContext, 1);
 				}
@@ -274,6 +291,36 @@ void ASNHero::ToggleInventory()
 				else
 				{
 					Inventory->ToggleCharacterInventory(Inventory->bIsCharacterInventoryVisible = true);
+					Subsystem->ClearAllMappings();
+					Subsystem->AddMappingContext(HUDMappingContext, 1);
+				}
+			}
+		}
+	}
+}
+
+void ASNHero::ToggleInGameMenu()
+{
+	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+	if(PC)
+	{
+		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer());
+		if(Subsystem)
+		{
+			USNInGameMenu* InGameMenu = PC->GetInGameMenuUI();
+			if(InGameMenu)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("toggling"));
+				if(InGameMenu->bIsInGameMenuVisible)
+				{
+					InGameMenu->ToggleInGameMenu(InGameMenu->bIsInGameMenuVisible = false);
+					Subsystem->RemoveMappingContext(HUDMappingContext);
+					Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
+					Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
+				}
+				else
+				{
+					InGameMenu->ToggleInGameMenu(InGameMenu->bIsInGameMenuVisible = true);
 					Subsystem->ClearAllMappings();
 					Subsystem->AddMappingContext(HUDMappingContext, 1);
 				}

@@ -6,6 +6,8 @@
 #include "Characters/Hero/SNHero.h"
 #include "ActorComponents/SNBasicAttributesComponent.h"
 #include "UI/SNHeroHUD.h"
+#include "UI/SNInGameMenu.h"
+#include "UI/SNCharacterStatusWidget.h"
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "GAS/SNAbilitySystemComponent.h"
 #include "UI/SNFloatingDmgNumberWComponent.h"
@@ -38,42 +40,27 @@ void ASNHeroController::CreateHeroHUD()
 		return;
 	}
 	
-	ASNHero* Hero = Cast<ASNHero>(GetCharacter());
-	const USNBasicAttributesComponent* AC = USNBasicAttributesComponent::FindAttributeComponent(Hero);
-	
 	HeroHUD = CreateWidget<USNHeroHUD>(this, HeroHUDClass);
 	HeroHUD->AddToViewport();
-
-	HeroHUD->SetHealth(AC->GetHealth());
-	HeroHUD->SetMaxHealth(AC->GetMaxHealth());
-	HeroHUD->SetHealthPercentage(AC->GetHealth() / FMath::Max<float>(AC->GetMaxHealth(), 1.0f));
-
-	HeroHUD->SetResource(AC->GetResource());
-	HeroHUD->SetMaxResource(AC->GetMaxResource());
-	HeroHUD->SetResourcePercentage(AC->GetResource() / FMath::Max<float>(AC->GetMaxResource(), 1.0f));
-
-	HeroHUD->SetStamina(AC->GetStamina());
-	HeroHUD->SetMaxStamina(AC->GetMaxStamina());
-	HeroHUD->SetStaminaPercentage(AC->GetStamina() / FMath::Max<float>(AC->GetMaxStamina(), 1.0f));
-
-	HeroHUD->SetCharacterLevel(AC->GetCharacterLevel());
-	HeroHUD->SetExperience(AC->GetExperience());
-	HeroHUD->SetMaxExperience(AC->GetMaxExperience());
-	HeroHUD->SetArmour(AC->GetArmour());
-	HeroHUD->SetStrength(AC->GetStrength());
-	HeroHUD->SetEndurance(AC->GetEndurance());
-	HeroHUD->SetFaith(AC->GetFaith());
-	HeroHUD->SetVitality(AC->GetVitality());
-	HeroHUD->SetArcane(AC->GetArcane());
-	HeroHUD->SetMind(AC->GetMind());
-
-	// Set Damage/Healing ranges
-	HeroHUD->SetHealingRange(AC->GetHealing(), AC->GetFaith());
-	HeroHUD->SetR1Range(Hero->R1BaseDamage, AC->GetStrength());
-	HeroHUD->SetR2Range(Hero->R2BaseDamage, AC->GetStrength());
-	HeroHUD->SetL1Range(Hero->L1BaseDamage, AC->GetStrength());
-	HeroHUD->SetWeaponSpellDamage(Hero->WeaponSpellDamage, AC->GetArcane());
 	
+	ASNHero* Hero = Cast<ASNHero>(GetCharacter());
+	check(Hero);
+	
+	const USNBasicAttributesComponent* AttributesComp = USNBasicAttributesComponent::FindAttributeComponent(Hero);
+	check(AttributesComp);
+	
+	HeroHUD->SetHealthPercentage(AttributesComp->GetHealth() / FMath::Max<float>(AttributesComp->GetMaxHealth(), 1.0f));
+	HeroHUD->SetMaxHealth(AttributesComp->GetMaxHealth());
+	
+	HeroHUD->SetResourcePercentage(AttributesComp->GetResource() / FMath::Max<float>(AttributesComp->GetMaxResource(), 1.0f));
+	HeroHUD->SetMaxResource(AttributesComp->GetMaxResource());
+	
+	HeroHUD->SetStaminaPercentage(AttributesComp->GetStamina() / FMath::Max<float>(AttributesComp->GetMaxStamina(), 1.0f));
+	HeroHUD->SetMaxStamina(AttributesComp->GetMaxStamina());
+	
+	CreateCharacterStatusUI(AttributesComp);
+	CreateInventoryUI();
+	CreateInGameMenuUI();
 }
 
 void ASNHeroController::CreateInventoryUI()
@@ -88,11 +75,77 @@ void ASNHeroController::CreateInventoryUI()
 		UE_LOG(LogTemp, Error, TEXT("%s() Missing InventoryWidgetClass. Fill in on the BP in PlayerController."), *FString(__FUNCTION__));
 		return;
 	}
-
-	ASNHero* Hero = Cast<ASNHero>(GetCharacter());
-
+	
 	InventoryWidget = CreateWidget<USNInventoryWidget>(this, InventoryWidgetClass);
 	InventoryWidget->AddToViewport();
+	InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
+}
+
+void ASNHeroController::CreateInGameMenuUI()
+{
+	if(InGameMenuWidget)
+	{
+		return;
+	}
+
+	if(!InGameMenuWidgetClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing InGameMenuClass. Fill in on the BP in PlayerController."), *FString(__FUNCTION__));
+		return;
+	}
+
+	InGameMenuWidget = CreateWidget<USNInGameMenu>(this, InGameMenuWidgetClass);
+	InGameMenuWidget->AddToViewport();
+	InGameMenuWidget->SetVisibility(ESlateVisibility::Collapsed);
+}
+
+void ASNHeroController::CreateCharacterStatusUI(const USNBasicAttributesComponent* AttributesComp)
+{
+	if(CharacterStatusWidget)
+	{
+		return;
+	}
+
+	if(!CharacterStatusWidgetClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing InGameMenuClass. Fill in on the BP in PlayerController."), *FString(__FUNCTION__));
+		return;
+	}
+	
+	ASNHero* Hero = Cast<ASNHero>(GetCharacter());
+	check(Hero);
+	
+	CharacterStatusWidget = CreateWidget<USNCharacterStatusWidget>(this, CharacterStatusWidgetClass);
+	CharacterStatusWidget->AddToViewport();
+	CharacterStatusWidget->SetVisibility(ESlateVisibility::Collapsed);
+	
+	CharacterStatusWidget->SetHealth(AttributesComp->GetHealth());
+	CharacterStatusWidget->SetMaxHealth(AttributesComp->GetMaxHealth());
+	
+	CharacterStatusWidget->SetResource(AttributesComp->GetResource());
+	CharacterStatusWidget->SetMaxResource(AttributesComp->GetMaxResource());
+	
+	CharacterStatusWidget->SetStamina(AttributesComp->GetStamina());
+	CharacterStatusWidget->SetMaxStamina(AttributesComp->GetMaxStamina());
+	
+	CharacterStatusWidget->SetCharacterLevel(AttributesComp->GetCharacterLevel());
+	CharacterStatusWidget->SetLevelUpPoints(AttributesComp->GetLevelUpPoints());
+	CharacterStatusWidget->SetExperience(AttributesComp->GetExperience());
+	CharacterStatusWidget->SetMaxExperience(AttributesComp->GetMaxExperience());
+	CharacterStatusWidget->SetArmour(AttributesComp->GetArmour());
+	CharacterStatusWidget->SetStrength(AttributesComp->GetStrength());
+	CharacterStatusWidget->SetEndurance(AttributesComp->GetEndurance());
+	CharacterStatusWidget->SetFaith(AttributesComp->GetFaith());
+	CharacterStatusWidget->SetVitality(AttributesComp->GetVitality());
+	CharacterStatusWidget->SetArcane(AttributesComp->GetArcane());
+	CharacterStatusWidget->SetMind(AttributesComp->GetMind());
+
+	// Set Damage/Healing ranges
+	CharacterStatusWidget->SetHealingRange(AttributesComp->GetHealing(), AttributesComp->GetFaith());
+	CharacterStatusWidget->SetR1Range(Hero->R1BaseDamage, AttributesComp->GetStrength());
+	CharacterStatusWidget->SetR2Range(Hero->R2BaseDamage, AttributesComp->GetStrength());
+	CharacterStatusWidget->SetL1Range(Hero->L1BaseDamage, AttributesComp->GetStrength());
+	CharacterStatusWidget->SetWeaponSpellDamage(Hero->WeaponSpellDamage, AttributesComp->GetArcane());
 }
 
 void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter)
@@ -104,7 +157,6 @@ void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* Targe
 		FloatingText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 		FloatingText->SetDamageText(Amount);
 	}
-
 }
 
 void ASNHeroController::PreProcessInput(const float DeltaTime, const bool bGamePaused)

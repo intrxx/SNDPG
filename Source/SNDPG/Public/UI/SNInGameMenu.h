@@ -13,5 +13,11 @@ UCLASS()
 class SNDPG_API USNInGameMenu : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ToggleInGameMenu(bool bIsVisible);
+
+public:
+	bool bIsInGameMenuVisible = false;
 };

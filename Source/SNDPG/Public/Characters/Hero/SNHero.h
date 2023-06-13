@@ -55,6 +55,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SN|InventorySystem")
 	void UseItem(class USNItemBase* ItemToUse);
 
+	UFUNCTION(BlueprintCallable, Category = "SN|InputConfig")
+	void ApplyGameplayInputMappings();
+
 public:
 	/*
 	 * Just a place holder really, in the future the damage should come from items.
@@ -90,6 +93,7 @@ protected:
 	
 	void ToggleCharacterStatus();
 	void ToggleInventory();
+	void ToggleInGameMenu();
 
 	void SetGamePause(bool bIsPaused);
 

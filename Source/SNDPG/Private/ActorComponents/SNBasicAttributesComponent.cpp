@@ -8,6 +8,7 @@
 #include "GameplayTags/SNGameplayTags.h"
 #include "GAS/Attributes/SNBasicAttributes.h"
 #include "GAS/SNAbilitySystemComponent.h"
+#include "UI/SNCharacterStatusWidget.h"
 #include "UI/SNHealthBarWidget.h"
 #include "UI/SNHeroHUD.h"
 
@@ -442,8 +443,13 @@ void USNBasicAttributesComponent::HealthChanged(const FOnAttributeChangeData& Da
 			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
 			if(HeroHUD)
 			{
-				HeroHUD->SetHealth(Health);
 				HeroHUD->SetHealthPercentage(Health / GetMaxHealth());
+			}
+
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
+			{
+				Status->SetHealth(Health);
 			}
 		}
 	}
@@ -471,6 +477,12 @@ void USNBasicAttributesComponent::MaxHealthChanged(const FOnAttributeChangeData&
 			{
 				HeroHUD->SetMaxHealth(MaxHealth);
 				HeroHUD->SetHealthPercentage(GetHealth() / MaxHealth);
+			}
+
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
+			{
+				Status->SetMaxHealth(MaxHealth);
 			}
 		}
 	}
@@ -509,6 +521,12 @@ void USNBasicAttributesComponent::MaxResourceChanged(const FOnAttributeChangeDat
 				HeroHUD->SetMaxResource(MaxResource);
 				HeroHUD->SetResourcePercentage(GetResource() / MaxResource);
 			}
+
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
+			{
+				Status->SetMaxResource(MaxResource);
+			}
 		}
 	}
 }
@@ -546,6 +564,12 @@ void USNBasicAttributesComponent::MaxStaminaChanged(const FOnAttributeChangeData
 				HeroHUD->SetMaxStamina(MaxStamina);
 				HeroHUD->SetStaminaPercentage(GetStamina() / MaxStamina);
 			}
+
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
+			{
+				Status->SetMaxStamina(MaxStamina);
+			}
 		}
 	}
 }
@@ -559,10 +583,10 @@ void USNBasicAttributesComponent::ExperienceChanged(const FOnAttributeChangeData
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetExperience(Experience);
+				Status->SetExperience(Experience);
 			}
 		}
 	}
@@ -577,10 +601,10 @@ void USNBasicAttributesComponent::MaxExperienceChanged(const FOnAttributeChangeD
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetMaxExperience(MaxExperience);
+				Status->SetMaxExperience(MaxExperience);
 			}
 		}
 	}
@@ -595,10 +619,10 @@ void USNBasicAttributesComponent::CharacterLevelChanged(const FOnAttributeChange
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetCharacterLevel(CharacterLevel);
+				Status->SetCharacterLevel(CharacterLevel);
 			}
 		}
 	}
@@ -613,10 +637,10 @@ void USNBasicAttributesComponent::ArmourChanged(const FOnAttributeChangeData& Da
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetArmour(Armour);
+				Status->SetArmour(Armour);
 			}
 		}
 	}
@@ -631,13 +655,13 @@ void USNBasicAttributesComponent::StrengthChanged(const FOnAttributeChangeData& 
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetStrength(Strength);
-				HeroHUD->SetR1Range(HeroOwner->R1BaseDamage, Strength);
-				HeroHUD->SetR2Range(HeroOwner->R2BaseDamage, Strength);
-				HeroHUD->SetL1Range(HeroOwner->L1BaseDamage, Strength);
+				Status->SetStrength(Strength);
+				Status->SetR1Range(HeroOwner->R1BaseDamage, Strength);
+				Status->SetR2Range(HeroOwner->R2BaseDamage, Strength);
+				Status->SetL1Range(HeroOwner->L1BaseDamage, Strength);
 			}
 		}
 	}
@@ -652,10 +676,10 @@ void USNBasicAttributesComponent::EnduranceChanged(const FOnAttributeChangeData&
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetEndurance(Endurance);
+				Status->SetEndurance(Endurance);
 			}
 		}
 	}
@@ -670,11 +694,11 @@ void USNBasicAttributesComponent::FaithChanged(const FOnAttributeChangeData& Dat
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetFaith(Faith);
-				HeroHUD->SetHealingRange(GetHealing(), Faith);
+				Status->SetFaith(Faith);
+				Status->SetHealingRange(GetHealing(), Faith);
 			}
 		}
 	}
@@ -689,10 +713,10 @@ void USNBasicAttributesComponent::HealingChanged(const FOnAttributeChangeData& D
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetHealingRange(Healing, GetFaith());
+				Status->SetHealingRange(Healing, GetFaith());
 			}
 		}
 	}
@@ -707,10 +731,10 @@ void USNBasicAttributesComponent::LevelUpPointsChanged(const FOnAttributeChangeD
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetLevelUpPoints(LevelUpPoints);
+				Status->SetLevelUpPoints(LevelUpPoints);
 			}
 		}
 	}
@@ -725,10 +749,10 @@ void USNBasicAttributesComponent::VitalityChanged(const FOnAttributeChangeData& 
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetVitality(Vitality);
+				Status->SetVitality(Vitality);
 			}
 		}
 	}
@@ -743,11 +767,11 @@ void USNBasicAttributesComponent::ArcaneChanged(const FOnAttributeChangeData& Da
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetArcane(Arcane);
-				HeroHUD->SetWeaponSpellDamage(HeroOwner->WeaponSpellDamage, Arcane);
+				Status->SetArcane(Arcane);
+				Status->SetWeaponSpellDamage(HeroOwner->WeaponSpellDamage, Arcane);
 			}
 		}
 	}
@@ -762,10 +786,10 @@ void USNBasicAttributesComponent::MindChanged(const FOnAttributeChangeData& Data
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
 			{
-				HeroHUD->SetMind(Mind);
+				Status->SetMind(Mind);
 			}
 		}
 	}
