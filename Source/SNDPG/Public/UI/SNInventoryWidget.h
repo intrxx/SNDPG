@@ -18,6 +18,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void ToggleCharacterInventory(bool bIsVisible);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetGold(float Gold);
+
 public:
 	bool bIsCharacterInventoryVisible = false;
 };

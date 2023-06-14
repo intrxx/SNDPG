@@ -32,5 +32,8 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetStaminaPercentage(float StaminaPercentage);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetGold(float Gold);
 	
 };

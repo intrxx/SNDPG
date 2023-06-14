@@ -144,12 +144,19 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 						// Create a dynamic instant Gameplay Effect to give the bounties
 						UGameplayEffect* GEBounty = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("EarningExperience")));
 						GEBounty->DurationPolicy = EGameplayEffectDurationType::Instant;
+
+						int32 Index = GEBounty->Modifiers.Num();
+						GEBounty->Modifiers.SetNum(Index + 2);
 						
-						GEBounty->Modifiers.SetNum(1);
-						FGameplayModifierInfo& InfoXP = GEBounty->Modifiers[0];
+						FGameplayModifierInfo& InfoXP = GEBounty->Modifiers[Index];
 						InfoXP.ModifierMagnitude = FScalableFloat(GetExperienceBounty());
 						InfoXP.ModifierOp = EGameplayModOp::Additive;
 						InfoXP.Attribute = USNBasicAttributes::GetExperienceAttribute();
+
+						FGameplayModifierInfo& InfoGold = GEBounty->Modifiers[Index + 1];
+						InfoGold.ModifierMagnitude = FScalableFloat(GetGoldBounty());
+						InfoGold.ModifierOp = EGameplayModOp::Additive;
+						InfoGold.Attribute = USNBasicAttributes::GetGoldAttribute();
 						
 						Source->ApplyGameplayEffectToSelf(GEBounty, 1.0f, Source->MakeEffectContext());
 					}

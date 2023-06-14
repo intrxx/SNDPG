@@ -37,6 +37,9 @@ public:
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, MaxStamina);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Mind);
 	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Arcane);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Replenishing);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, Gold);
+	ATTRIBUTE_ACCESSORS(USNBasicAttributes, GoldBounty);
 
 	// Delegate to broadcast when the health attribute reaches zero.
 	mutable FSNAttributeEvent OnOutOfHealth;
@@ -102,6 +105,9 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
 	FGameplayAttributeData Healing;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData Replenishing;
 	
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
 	FGameplayAttributeData Damage;
@@ -117,4 +123,10 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
 	FGameplayAttributeData Mind;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData Gold;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SN|BasicAttributes", meta=(AllowPrivateAccess=true))
+	FGameplayAttributeData GoldBounty;
 };

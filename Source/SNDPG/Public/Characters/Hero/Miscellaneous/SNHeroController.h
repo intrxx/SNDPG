@@ -44,7 +44,7 @@ public:
 	USNCharacterStatusWidget* GetCharacterStatusUI() {return CharacterStatusWidget;}
 	
 	void CreateHeroHUD();
-	void CreateInventoryUI();
+	void CreateInventoryUI(const USNBasicAttributesComponent* AttributesComp);
 	void CreateInGameMenuUI();
 	void CreateCharacterStatusUI(const USNBasicAttributesComponent* AttributesComp);
 

@@ -11,6 +11,7 @@
 #include "UI/SNCharacterStatusWidget.h"
 #include "UI/SNHealthBarWidget.h"
 #include "UI/SNHeroHUD.h"
+#include "UI/SNInventoryWidget.h"
 
 // Sets default values for this component's properties
 USNBasicAttributesComponent::USNBasicAttributesComponent()
@@ -88,6 +89,10 @@ void USNBasicAttributesComponent::InitializeWithAbilitySystem(USNAbilitySystemCo
 		GetArcaneAttribute()).AddUObject(this, &ThisClass::ArcaneChanged);
 	MindChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		GetMindAttribute()).AddUObject(this, &ThisClass::MindChanged);
+	ReplenishingChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		GetReplenishingAttribute()).AddUObject(this, &ThisClass::ReplenishingChanged);
+	GoldChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		GetGoldAttribute()).AddUObject(this, &ThisClass::GoldChanged);
 
 	BasicAttributes->OnOutOfHealth.AddUObject(this, &ThisClass::HandleOutOfHealth);
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
@@ -180,6 +185,11 @@ float USNBasicAttributesComponent::GetHealing() const
 	return (BasicAttributes ? BasicAttributes->GetHealing() : 0.0f);
 }
 
+float USNBasicAttributesComponent::GetReplenishing() const
+{
+	return (BasicAttributes ? BasicAttributes->GetReplenishing() : 0.0f);
+}
+
 float USNBasicAttributesComponent::GetArcane() const
 {
 	return (BasicAttributes ? BasicAttributes->GetArcane() : 0.0f);
@@ -188,6 +198,11 @@ float USNBasicAttributesComponent::GetArcane() const
 float USNBasicAttributesComponent::GetMind() const
 {
 	return (BasicAttributes ? BasicAttributes->GetMind() : 0.0f);
+}
+
+float USNBasicAttributesComponent::GetGold() const
+{
+	return (BasicAttributes ? BasicAttributes->GetGold() : 0.0f);
 }
 
 FGameplayAttribute USNBasicAttributesComponent::GetHealthAttribute() const
@@ -250,6 +265,11 @@ FGameplayAttribute USNBasicAttributesComponent::GetHealingAttribute() const
 	return (BasicAttributes ? BasicAttributes->GetHealingAttribute() : nullptr);
 }
 
+FGameplayAttribute USNBasicAttributesComponent::GetReplenishingAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetReplenishingAttribute() : nullptr);
+}
+
 FGameplayAttribute USNBasicAttributesComponent::GetLevelUpPointsAttribute() const
 {
 	return (BasicAttributes ? BasicAttributes->GetLevelUpPointsAttribute() : nullptr);
@@ -277,6 +297,11 @@ FGameplayAttribute USNBasicAttributesComponent::GetArcaneAttribute() const
 FGameplayAttribute USNBasicAttributesComponent::GetMindAttribute() const
 {
 	return (BasicAttributes ? BasicAttributes->GetMindAttribute() : nullptr);
+}
+
+FGameplayAttribute USNBasicAttributesComponent::GetGoldAttribute() const
+{
+	return (BasicAttributes ? BasicAttributes->GetGoldAttribute() : nullptr);
 }
 
 // Called when the game starts
@@ -699,6 +724,7 @@ void USNBasicAttributesComponent::FaithChanged(const FOnAttributeChangeData& Dat
 			{
 				Status->SetFaith(Faith);
 				Status->SetHealingRange(GetHealing(), Faith);
+				Status->SetReplenishingRange(GetReplenishing(), Faith);
 			}
 		}
 	}
@@ -717,6 +743,48 @@ void USNBasicAttributesComponent::HealingChanged(const FOnAttributeChangeData& D
 			if(Status)
 			{
 				Status->SetHealingRange(Healing, GetFaith());
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::ReplenishingChanged(const FOnAttributeChangeData& Data)
+{
+	float Replenishing = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
+			{
+				Status->SetHealingRange(Replenishing, GetFaith());
+			}
+		}
+	}
+}
+
+void USNBasicAttributesComponent::GoldChanged(const FOnAttributeChangeData& Data)
+{
+	float Gold = Data.NewValue;
+	
+	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
+		if(PC)
+		{
+			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
+			if(HeroHUD)
+			{
+				HeroHUD->SetGold(Gold);
+			}
+
+			USNInventoryWidget* InventoryUI = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(InventoryUI)
+			{
+				InventoryUI->SetGold(Gold);
 			}
 		}
 	}

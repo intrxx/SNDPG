@@ -159,6 +159,12 @@ public:
 	FGameplayAttribute GetHealingAttribute() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	float GetReplenishing() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	FGameplayAttribute GetReplenishingAttribute() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	float GetLevelUpPoints() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
@@ -193,6 +199,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
 	FGameplayAttribute GetMindAttribute() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	float GetGold() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|Attributes")
+	FGameplayAttribute GetGoldAttribute() const;
 	
 	/**
 	 *
@@ -230,6 +242,8 @@ protected:
 	virtual void VitalityChanged(const FOnAttributeChangeData& Data);
 	virtual void ArcaneChanged(const FOnAttributeChangeData& Data);
 	virtual void MindChanged(const FOnAttributeChangeData& Data);
+	virtual void ReplenishingChanged(const FOnAttributeChangeData& Data);
+	virtual void GoldChanged(const FOnAttributeChangeData& Data);
 
 	void SubtractLevelUpPoints(float Amount);
 	void AddLeveledUpAttribute(float Amount, FGameplayAttribute AttributeToAdd);
@@ -256,6 +270,8 @@ protected:
 	FDelegateHandle VitalityChangedDelegateHandle;
 	FDelegateHandle MindChangedDelegateHandle;
 	FDelegateHandle ArcaneChangedDelegateHandle;
+	FDelegateHandle ReplenishingChangedDelegateHandle;
+	FDelegateHandle GoldChangedDelegateHandle;
 	
 	UPROPERTY()
 	USNAbilitySystemComponent* AbilitySystemComponent;

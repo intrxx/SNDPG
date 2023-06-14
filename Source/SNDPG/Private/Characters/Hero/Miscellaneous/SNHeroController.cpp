@@ -57,13 +57,15 @@ void ASNHeroController::CreateHeroHUD()
 	
 	HeroHUD->SetStaminaPercentage(AttributesComp->GetStamina() / FMath::Max<float>(AttributesComp->GetMaxStamina(), 1.0f));
 	HeroHUD->SetMaxStamina(AttributesComp->GetMaxStamina());
+
+	HeroHUD->SetGold(AttributesComp->GetGold());
 	
 	CreateCharacterStatusUI(AttributesComp);
-	CreateInventoryUI();
+	CreateInventoryUI(AttributesComp);
 	CreateInGameMenuUI();
 }
 
-void ASNHeroController::CreateInventoryUI()
+void ASNHeroController::CreateInventoryUI(const USNBasicAttributesComponent* AttributesComp)
 {
 	if(InventoryWidget)
 	{
@@ -79,6 +81,8 @@ void ASNHeroController::CreateInventoryUI()
 	InventoryWidget = CreateWidget<USNInventoryWidget>(this, InventoryWidgetClass);
 	InventoryWidget->AddToViewport();
 	InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
+
+	InventoryWidget->SetGold(AttributesComp->GetGold());
 }
 
 void ASNHeroController::CreateInGameMenuUI()
@@ -142,6 +146,7 @@ void ASNHeroController::CreateCharacterStatusUI(const USNBasicAttributesComponen
 
 	// Set Damage/Healing ranges
 	CharacterStatusWidget->SetHealingRange(AttributesComp->GetHealing(), AttributesComp->GetFaith());
+	CharacterStatusWidget->SetReplenishingRange(AttributesComp->GetReplenishing(), AttributesComp->GetFaith());
 	CharacterStatusWidget->SetR1Range(Hero->R1BaseDamage, AttributesComp->GetStrength());
 	CharacterStatusWidget->SetR2Range(Hero->R2BaseDamage, AttributesComp->GetStrength());
 	CharacterStatusWidget->SetL1Range(Hero->L1BaseDamage, AttributesComp->GetStrength());

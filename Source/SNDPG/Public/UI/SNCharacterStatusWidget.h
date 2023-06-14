@@ -73,6 +73,9 @@ public:
 	void SetHealingRange(float Healing, float Faith);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetReplenishingRange(float Replenishing, float Faith);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetR1Range(float R1Damage, float Strength);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
