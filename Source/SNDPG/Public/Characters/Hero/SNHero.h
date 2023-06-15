@@ -91,8 +91,6 @@ protected:
 	void LookMouse(const FInputActionValue& Value);
 	void LookStick(const FInputActionValue& Value);
 	
-	void ToggleCharacterStatus();
-	void ToggleInventory();
 	void ToggleInGameMenu();
 
 	void SetGamePause(bool bIsPaused);

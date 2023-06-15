@@ -19,5 +19,6 @@ public:
 	void ToggleInGameMenu(bool bIsVisible);
 
 public:
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	bool bIsInGameMenuVisible = false;
 };

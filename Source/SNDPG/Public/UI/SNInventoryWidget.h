@@ -22,5 +22,6 @@ public:
 	void SetGold(float Gold);
 
 public:
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	bool bIsCharacterInventoryVisible = false;
 };

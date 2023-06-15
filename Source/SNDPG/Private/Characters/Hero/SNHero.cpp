@@ -153,10 +153,6 @@ void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		&ThisClass::LookMouse);
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_Look_Stick, ETriggerEvent::Triggered, this,
 		&ThisClass::LookStick);
-	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleCharacterStatus, ETriggerEvent::Triggered,
-		this, &ThisClass::ToggleCharacterStatus);
-	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleInventory, ETriggerEvent::Triggered,
-		this, &ThisClass::ToggleInventory);
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleInGameMenu, ETriggerEvent::Triggered,
 		this, &ThisClass::ToggleInGameMenu);
 }
@@ -240,65 +236,6 @@ void ASNHero::LookStick(const FInputActionValue& Value)
 	}
 }
 
-
-void ASNHero::ToggleCharacterStatus()
-{
-	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
-	if(PC)
-	{
-		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer());
-		if(Subsystem)
-		{
-			USNCharacterStatusWidget* Status = PC->GetCharacterStatusUI();
-			if(Status)
-			{
-				if(Status->bIsCharacterStatusVisible)
-				{
-					Status->ToggleCharacterStatus(Status->bIsCharacterStatusVisible = false);
-					Subsystem->RemoveMappingContext(HUDMappingContext);
-					Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
-					Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
-				}
-				else
-				{
-					Status->ToggleCharacterStatus(Status->bIsCharacterStatusVisible = true);
-					Subsystem->ClearAllMappings();
-					Subsystem->AddMappingContext(HUDMappingContext, 1);
-				}
-			}
-		}
-	}
-}
-
-void ASNHero::ToggleInventory()
-{
-	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
-	if(PC)
-	{
-		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer());
-		if(Subsystem)
-		{
-			USNInventoryWidget* Inventory = PC->GetInventoryUI();
-			if(Inventory)
-			{
-				if(Inventory->bIsCharacterInventoryVisible)
-				{
-					Inventory->ToggleCharacterInventory(Inventory->bIsCharacterInventoryVisible = false);
-					Subsystem->RemoveMappingContext(HUDMappingContext);
-					Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
-					Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
-				}
-				else
-				{
-					Inventory->ToggleCharacterInventory(Inventory->bIsCharacterInventoryVisible = true);
-					Subsystem->ClearAllMappings();
-					Subsystem->AddMappingContext(HUDMappingContext, 1);
-				}
-			}
-		}
-	}
-}
-
 void ASNHero::ToggleInGameMenu()
 {
 	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
@@ -310,20 +247,9 @@ void ASNHero::ToggleInGameMenu()
 			USNInGameMenu* InGameMenu = PC->GetInGameMenuUI();
 			if(InGameMenu)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("toggling"));
-				if(InGameMenu->bIsInGameMenuVisible)
-				{
-					InGameMenu->ToggleInGameMenu(InGameMenu->bIsInGameMenuVisible = false);
-					Subsystem->RemoveMappingContext(HUDMappingContext);
-					Subsystem->AddMappingContext(DefaultMappingContext_MNK, 0);
-					Subsystem->AddMappingContext(DefaultMappingContext_Gamepad, 0);
-				}
-				else
-				{
-					InGameMenu->ToggleInGameMenu(InGameMenu->bIsInGameMenuVisible = true);
-					Subsystem->ClearAllMappings();
-					Subsystem->AddMappingContext(HUDMappingContext, 1);
-				}
+				InGameMenu->ToggleInGameMenu(InGameMenu->bIsInGameMenuVisible = true);
+				Subsystem->ClearAllMappings();
+				Subsystem->AddMappingContext(HUDMappingContext, 1);
 			}
 		}
 	}

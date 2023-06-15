@@ -88,5 +88,6 @@ public:
 	void SetWeaponSpellDamage(float WeaponSpellDamage, float Arcane);
 
 public:
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	bool bIsCharacterStatusVisible = false;
 };

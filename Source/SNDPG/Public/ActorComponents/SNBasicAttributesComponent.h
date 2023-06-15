@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "GAS/SNAbilitySystemComponent.h"
 #include "GAS/Attributes/SNBasicAttributes.h"
 #include "SNBasicAttributesComponent.generated.h"
 

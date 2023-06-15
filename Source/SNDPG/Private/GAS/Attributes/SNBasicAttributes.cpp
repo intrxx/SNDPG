@@ -142,7 +142,7 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 					if (SourceController != TargetController)
 					{
 						// Create a dynamic instant Gameplay Effect to give the bounties
-						UGameplayEffect* GEBounty = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("EarningExperience")));
+						UGameplayEffect* GEBounty = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("KillBounty")));
 						GEBounty->DurationPolicy = EGameplayEffectDurationType::Instant;
 
 						int32 Index = GEBounty->Modifiers.Num();
@@ -154,7 +154,7 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 						InfoXP.Attribute = USNBasicAttributes::GetExperienceAttribute();
 
 						FGameplayModifierInfo& InfoGold = GEBounty->Modifiers[Index + 1];
-						InfoGold.ModifierMagnitude = FScalableFloat(GetGoldBounty());
+						InfoGold.ModifierMagnitude = FScalableFloat(FMath::RoundToFloat(FMath::FRandRange(GetGoldBounty() - 10, GetGoldBounty() + 10)));
 						InfoGold.ModifierOp = EGameplayModOp::Additive;
 						InfoGold.Attribute = USNBasicAttributes::GetGoldAttribute();
 						
