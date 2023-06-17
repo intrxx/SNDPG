@@ -30,7 +30,7 @@ protected:
 	virtual void BeginPlay() override;
 
 protected:
-	UPROPERTY(EditDefaultsOnly, Instanced)
+	UPROPERTY(EditDefaultsOnly, Instanced, Category = "SN|InventoryComponent")
 	TArray<class USNItemBase*> DefaultItems;
 	
 	UPROPERTY(BlueprintAssignable, Category = "SN|InventoryComponent")

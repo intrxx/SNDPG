@@ -474,8 +474,15 @@ void USNBasicAttributesComponent::HealthChanged(const FOnAttributeChangeData& Da
 			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
 			if(Status)
 			{
-				Status->SetHealth(Health);
+				Status->SetHealth(Health, GetMaxHealth());
 			}
+			
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetStamina(Health, GetMaxHealth());
+			}
+			
 		}
 	}
 }
@@ -507,7 +514,13 @@ void USNBasicAttributesComponent::MaxHealthChanged(const FOnAttributeChangeData&
 			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
 			if(Status)
 			{
-				Status->SetMaxHealth(MaxHealth);
+				Status->SetHealth(GetHealth(), MaxHealth);
+			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetStamina(GetHealth(), MaxHealth);
 			}
 		}
 	}
@@ -526,6 +539,18 @@ void USNBasicAttributesComponent::ResourceChanged(const FOnAttributeChangeData& 
 			if(HeroHUD)
 			{
 				HeroHUD->SetResourcePercentage(Resource / GetMaxResource());
+			}
+
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
+			{
+				Status->SetResource(Resource, GetMaxResource());
+			}
+			
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetStamina(Resource, GetMaxResource());
 			}
 		}
 	}
@@ -550,7 +575,13 @@ void USNBasicAttributesComponent::MaxResourceChanged(const FOnAttributeChangeDat
 			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
 			if(Status)
 			{
-				Status->SetMaxResource(MaxResource);
+				Status->SetResource(GetResource(), MaxResource);
+			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetStamina(GetResource(), MaxResource);
 			}
 		}
 	}
@@ -569,6 +600,18 @@ void USNBasicAttributesComponent::StaminaChanged(const FOnAttributeChangeData& D
 			if(HeroHUD)
 			{
 				HeroHUD->SetStaminaPercentage(Stamina / GetMaxStamina());
+			}
+
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
+			{
+				Status->SetResource(Stamina, GetMaxStamina());
+			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetStamina(Stamina, GetMaxStamina());
 			}
 		}
 	}
@@ -593,7 +636,13 @@ void USNBasicAttributesComponent::MaxStaminaChanged(const FOnAttributeChangeData
 			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
 			if(Status)
 			{
-				Status->SetMaxStamina(MaxStamina);
+				Status->SetStamina(GetStamina(), MaxStamina);
+			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetStamina(GetStamina(), MaxStamina);
 			}
 		}
 	}
@@ -612,6 +661,12 @@ void USNBasicAttributesComponent::ExperienceChanged(const FOnAttributeChangeData
 			if(Status)
 			{
 				Status->SetExperience(Experience);
+			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetExperience(Experience);
 			}
 		}
 	}
@@ -649,6 +704,12 @@ void USNBasicAttributesComponent::CharacterLevelChanged(const FOnAttributeChange
 			{
 				Status->SetCharacterLevel(CharacterLevel);
 			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetCharacterLevel(CharacterLevel);
+			}
 		}
 	}
 }
@@ -666,6 +727,12 @@ void USNBasicAttributesComponent::ArmourChanged(const FOnAttributeChangeData& Da
 			if(Status)
 			{
 				Status->SetArmour(Armour);
+			}
+			
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetArmour(Armour);
 			}
 		}
 	}
@@ -688,6 +755,12 @@ void USNBasicAttributesComponent::StrengthChanged(const FOnAttributeChangeData& 
 				Status->SetR2Range(HeroOwner->R2BaseDamage, Strength);
 				Status->SetL1Range(HeroOwner->L1BaseDamage, Strength);
 			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetStrength(Strength);
+			}
 		}
 	}
 }
@@ -705,6 +778,12 @@ void USNBasicAttributesComponent::EnduranceChanged(const FOnAttributeChangeData&
 			if(Status)
 			{
 				Status->SetEndurance(Endurance);
+			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetEndurance(Endurance);
 			}
 		}
 	}
@@ -725,6 +804,12 @@ void USNBasicAttributesComponent::FaithChanged(const FOnAttributeChangeData& Dat
 				Status->SetFaith(Faith);
 				Status->SetHealingRange(GetHealing(), Faith);
 				Status->SetReplenishingRange(GetReplenishing(), Faith);
+			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetFaith(Faith);
 			}
 		}
 	}
@@ -822,6 +907,12 @@ void USNBasicAttributesComponent::VitalityChanged(const FOnAttributeChangeData& 
 			{
 				Status->SetVitality(Vitality);
 			}
+			
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetVitality(Vitality);
+			}
 		}
 	}
 }
@@ -841,6 +932,12 @@ void USNBasicAttributesComponent::ArcaneChanged(const FOnAttributeChangeData& Da
 				Status->SetArcane(Arcane);
 				Status->SetWeaponSpellDamage(HeroOwner->WeaponSpellDamage, Arcane);
 			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetArcane(Arcane);
+			}
 		}
 	}
 }
@@ -858,6 +955,12 @@ void USNBasicAttributesComponent::MindChanged(const FOnAttributeChangeData& Data
 			if(Status)
 			{
 				Status->SetMind(Mind);
+			}
+
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
+			{
+				Inventory->SetMind(Mind);
 			}
 		}
 	}

@@ -82,6 +82,20 @@ void ASNHeroController::CreateInventoryUI(const USNBasicAttributesComponent* Att
 	InventoryWidget->AddToViewport();
 	InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
 
+	InventoryWidget->SetHealth(AttributesComp->GetHealth(), AttributesComp->GetMaxHealth());
+	InventoryWidget->SetResource(AttributesComp->GetResource(), AttributesComp->GetMaxResource());
+	InventoryWidget->SetStamina(AttributesComp->GetStamina(), AttributesComp->GetMaxStamina());
+	
+	InventoryWidget->SetCharacterLevel(AttributesComp->GetCharacterLevel());
+	InventoryWidget->SetExperience(AttributesComp->GetExperience());
+	InventoryWidget->SetVitality(AttributesComp->GetVitality());
+	InventoryWidget->SetMind(AttributesComp->GetMind());
+	InventoryWidget->SetEndurance(AttributesComp->GetEndurance());
+	InventoryWidget->SetStrength(AttributesComp->GetStrength());
+	InventoryWidget->SetFaith(AttributesComp->GetFaith());
+	InventoryWidget->SetArcane(AttributesComp->GetArcane());
+
+	InventoryWidget->SetArmour(AttributesComp->GetArmour());
 	InventoryWidget->SetGold(AttributesComp->GetGold());
 }
 
@@ -123,13 +137,13 @@ void ASNHeroController::CreateCharacterStatusUI(const USNBasicAttributesComponen
 	CharacterStatusWidget->AddToViewport();
 	CharacterStatusWidget->SetVisibility(ESlateVisibility::Collapsed);
 	
-	CharacterStatusWidget->SetHealth(AttributesComp->GetHealth());
+	CharacterStatusWidget->SetHealth(AttributesComp->GetHealth(), AttributesComp->GetMaxHealth());
 	CharacterStatusWidget->SetMaxHealth(AttributesComp->GetMaxHealth());
 	
-	CharacterStatusWidget->SetResource(AttributesComp->GetResource());
+	CharacterStatusWidget->SetResource(AttributesComp->GetResource(), AttributesComp->GetMaxResource());
 	CharacterStatusWidget->SetMaxResource(AttributesComp->GetMaxResource());
 	
-	CharacterStatusWidget->SetStamina(AttributesComp->GetStamina());
+	CharacterStatusWidget->SetStamina(AttributesComp->GetStamina(), AttributesComp->GetMaxStamina());
 	CharacterStatusWidget->SetMaxStamina(AttributesComp->GetMaxStamina());
 	
 	CharacterStatusWidget->SetCharacterLevel(AttributesComp->GetCharacterLevel());

@@ -19,19 +19,19 @@ public:
 	void ToggleCharacterStatus(bool bIsVisible);
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void SetHealth(float Health);
+	void SetHealth(float CurrentHealth, float MaxHealth);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetResource(float CurrentResource, float MaxResource);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetStamina(float CurrentStamina, float MaxStamina);
+	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetMaxHealth(float MaxHealth);
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void SetResource(float Resource);
-
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetMaxResource(float MaxResource);
-
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void SetStamina(float Stamina);
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetMaxStamina(float MaxStamina);
