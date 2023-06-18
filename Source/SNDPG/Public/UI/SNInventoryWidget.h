@@ -56,7 +56,7 @@ public:
 	void SetResource(float CurrentMana, float MaxMana);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void SetStamina(float CurrentStamina, float MaxStamina);
+	void SetMaxStamina(float MaxStamina);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetArmour(float Armour);

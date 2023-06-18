@@ -84,7 +84,7 @@ void ASNHeroController::CreateInventoryUI(const USNBasicAttributesComponent* Att
 
 	InventoryWidget->SetHealth(AttributesComp->GetHealth(), AttributesComp->GetMaxHealth());
 	InventoryWidget->SetResource(AttributesComp->GetResource(), AttributesComp->GetMaxResource());
-	InventoryWidget->SetStamina(AttributesComp->GetStamina(), AttributesComp->GetMaxStamina());
+	InventoryWidget->SetMaxStamina(AttributesComp->GetMaxStamina());
 	
 	InventoryWidget->SetCharacterLevel(AttributesComp->GetCharacterLevel());
 	InventoryWidget->SetExperience(AttributesComp->GetExperience());
@@ -143,7 +143,7 @@ void ASNHeroController::CreateCharacterStatusUI(const USNBasicAttributesComponen
 	CharacterStatusWidget->SetResource(AttributesComp->GetResource(), AttributesComp->GetMaxResource());
 	CharacterStatusWidget->SetMaxResource(AttributesComp->GetMaxResource());
 	
-	CharacterStatusWidget->SetStamina(AttributesComp->GetStamina(), AttributesComp->GetMaxStamina());
+	CharacterStatusWidget->SetMaxStamina(AttributesComp->GetMaxStamina());
 	CharacterStatusWidget->SetMaxStamina(AttributesComp->GetMaxStamina());
 	
 	CharacterStatusWidget->SetCharacterLevel(AttributesComp->GetCharacterLevel());

@@ -23,9 +23,6 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetResource(float CurrentResource, float MaxResource);
-
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void SetStamina(float CurrentStamina, float MaxStamina);
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetMaxHealth(float MaxHealth);

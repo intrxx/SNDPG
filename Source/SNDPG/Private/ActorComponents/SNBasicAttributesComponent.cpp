@@ -480,7 +480,7 @@ void USNBasicAttributesComponent::HealthChanged(const FOnAttributeChangeData& Da
 			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
 			if(Inventory)
 			{
-				Inventory->SetStamina(Health, GetMaxHealth());
+				Inventory->SetHealth(Health, GetMaxHealth());
 			}
 			
 		}
@@ -520,7 +520,7 @@ void USNBasicAttributesComponent::MaxHealthChanged(const FOnAttributeChangeData&
 			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
 			if(Inventory)
 			{
-				Inventory->SetStamina(GetHealth(), MaxHealth);
+				Inventory->SetHealth(GetHealth(), MaxHealth);
 			}
 		}
 	}
@@ -550,7 +550,7 @@ void USNBasicAttributesComponent::ResourceChanged(const FOnAttributeChangeData& 
 			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
 			if(Inventory)
 			{
-				Inventory->SetStamina(Resource, GetMaxResource());
+				Inventory->SetResource(Resource, GetMaxResource());
 			}
 		}
 	}
@@ -581,7 +581,7 @@ void USNBasicAttributesComponent::MaxResourceChanged(const FOnAttributeChangeDat
 			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
 			if(Inventory)
 			{
-				Inventory->SetStamina(GetResource(), MaxResource);
+				Inventory->SetResource(GetResource(), MaxResource);
 			}
 		}
 	}
@@ -600,18 +600,6 @@ void USNBasicAttributesComponent::StaminaChanged(const FOnAttributeChangeData& D
 			if(HeroHUD)
 			{
 				HeroHUD->SetStaminaPercentage(Stamina / GetMaxStamina());
-			}
-
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
-			{
-				Status->SetResource(Stamina, GetMaxStamina());
-			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
-			{
-				Inventory->SetStamina(Stamina, GetMaxStamina());
 			}
 		}
 	}
@@ -636,13 +624,13 @@ void USNBasicAttributesComponent::MaxStaminaChanged(const FOnAttributeChangeData
 			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
 			if(Status)
 			{
-				Status->SetStamina(GetStamina(), MaxStamina);
+				Status->SetMaxStamina(MaxStamina);
 			}
 
 			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
 			if(Inventory)
 			{
-				Inventory->SetStamina(GetStamina(), MaxStamina);
+				Inventory->SetMaxStamina(MaxStamina);
 			}
 		}
 	}
