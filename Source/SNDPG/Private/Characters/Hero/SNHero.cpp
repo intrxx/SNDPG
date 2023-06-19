@@ -9,8 +9,7 @@
 #include "ActorComponents/SNBasicAttributesComponent.h"
 #include "ActorComponents/SNCombatComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "UI/SNInGameMenu.h"
-#include "UI/SNCharacterStatusWidget.h"
+#include "UI/Menus/SNInGameMenu.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "Components/CapsuleComponent.h"
@@ -19,7 +18,6 @@
 #include "Input/SNEnhancedInputComponent.h"
 #include "InventorySystem/SNInventoryComponent.h"
 #include "InventorySystem/SNItemBase.h"
-#include "UI/SNInventoryWidget.h"
 
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)

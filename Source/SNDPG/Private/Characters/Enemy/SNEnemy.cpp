@@ -3,11 +3,10 @@
 
 #include "Characters/Enemy/SNEnemy.h"
 #include "GAS/SNAbilitySet.h"
-#include "UI/SNHealthBarWidget.h"
+#include "UI/EnemyUI/SNHealthBarWidget.h"
 #include "ActorComponents/SNBasicAttributesComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GAS/SNAbilitySystemComponent.h"
-#include "GAS/Attributes/SNBasicAttributes.h"
 
 ASNEnemy::ASNEnemy(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)

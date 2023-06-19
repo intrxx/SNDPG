@@ -2,15 +2,16 @@
 
 
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
-#include "UI/SNInventoryWidget.h"
+#include "UI/Inventory/SNInventoryWidget.h"
 #include "Characters/Hero/SNHero.h"
 #include "ActorComponents/SNBasicAttributesComponent.h"
-#include "UI/SNHeroHUD.h"
-#include "UI/SNInGameMenu.h"
-#include "UI/SNCharacterStatusWidget.h"
+#include "UI/HeroHUD/SNHeroHUD.h"
+#include "UI/Menus/SNInGameMenu.h"
+#include "UI/Inventory/SNEquipmentWidget.h"
+#include "UI/HeroHUD/SNCharacterStatusWidget.h"
 #include "Characters/Hero/Miscellaneous/SNHeroState.h"
 #include "GAS/SNAbilitySystemComponent.h"
-#include "UI/SNFloatingDmgNumberWComponent.h"
+#include "UI/Combat/SNFloatingDmgNumberWComponent.h"
 
 ASNHeroController::ASNHeroController()
 {
@@ -62,6 +63,7 @@ void ASNHeroController::CreateHeroHUD()
 	
 	CreateCharacterStatusUI(AttributesComp);
 	CreateInventoryUI(AttributesComp);
+	CreateEquipmentUI(AttributesComp);
 	CreateInGameMenuUI();
 }
 
@@ -144,7 +146,6 @@ void ASNHeroController::CreateCharacterStatusUI(const USNBasicAttributesComponen
 	CharacterStatusWidget->SetMaxResource(AttributesComp->GetMaxResource());
 	
 	CharacterStatusWidget->SetMaxStamina(AttributesComp->GetMaxStamina());
-	CharacterStatusWidget->SetMaxStamina(AttributesComp->GetMaxStamina());
 	
 	CharacterStatusWidget->SetCharacterLevel(AttributesComp->GetCharacterLevel());
 	CharacterStatusWidget->SetLevelUpPoints(AttributesComp->GetLevelUpPoints());
@@ -165,6 +166,40 @@ void ASNHeroController::CreateCharacterStatusUI(const USNBasicAttributesComponen
 	CharacterStatusWidget->SetR2Range(Hero->R2BaseDamage, AttributesComp->GetStrength());
 	CharacterStatusWidget->SetL1Range(Hero->L1BaseDamage, AttributesComp->GetStrength());
 	CharacterStatusWidget->SetWeaponSpellDamage(Hero->WeaponSpellDamage, AttributesComp->GetArcane());
+}
+
+void ASNHeroController::CreateEquipmentUI(const USNBasicAttributesComponent* AttributesComp)
+{
+	if(EquipmentWidget)
+	{
+		return;
+	}
+
+	if(!EquipmentWidgetClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing InGameMenuClass. Fill in on the BP in PlayerController."), *FString(__FUNCTION__));
+		return;
+	}
+
+	EquipmentWidget = CreateWidget<USNEquipmentWidget>(this, EquipmentWidgetClass);
+	EquipmentWidget->AddToViewport();
+	EquipmentWidget->SetVisibility(ESlateVisibility::Collapsed);
+
+	EquipmentWidget->SetHealth(AttributesComp->GetHealth(), AttributesComp->GetMaxHealth());
+	EquipmentWidget->SetResource(AttributesComp->GetResource(), AttributesComp->GetMaxResource());
+	EquipmentWidget->SetMaxStamina(AttributesComp->GetMaxStamina());
+	
+	EquipmentWidget->SetCharacterLevel(AttributesComp->GetCharacterLevel());
+	EquipmentWidget->SetExperience(AttributesComp->GetExperience());
+	EquipmentWidget->SetVitality(AttributesComp->GetVitality());
+	EquipmentWidget->SetMind(AttributesComp->GetMind());
+	EquipmentWidget->SetEndurance(AttributesComp->GetEndurance());
+	EquipmentWidget->SetStrength(AttributesComp->GetStrength());
+	EquipmentWidget->SetFaith(AttributesComp->GetFaith());
+	EquipmentWidget->SetArcane(AttributesComp->GetArcane());
+
+	EquipmentWidget->SetArmour(AttributesComp->GetArmour());
+	EquipmentWidget->SetGold(AttributesComp->GetGold());
 }
 
 void ASNHeroController::ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter)

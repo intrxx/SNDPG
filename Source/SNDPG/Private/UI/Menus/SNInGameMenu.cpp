@@ -1,5 +1,5 @@
 // Copyright 2023 Michał Ogiński.
 
 
-#include "UI/SNInGameMenu.h"
+#include "UI/Menus/SNInGameMenu.h"
 

@@ -8,10 +8,11 @@
 #include "GameplayTags/SNGameplayTags.h"
 #include "GAS/Attributes/SNBasicAttributes.h"
 #include "GAS/SNAbilitySystemComponent.h"
-#include "UI/SNCharacterStatusWidget.h"
-#include "UI/SNHealthBarWidget.h"
-#include "UI/SNHeroHUD.h"
-#include "UI/SNInventoryWidget.h"
+#include "UI/HeroHUD/SNCharacterStatusWidget.h"
+#include "UI/EnemyUI/SNHealthBarWidget.h"
+#include "UI/HeroHUD/SNHeroHUD.h"
+#include "UI/Inventory/SNEquipmentWidget.h"
+#include "UI/Inventory/SNInventoryWidget.h"
 
 // Sets default values for this component's properties
 USNBasicAttributesComponent::USNBasicAttributesComponent()
@@ -482,7 +483,12 @@ void USNBasicAttributesComponent::HealthChanged(const FOnAttributeChangeData& Da
 			{
 				Inventory->SetHealth(Health, GetMaxHealth());
 			}
-			
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetHealth(Health, GetMaxHealth());
+			}
 		}
 	}
 }
@@ -522,6 +528,12 @@ void USNBasicAttributesComponent::MaxHealthChanged(const FOnAttributeChangeData&
 			{
 				Inventory->SetHealth(GetHealth(), MaxHealth);
 			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetHealth(GetHealth(), MaxHealth);
+			}
 		}
 	}
 }
@@ -551,6 +563,12 @@ void USNBasicAttributesComponent::ResourceChanged(const FOnAttributeChangeData& 
 			if(Inventory)
 			{
 				Inventory->SetResource(Resource, GetMaxResource());
+			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetResource(Resource, GetMaxResource());
 			}
 		}
 	}
@@ -582,6 +600,12 @@ void USNBasicAttributesComponent::MaxResourceChanged(const FOnAttributeChangeDat
 			if(Inventory)
 			{
 				Inventory->SetResource(GetResource(), MaxResource);
+			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetResource(GetResource(), MaxResource);
 			}
 		}
 	}
@@ -632,6 +656,12 @@ void USNBasicAttributesComponent::MaxStaminaChanged(const FOnAttributeChangeData
 			{
 				Inventory->SetMaxStamina(MaxStamina);
 			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetMaxStamina(MaxStamina);
+			}
 		}
 	}
 }
@@ -655,6 +685,12 @@ void USNBasicAttributesComponent::ExperienceChanged(const FOnAttributeChangeData
 			if(Inventory)
 			{
 				Inventory->SetExperience(Experience);
+			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetExperience(Experience);
 			}
 		}
 	}
@@ -698,6 +734,12 @@ void USNBasicAttributesComponent::CharacterLevelChanged(const FOnAttributeChange
 			{
 				Inventory->SetCharacterLevel(CharacterLevel);
 			}
+			
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetCharacterLevel(CharacterLevel);
+			}
 		}
 	}
 }
@@ -721,6 +763,12 @@ void USNBasicAttributesComponent::ArmourChanged(const FOnAttributeChangeData& Da
 			if(Inventory)
 			{
 				Inventory->SetArmour(Armour);
+			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetArmour(Armour);
 			}
 		}
 	}
@@ -749,6 +797,12 @@ void USNBasicAttributesComponent::StrengthChanged(const FOnAttributeChangeData& 
 			{
 				Inventory->SetStrength(Strength);
 			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetStrength(Strength);
+			}
 		}
 	}
 }
@@ -772,6 +826,12 @@ void USNBasicAttributesComponent::EnduranceChanged(const FOnAttributeChangeData&
 			if(Inventory)
 			{
 				Inventory->SetEndurance(Endurance);
+			}
+			
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetEndurance(Endurance);
 			}
 		}
 	}
@@ -798,6 +858,12 @@ void USNBasicAttributesComponent::FaithChanged(const FOnAttributeChangeData& Dat
 			if(Inventory)
 			{
 				Inventory->SetFaith(Faith);
+			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetFaith(Faith);
 			}
 		}
 	}
@@ -854,10 +920,16 @@ void USNBasicAttributesComponent::GoldChanged(const FOnAttributeChangeData& Data
 				HeroHUD->SetGold(Gold);
 			}
 
-			USNInventoryWidget* InventoryUI = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(InventoryUI)
+			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
+			if(Inventory)
 			{
-				InventoryUI->SetGold(Gold);
+				Inventory->SetGold(Gold);
+			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetGold(Gold);
 			}
 		}
 	}
@@ -901,6 +973,12 @@ void USNBasicAttributesComponent::VitalityChanged(const FOnAttributeChangeData& 
 			{
 				Inventory->SetVitality(Vitality);
 			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetVitality(Vitality);
+			}
 		}
 	}
 }
@@ -926,6 +1004,12 @@ void USNBasicAttributesComponent::ArcaneChanged(const FOnAttributeChangeData& Da
 			{
 				Inventory->SetArcane(Arcane);
 			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetArcane(Arcane);
+			}
 		}
 	}
 }
@@ -949,6 +1033,12 @@ void USNBasicAttributesComponent::MindChanged(const FOnAttributeChangeData& Data
 			if(Inventory)
 			{
 				Inventory->SetMind(Mind);
+			}
+
+			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
+			if(Equipment)
+			{
+				Equipment->SetMind(Mind);
 			}
 		}
 	}

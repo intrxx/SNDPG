@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerController.h"
 #include "SNHeroController.generated.h"
 
+class USNEquipmentWidget;
 class USNCharacterStatusWidget;
 class USNInGameMenu;
 class USNInventoryWidget;
@@ -42,11 +43,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController|UI")
 	USNCharacterStatusWidget* GetCharacterStatusUI() {return CharacterStatusWidget;}
+
+	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController|UI")
+	USNEquipmentWidget* GetEquipmentUI() {return EquipmentWidget;}
 	
 	void CreateHeroHUD();
 	void CreateInventoryUI(const USNBasicAttributesComponent* AttributesComp);
-	void CreateInGameMenuUI();
 	void CreateCharacterStatusUI(const USNBasicAttributesComponent* AttributesComp);
+	void CreateEquipmentUI(const USNBasicAttributesComponent* AttributesComp);
+	void CreateInGameMenuUI();
+	
 
 	void ShowFloatingNumber(float Amount, ASNCharacterBase* TargetCharacter);
 	
@@ -78,6 +84,12 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Hero|UI")
 	USNCharacterStatusWidget* CharacterStatusWidget;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Hero|UI")
+	TSubclassOf<USNEquipmentWidget> EquipmentWidgetClass;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Hero|UI")
+	USNEquipmentWidget* EquipmentWidget;
 	
 protected:
 	virtual void PreProcessInput(const float DeltaTime, const bool bGamePaused) override;
