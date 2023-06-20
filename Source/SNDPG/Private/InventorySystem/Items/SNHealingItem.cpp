@@ -3,6 +3,11 @@
 
 #include "InventorySystem/Items/SNHealingItem.h"
 
+USNHealingItem::USNHealingItem()
+{
+	ItemCategory = EItemCategory::Consumable;
+}
+
 void USNHealingItem::Use(ASNHero* Hero)
 {
 	Super::Use(Hero);

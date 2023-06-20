@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/TextBlock.h"
 #include "UI/SNStatusWidget.h"
 #include "SNEquipmentWidget.generated.h"
 

@@ -3,8 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
 #include "SNItemBase.generated.h"
+
+UENUM(BlueprintType)
+enum class EItemCategory : uint8
+{
+	RightHandWeapon,
+	LeftHandWeapon,
+	Consumable,
+	Helmet,
+	BodyArmour,
+	Gloves,
+	Boots,
+	Talismans
+};
 
 /**
  * 
@@ -49,5 +61,6 @@ public:
 	UPROPERTY()
 	class USNInventoryComponent* OwningInventory;
 
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	EItemCategory ItemCategory;
 };

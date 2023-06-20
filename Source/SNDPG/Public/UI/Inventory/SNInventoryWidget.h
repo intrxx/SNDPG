@@ -19,7 +19,7 @@ public:
 	void ToggleCharacterInventory(bool bIsVisible);
 	
 	// Updates the UI for currently selected item
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Inventory|")
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Inventory")
 	void UpdateCurrentItemInfo(USNItemBase* ItemBase);
 
 public:

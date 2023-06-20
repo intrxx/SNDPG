@@ -16,6 +16,8 @@ class SNDPG_API USNHealingItem : public USNItemBase
 	GENERATED_BODY()
 
 public:
+	USNHealingItem();
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|HealingItem", meta = (ClampMin = 0.0f))
 	float HealingAmount = 0.0f;
 
