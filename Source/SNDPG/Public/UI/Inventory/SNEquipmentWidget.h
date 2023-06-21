@@ -19,6 +19,10 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Equipment|Visibility")
 	void ToggleEquipment(bool bIsVisible);
 
+	// Updates the UI for currently selected item
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Equipment")
+	void UpdateCurrentItemInfo(USNItemBase* ItemBase);
+	
 public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "SN|UI|Equipment|Visibility")
 	bool bIsEquipmentVisible = false;
