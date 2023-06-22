@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/TextBlock.h"
 #include "UI/SNStatusWidget.h"
 #include "SNEquipmentWidget.generated.h"
 
@@ -22,6 +21,9 @@ public:
 	// Updates the UI for currently selected item
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Equipment")
 	void UpdateCurrentItemInfo(USNItemBase* ItemBase);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Equipment")
+	void UpdateCurrentSlotName(UUserWidget* SlotWidget);
 	
 public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "SN|UI|Equipment|Visibility")
