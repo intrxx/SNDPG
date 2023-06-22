@@ -51,4 +51,5 @@ Engineering Thesis ARPG project in Unreal Engine 5.1 using Gameplay Ability Syst
 - Equipment: [Free Fantasy Weapon Sample Pack](https://www.unrealengine.com/marketplace/en-US/product/e4494c76c3b348aba7ef9b263a6dd496)
 - UI: [DARK FANTASY UI](https://www.unrealengine.com/marketplace/en-US/product/dark-fantasy-ui)
 - Font: [Adobe Garamond](https://fonts.adobe.com/fonts/adobe-garamond)
+- Item Icons (AI generated): [OpenArt](https://openart.ai/)
  
