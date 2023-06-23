@@ -24,6 +24,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Equipment")
 	void UpdateCurrentSlotName(UUserWidget* SlotWidget);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Equipment")
+	void EquipItemToSlot(USNItemBase* ItemToEquip);
 	
 public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "SN|UI|Equipment|Visibility")
