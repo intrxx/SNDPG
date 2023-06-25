@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SNInventoryItemButton.h"
 #include "UI/SNStatusWidget.h"
 #include "SNEquipmentWidget.generated.h"
 
@@ -26,7 +27,11 @@ public:
 	void UpdateCurrentSlotName(UUserWidget* SlotWidget);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Equipment")
-	void EquipItemToSlot(USNItemBase* ItemToEquip);
+	void ToggleEquipItemToSlot(USNItemBase* ItemToEquip, USNInventoryItemButton* InventorySlotClicked);
+
+	// Updates the UI for currently selected item
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Equipment")
+	void UpdateCurrentItemInfoFromSlot();
 	
 public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "SN|UI|Equipment|Visibility")

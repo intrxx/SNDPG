@@ -1,4 +1,4 @@
-// Copyright 2023 Michal Oginski.
+// Copyright 2023 Michał Ogiński.
 
 #pragma once
 
@@ -60,6 +60,12 @@ public:
 	UPROPERTY()
 	class USNInventoryComponent* OwningInventory;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
 	EItemCategory ItemCategory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
+	bool bIsItemEquipped = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
+	UUserWidget* ItemEquipmentSlot;
 };
