@@ -9,14 +9,12 @@ USNInventoryComponent::USNInventoryComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	PrimaryComponentTick.bStartWithTickEnabled = false;
-
-	InventoryCapacity = 30.0f;
 	
 }
 
 bool USNInventoryComponent::AddItem(USNItemBase* ItemToAdd)
 {
-	if(Items.Num() >= InventoryCapacity || !ItemToAdd)
+	if(!ItemToAdd)
 	{
 		return false;
 	}
@@ -32,16 +30,18 @@ bool USNInventoryComponent::AddItem(USNItemBase* ItemToAdd)
 
 bool USNInventoryComponent::RemoveItem(USNItemBase* ItemToRemove)
 {
-	if(ItemToRemove)
+	if(!ItemToRemove)
 	{
-		ItemToRemove->OwningInventory = nullptr;
-		ItemToRemove->World = nullptr;
-		Items.RemoveSingle(ItemToRemove);
-		OnInventoryUpdatedDelegate.Broadcast();
-
-		return true;
+		return false;
 	}
-	return false;
+	
+	ItemToRemove->OwningInventory = nullptr;
+	ItemToRemove->World = nullptr;
+	Items.RemoveSingle(ItemToRemove);
+	
+	OnInventoryUpdatedDelegate.Broadcast();
+
+	return true;
 }
 
 void USNInventoryComponent::BeginPlay()

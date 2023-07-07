@@ -220,7 +220,6 @@ void ASNHeroController::PreProcessInput(const float DeltaTime, const bool bGameP
 
 void ASNHeroController::PostProcessInput(const float DeltaTime, const bool bGamePaused)
 {
-	Super::PostProcessInput(DeltaTime, bGamePaused);
 	if(USNAbilitySystemComponent* SNASC = GetSNAbilitySystemComponent())
 	{
 		SNASC->ProcessAbilityInput(DeltaTime, bGamePaused);

@@ -4,7 +4,6 @@
 #include "Characters/SNCharacterBase.h"
 #include "Characters/SNCharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "EnvironmentQuery/EnvQueryTypes.h"
 #include "GAS/SNAbilitySystemComponent.h"
 
 // Sets default values

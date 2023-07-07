@@ -60,6 +60,9 @@ public:
 	UPROPERTY()
 	class USNInventoryComponent* OwningInventory;
 
+	UPROPERTY()
+	class USNEquipmentComponent* OwningEquipment;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
 	EItemCategory ItemCategory;
 

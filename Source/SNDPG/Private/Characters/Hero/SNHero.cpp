@@ -60,7 +60,6 @@ ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	AttributesComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
 
 	InventoryComponent = CreateDefaultSubobject<USNInventoryComponent>(TEXT("InventoryComponent"));
-	InventoryComponent->InventoryCapacity = 30;
 }
 
 void ASNHero::PossessedBy(AController* NewController)

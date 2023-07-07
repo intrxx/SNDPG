@@ -5,6 +5,10 @@
 #include "GAS/SNGameplayAbility.h"
 
 
+USNAbilitySet::USNAbilitySet()
+{
+}
+
 void FSNAbilitySet_GrantedHandles::AddAbilitySpecHandle(const FGameplayAbilitySpecHandle& Handle)
 {
 	if (Handle.IsValid())
@@ -60,10 +64,6 @@ void FSNAbilitySet_GrantedHandles::TakeFromAbilitySystem(USNAbilitySystemCompone
 	AbilitySpecHandles.Reset();
 	GameplayEffectHandles.Reset();
 	GrantedAttributeSets.Reset();
-}
-
-USNAbilitySet::USNAbilitySet()
-{
 }
 
 void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* InASC,

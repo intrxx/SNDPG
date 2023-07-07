@@ -9,7 +9,7 @@
 class USNCharacterMovementComponent;
 class ASNHero;
 class ASNHeroController;
-class USNAbilitySystemComponent;
+class USNAbilitySystemComponent;	
 /**
  * Defines how ability is meant to activate
  */

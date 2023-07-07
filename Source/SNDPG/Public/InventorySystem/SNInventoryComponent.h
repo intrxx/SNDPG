@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "SNInventoryComponent.generated.h"
 
+class USNItemBase;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInventoryUpdated);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -16,16 +18,12 @@ class SNDPG_API USNInventoryComponent : public UActorComponent
 public:	
 	USNInventoryComponent();
 
-	bool AddItem(class USNItemBase* ItemToAdd);
-	bool RemoveItem(class USNItemBase* ItemToRemove);
+	bool AddItem(USNItemBase* ItemToAdd);
+	bool RemoveItem(USNItemBase* ItemToRemove);
 
-	UFUNCTION(BlueprintPure, Category = "Inventory")
+	UFUNCTION(BlueprintPure, Category = "SN|InventoryComponent")
 	static USNInventoryComponent* FindInventoryComponent(const AActor* Actor) {return (Actor ? Actor->FindComponentByClass<USNInventoryComponent>() : nullptr);}
 
-public:
-	UPROPERTY(EditDefaultsOnly, Category = "SN|InventoryComponent")
-	int32 InventoryCapacity = 0;
-	
 protected:
 	virtual void BeginPlay() override;
 

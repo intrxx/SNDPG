@@ -29,7 +29,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController")
 	ASNHeroState* GetSNPlayerState() const;
 	
-	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController")
+	UFUNCTION(BlueprintCallable, Category = "SN|SNAbilitySystemComponent")
 	USNAbilitySystemComponent* GetSNAbilitySystemComponent() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|PlayerController|UI")
