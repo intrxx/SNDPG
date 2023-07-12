@@ -8,13 +8,15 @@
 UENUM(BlueprintType)
 enum class EItemCategory : uint8
 {
-	Weapon,
+	LeftHandWeapon,
+	RightHandWeapon,
 	Consumable,
 	Helmet,
 	BodyArmour,
 	Gloves,
 	Boots,
-	Talisman
+	Talisman,
+	Magic
 };
 
 /**

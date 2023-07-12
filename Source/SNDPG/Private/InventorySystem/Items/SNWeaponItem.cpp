@@ -5,7 +5,7 @@
 
 USNWeaponItem::USNWeaponItem()
 {
-	ItemCategory = EItemCategory::Weapon;
+	//ItemCategory = EItemCategory::Weapon;
 }
 
 void USNWeaponItem::Use(ASNHero* Hero)

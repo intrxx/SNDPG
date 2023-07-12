@@ -16,6 +16,7 @@
 #include "GameplayTags/SNGameplayTags.h"
 #include "GAS/SNAbilitySet.h"
 #include "Input/SNEnhancedInputComponent.h"
+#include "InventorySystem/SNEquipmentComponent.h"
 #include "InventorySystem/SNInventoryComponent.h"
 #include "InventorySystem/SNItemBase.h"
 
@@ -60,6 +61,8 @@ ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	AttributesComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
 
 	InventoryComponent = CreateDefaultSubobject<USNInventoryComponent>(TEXT("InventoryComponent"));
+
+	EquipmentComponent = CreateDefaultSubobject<USNEquipmentComponent>(TEXT("EquipmentComponent"));
 }
 
 void ASNHero::PossessedBy(AController* NewController)

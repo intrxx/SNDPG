@@ -9,6 +9,7 @@
 #include "GAS/SNGameplayAbility.h"
 #include "SNHero.generated.h"
 
+class USNEquipmentComponent;
 class USNInventoryComponent;
 class USNCombatComponent;
 class USNInputConfig;
@@ -129,4 +130,7 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
 	USNInventoryComponent* InventoryComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	USNEquipmentComponent* EquipmentComponent;
 };
