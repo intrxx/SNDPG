@@ -44,6 +44,10 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Input_Look_Mouse, "Input.Look.Mouse", "Look input with mouse.");
 	AddTag(Input_Look_Stick, "Input.Look.Stick", "Look input with stick.");
 	AddTag(Input_ToggleInGameMenu, "Input.ToggleInGameMenu", "Toggle input for In Game Menu Tab.");
+	AddTag(Input_ItemSwitch_WeaponRightSlot, "Input.ItemSwitch.WeaponRightSlot", "Change item in the Right Slot Weapon");
+	AddTag(Input_ItemSwitch_WeaponLeftSlot, "Input.ItemSwitch.WeaponLeftSlot", "Change item in the Left Slot Weapon");
+	AddTag(Input_ItemSwitch_ConsumableDownSlot, "Input.ItemSwitch.ConsumableDownSlot", "Change item in the Consumable Slot");
+	AddTag(Input_ItemSwitch_MagicUpSlot, "Input.ItemSwitch.MagicUpSlot", "Change item in the Magic Slot");
 
 	// Events
 	AddTag(GameplayEvent_Death, "GameplayEvent.Death", "Event that fires on Death");

@@ -2,6 +2,8 @@
 
 
 #include "InventorySystem/SNEquipmentComponent.h"
+
+#include "SWarningOrErrorBox.h"
 #include "InventorySystem/SNItemBase.h"
 
 USNEquipmentComponent::USNEquipmentComponent()
@@ -38,7 +40,8 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd)
 		
 	case EItemCategory::Consumable:
 		EquippedConsumables.Add(ItemToAdd);
-		
+
+		CurrentlyEquippedConsumable = EquippedConsumables.Last();
 		OnEquippedConsumableUpdateDelegate.Broadcast();
 		break;
 		
@@ -88,6 +91,34 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove)
 	
 	
 	return true;
+}
+
+bool USNEquipmentComponent::SwitchEquippedConsumable(int16 Index)
+{
+	if(EquippedConsumables.IsEmpty())
+	{
+		return false;
+	}
+	
+	if(Index+1 < EquippedConsumables.Num())
+	{
+		CurrentlyEquippedConsumable = EquippedConsumables[Index+1];
+		CurrentlyEquippedConsumableIndex = Index+1;
+
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedConsumable->GetName());
+		return true;
+	}
+
+	if(Index+1 == EquippedConsumables.Num())
+	{
+		CurrentlyEquippedConsumable = EquippedConsumables[0];
+		CurrentlyEquippedConsumableIndex = 0;
+
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedConsumable->GetName());
+		return true;
+	}
+	
+	return false;
 }
 
 void USNEquipmentComponent::BeginPlay()

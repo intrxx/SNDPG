@@ -32,7 +32,16 @@ public:
 	bool RemoveFromEquippedItems(USNItemBase* ItemToRemove);
 	
 	UFUNCTION(BlueprintPure, Category = "SN|EquipmentComponent")
-	static USNEquipmentComponent* FindEquipmentComponent(const AActor* Actor)  {return (Actor ? Actor->FindComponentByClass<USNEquipmentComponent>() : nullptr); }
+	static USNEquipmentComponent* FindEquipmentComponent(const AActor* Actor)  {return (Actor ? Actor->FindComponentByClass<USNEquipmentComponent>() : nullptr);}
+
+	UFUNCTION()
+	bool SwitchEquippedConsumable(int16 CurrentlyEquippedConsumableIndex);
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent")
+	USNItemBase* CurrentlyEquippedConsumable = nullptr;
+	
+	int16 CurrentlyEquippedConsumableIndex = 0;
 	
 protected:
 	// Called when the game starts

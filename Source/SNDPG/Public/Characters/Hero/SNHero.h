@@ -91,6 +91,11 @@ protected:
 	void Move(const FInputActionValue& Value);
 	void LookMouse(const FInputActionValue& Value);
 	void LookStick(const FInputActionValue& Value);
+
+	void SwitchItemRight_Weapon();
+	void SwitchItemLeft_Weapon();
+	void SwitchItemDown_Consumable();
+	void SwitchItemUp_Magic();
 	
 	void ToggleInGameMenu();
 

@@ -22,6 +22,10 @@ public:
 	FGameplayTag Input_Look_Stick;
 	FGameplayTag Input_Look_Mouse;
 	FGameplayTag Input_ToggleInGameMenu;
+	FGameplayTag Input_ItemSwitch_WeaponRightSlot;
+	FGameplayTag Input_ItemSwitch_WeaponLeftSlot;
+	FGameplayTag Input_ItemSwitch_ConsumableDownSlot;
+	FGameplayTag Input_ItemSwitch_MagicUpSlot;
 
 	// Events
 	FGameplayTag GameplayEvent_Death;

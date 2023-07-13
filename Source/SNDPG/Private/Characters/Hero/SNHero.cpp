@@ -19,6 +19,7 @@
 #include "InventorySystem/SNEquipmentComponent.h"
 #include "InventorySystem/SNInventoryComponent.h"
 #include "InventorySystem/SNItemBase.h"
+#include "UI/HeroHUD/SNHeroHUD.h"
 
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -147,14 +148,27 @@ void ASNHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	TArray<uint32> BindHandles;
 	EInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::InputAbilityInputTagPressed,
 		&ThisClass::InputAbilityInputTagReleased, /*out*/ BindHandles);
+
+	// Movement
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_Move, ETriggerEvent::Triggered, this,
 		&ThisClass::Move);
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_Look_Mouse, ETriggerEvent::Triggered, this,
 		&ThisClass::LookMouse);
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_Look_Stick, ETriggerEvent::Triggered, this,
 		&ThisClass::LookStick);
+
+	// HUD
 	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ToggleInGameMenu, ETriggerEvent::Triggered,
 		this, &ThisClass::ToggleInGameMenu);
+
+	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ItemSwitch_WeaponLeftSlot, ETriggerEvent::Triggered,
+		this, &ThisClass::SwitchItemLeft_Weapon);
+	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ItemSwitch_WeaponRightSlot, ETriggerEvent::Triggered,
+		this, &ThisClass::SwitchItemRight_Weapon);
+	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ItemSwitch_ConsumableDownSlot, ETriggerEvent::Triggered,
+		this, &ThisClass::SwitchItemDown_Consumable);
+	EInputComponent->BindNativeAction(InputConfig, GameplayTags.Input_ItemSwitch_MagicUpSlot, ETriggerEvent::Triggered,
+		this, &ThisClass::SwitchItemUp_Magic);
 }
 
 void ASNHero::BeginPlay()
@@ -234,6 +248,47 @@ void ASNHero::LookStick(const FInputActionValue& Value)
 			AddControllerPitchInput(LookValue.Y * Hero::LookPitchRate * World->GetDeltaSeconds());
 		}
 	}
+}
+
+void ASNHero::SwitchItemRight_Weapon()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in right weapon slot"));
+}
+
+void ASNHero::SwitchItemLeft_Weapon()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in left weapon slot"));
+}
+
+void ASNHero::SwitchItemDown_Consumable()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in consumable slot"));
+
+	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
+	if(Equipment)
+	{
+		if(Equipment->CurrentlyEquippedConsumable == nullptr)
+		{
+			return;
+		}
+		
+		Equipment->SwitchEquippedConsumable(Equipment->CurrentlyEquippedConsumableIndex);
+		
+		ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+		if(PC)
+		{
+			USNHeroHUD* HUD = PC->GetHeroHUD();
+			if(HUD)
+			{
+				HUD->SetEquippedItemDisplay(Equipment->CurrentlyEquippedConsumable);
+			}
+		}	
+	}
+}
+
+void ASNHero::SwitchItemUp_Magic()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in magic slot"));
 }
 
 void ASNHero::ToggleInGameMenu()
