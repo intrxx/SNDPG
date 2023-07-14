@@ -253,11 +253,53 @@ void ASNHero::LookStick(const FInputActionValue& Value)
 void ASNHero::SwitchItemRight_Weapon()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in right weapon slot"));
+
+	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
+	if(Equipment)
+	{
+		if(Equipment->CurrentlyEquippedRightHandWeapon == nullptr)
+		{
+			return;
+		}
+		
+		Equipment->SwitchEquippedRightHandWeapon(Equipment->CurrentlyEquippedRightHandWeaponIndex);
+		
+		ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+		if(PC)
+		{
+			USNHeroHUD* HUD = PC->GetHeroHUD();
+			if(HUD)
+			{
+				HUD->SetRightHandWeaponEquippedItemDisplay(Equipment->CurrentlyEquippedRightHandWeapon);
+			}
+		}	
+	}
 }
 
 void ASNHero::SwitchItemLeft_Weapon()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in left weapon slot"));
+
+	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
+	if(Equipment)
+	{
+		if(Equipment->CurrentlyEquippedLeftHandWeapon == nullptr)
+		{
+			return;
+		}
+		
+		Equipment->SwitchEquippedLeftHandWeapon(Equipment->CurrentlyEquippedLeftHandWeaponIndex);
+		
+		ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+		if(PC)
+		{
+			USNHeroHUD* HUD = PC->GetHeroHUD();
+			if(HUD)
+			{
+				HUD->SetLeftHandWeaponEquippedItemDisplay(Equipment->CurrentlyEquippedLeftHandWeapon);
+			}
+		}	
+	}
 }
 
 void ASNHero::SwitchItemDown_Consumable()
@@ -280,7 +322,7 @@ void ASNHero::SwitchItemDown_Consumable()
 			USNHeroHUD* HUD = PC->GetHeroHUD();
 			if(HUD)
 			{
-				HUD->SetEquippedItemDisplay(Equipment->CurrentlyEquippedConsumable);
+				HUD->SetConsumableEquippedItemDisplay(Equipment->CurrentlyEquippedConsumable);
 			}
 		}	
 	}
@@ -289,6 +331,27 @@ void ASNHero::SwitchItemDown_Consumable()
 void ASNHero::SwitchItemUp_Magic()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in magic slot"));
+
+	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
+	if(Equipment)
+	{
+		if(Equipment->CurrentlyEquippedMagic == nullptr)
+		{
+			return;
+		}
+		
+		Equipment->SwitchEquippedMagic(Equipment->CurrentlyEquippedMagicIndex);
+		
+		ASNHeroController* PC = Cast<ASNHeroController>(GetController());
+		if(PC)
+		{
+			USNHeroHUD* HUD = PC->GetHeroHUD();
+			if(HUD)
+			{
+				HUD->SetMagicEquippedItemDisplay(Equipment->CurrentlyEquippedMagic);
+			}
+		}	
+	}
 }
 
 void ASNHero::ToggleInGameMenu()

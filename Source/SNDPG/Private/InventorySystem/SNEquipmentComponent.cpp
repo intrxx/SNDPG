@@ -2,8 +2,6 @@
 
 
 #include "InventorySystem/SNEquipmentComponent.h"
-
-#include "SWarningOrErrorBox.h"
 #include "InventorySystem/SNItemBase.h"
 
 USNEquipmentComponent::USNEquipmentComponent()
@@ -13,7 +11,7 @@ USNEquipmentComponent::USNEquipmentComponent()
 	
 }
 
-bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd)
+bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCategory SlotCategory)
 {
 	if(!ItemToAdd)
 	{
@@ -24,25 +22,40 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd)
 	ItemToAdd->World = GetWorld();
 	EquippedItems.Add(ItemToAdd);
 
-	switch (ItemToAdd->ItemCategory)
+	switch (SlotCategory)
 	{
-	case EItemCategory::LeftHandWeapon:
+	case ESlotCategory::LeftHandWeaponSlot:
 		EquippedLeftHandWeapon.Add(ItemToAdd);
-		
+
+		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
 		OnEquippedLeftHandWeaponUpdateDelegate.Broadcast();
 		break;
 		
-	case EItemCategory::RightHandWeapon:
+	case ESlotCategory::RightHandWeaponSlot:
 		EquippedRightHandWeapon.Add(ItemToAdd);
-		
+
+		CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[0];
 		OnEquippedRightHandWeaponUpdateDelegate.Broadcast();
 		break;
 		
-	case EItemCategory::Consumable:
+	case ESlotCategory::ConsumableSlot:
 		EquippedConsumables.Add(ItemToAdd);
-
-		CurrentlyEquippedConsumable = EquippedConsumables.Last();
+		UE_LOG(LogTemp, Warning, TEXT("Adding item to consumable slot: %s"), *ItemToAdd->GetName());
+		
+		CurrentlyEquippedConsumable = EquippedConsumables[0];
 		OnEquippedConsumableUpdateDelegate.Broadcast();
+		break;
+
+	case ESlotCategory::ArmourSlot:
+		//TODO Do something when we equip armour
+		break;
+
+	case ESlotCategory::TalismanSlot:
+		//TODO Do something when we equip Talisman
+		break;
+
+	case ESlotCategory::MagicSlot:
+		//TODO Do something when we equip Magic
 		break;
 		
 	default:
@@ -53,7 +66,7 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd)
 	return true;
 }
 
-bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove)
+bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove, ESlotCategory SlotCategory)
 {
 	if(!ItemToRemove)
 	{
@@ -64,24 +77,64 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove)
 	ItemToRemove->World = nullptr;
 	EquippedItems.RemoveSingle(ItemToRemove);
 
-	switch (ItemToRemove->ItemCategory)
+	switch (SlotCategory)
 	{
-	case EItemCategory::LeftHandWeapon:
+	case ESlotCategory::LeftHandWeaponSlot:
 		EquippedLeftHandWeapon.RemoveSingle(ItemToRemove);
+
+		if (!EquippedLeftHandWeapon.IsEmpty())
+		{
+			CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
+		}
+		else
+		{
+			CurrentlyEquippedLeftHandWeapon = nullptr;
+		}
 		
 		OnEquippedLeftHandWeaponUpdateDelegate.Broadcast();
 		break;
 		
-	case EItemCategory::RightHandWeapon:
+	case ESlotCategory::RightHandWeaponSlot:
 		EquippedRightHandWeapon.RemoveSingle(ItemToRemove);
+
+		if (!EquippedRightHandWeapon.IsEmpty())
+		{
+			CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[0];
+		}
+		else
+		{
+			CurrentlyEquippedRightHandWeapon = nullptr;
+		}
 
 		OnEquippedRightHandWeaponUpdateDelegate.Broadcast();
 		break;
 		
-	case EItemCategory::Consumable:
+	case ESlotCategory::ConsumableSlot:
 		EquippedConsumables.RemoveSingle(ItemToRemove);
+		UE_LOG(LogTemp, Warning, TEXT("Removing item from consumable slot: %s"), *ItemToRemove->GetName());
+
+		if (!EquippedConsumables.IsEmpty())
+		{
+			CurrentlyEquippedConsumable = EquippedConsumables[0];
+		}
+		else
+		{
+			CurrentlyEquippedConsumable = nullptr;
+		}
 		
 		OnEquippedConsumableUpdateDelegate.Broadcast();
+		break;
+
+	case ESlotCategory::ArmourSlot:
+		//TODO Remove armour
+		break;
+
+	case ESlotCategory::TalismanSlot:
+		//TODO Remove Talisman
+		break;
+
+	case ESlotCategory::MagicSlot:
+		//TODO Remove Magic
 		break;
 		
 	default:
@@ -95,7 +148,7 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove)
 
 bool USNEquipmentComponent::SwitchEquippedConsumable(int16 Index)
 {
-	if(EquippedConsumables.IsEmpty())
+	if(EquippedConsumables.IsEmpty() || EquippedConsumables.Num() == 1)
 	{
 		return false;
 	}
@@ -115,6 +168,90 @@ bool USNEquipmentComponent::SwitchEquippedConsumable(int16 Index)
 		CurrentlyEquippedConsumableIndex = 0;
 
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedConsumable->GetName());
+		return true;
+	}
+	
+	return false;
+}
+
+bool USNEquipmentComponent::SwitchEquippedLeftHandWeapon(int16 Index)
+{
+	if(EquippedLeftHandWeapon.IsEmpty() || EquippedLeftHandWeapon.Num() == 1)
+	{
+		return false;
+	}
+	
+	if(Index+1 < EquippedLeftHandWeapon.Num())
+	{
+		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[Index+1];
+		CurrentlyEquippedLeftHandWeaponIndex = Index+1;
+
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
+		return true;
+	}
+
+	if(Index+1 == EquippedLeftHandWeapon.Num())
+	{
+		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
+		CurrentlyEquippedLeftHandWeaponIndex = 0;
+
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
+		return true;
+	}
+	
+	return false;
+}
+
+bool USNEquipmentComponent::SwitchEquippedRightHandWeapon(int16 Index)
+{
+	if(EquippedRightHandWeapon.IsEmpty() || EquippedRightHandWeapon.Num() == 1)
+	{
+		return false;
+	}
+	
+	if(Index+1 < EquippedRightHandWeapon.Num())
+	{
+		CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[Index+1];
+		CurrentlyEquippedRightHandWeaponIndex = Index+1;
+
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
+		return true;
+	}
+
+	if(Index+1 == EquippedRightHandWeapon.Num())
+	{
+		CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[0];
+		CurrentlyEquippedRightHandWeaponIndex = 0;
+
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
+		return true;
+	}
+	
+	return false;
+}
+
+bool USNEquipmentComponent::SwitchEquippedMagic(int16 Index)
+{
+	if(EquippedMagic.IsEmpty() || EquippedMagic.Num() == 1)
+	{
+		return false;
+	}
+	
+	if(Index+1 < EquippedMagic.Num())
+	{
+		CurrentlyEquippedMagic = EquippedMagic[Index+1];
+		CurrentlyEquippedMagicIndex = Index+1;
+
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedMagic->GetName());
+		return true;
+	}
+
+	if(Index+1 == EquippedMagic.Num())
+	{
+		CurrentlyEquippedMagic = EquippedMagic[0];
+		CurrentlyEquippedMagicIndex = 0;
+
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedMagic->GetName());
 		return true;
 	}
 	

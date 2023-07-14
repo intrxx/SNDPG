@@ -17,6 +17,15 @@ class SNDPG_API USNHeroHUD : public USNStatusWidget
 
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|CharacterStats")
-	void SetEquippedItemDisplay(USNItemBase* Item);
+	void SetConsumableEquippedItemDisplay(USNItemBase* Item);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|CharacterStats")
+	void SetLeftHandWeaponEquippedItemDisplay(USNItemBase* Item);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|CharacterStats")
+	void SetRightHandWeaponEquippedItemDisplay(USNItemBase* Item);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|CharacterStats")
+	void SetMagicEquippedItemDisplay(USNItemBase* Item);
 	
 };

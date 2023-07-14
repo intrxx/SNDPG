@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "SNItemBase.generated.h"
 
+enum class ESlotCategory : uint8;
+
 UENUM(BlueprintType)
 enum class EItemCategory : uint8
 {
@@ -68,6 +70,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
 	EItemCategory ItemCategory;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
+	ESlotCategory SlotCategoryEquippedTo;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
 	bool bIsItemEquipped = false;
 

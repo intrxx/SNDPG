@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "UI/Inventory/SNEquipmentSlotButton.h"
 #include "SNEquipmentComponent.generated.h"
 
 enum class EItemCategory : uint8;
@@ -26,22 +27,46 @@ public:
 	USNEquipmentComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
-	bool AddToEquippedItems(USNItemBase* ItemToAdd);
+	bool AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCategory SlotCategory);
 
 	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
-	bool RemoveFromEquippedItems(USNItemBase* ItemToRemove);
+	bool RemoveFromEquippedItems(USNItemBase* ItemToRemove, ESlotCategory SlotCategory);
 	
 	UFUNCTION(BlueprintPure, Category = "SN|EquipmentComponent")
 	static USNEquipmentComponent* FindEquipmentComponent(const AActor* Actor)  {return (Actor ? Actor->FindComponentByClass<USNEquipmentComponent>() : nullptr);}
 
 	UFUNCTION()
-	bool SwitchEquippedConsumable(int16 CurrentlyEquippedConsumableIndex);
+	bool SwitchEquippedConsumable(int16 Index);
+
+	UFUNCTION()
+	bool SwitchEquippedLeftHandWeapon(int16 Index);
+
+	UFUNCTION()
+	bool SwitchEquippedRightHandWeapon(int16 Index);
+
+	UFUNCTION()
+	bool SwitchEquippedMagic(int16 Index);
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent")
 	USNItemBase* CurrentlyEquippedConsumable = nullptr;
 	
 	int16 CurrentlyEquippedConsumableIndex = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent")
+	USNItemBase* CurrentlyEquippedLeftHandWeapon = nullptr;
+	
+	int16 CurrentlyEquippedLeftHandWeaponIndex = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent")
+	USNItemBase* CurrentlyEquippedRightHandWeapon = nullptr;
+	
+	int16 CurrentlyEquippedRightHandWeaponIndex = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent")
+	USNItemBase* CurrentlyEquippedMagic = nullptr;
+	
+	int16 CurrentlyEquippedMagicIndex = 0;
 	
 protected:
 	// Called when the game starts
