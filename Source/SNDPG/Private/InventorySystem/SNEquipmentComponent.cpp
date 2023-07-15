@@ -186,7 +186,7 @@ bool USNEquipmentComponent::SwitchEquippedLeftHandWeapon(int16 Index)
 		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[Index+1];
 		CurrentlyEquippedLeftHandWeaponIndex = Index+1;
 
-		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Left Hand Weapon: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
 		return true;
 	}
 
@@ -195,7 +195,7 @@ bool USNEquipmentComponent::SwitchEquippedLeftHandWeapon(int16 Index)
 		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
 		CurrentlyEquippedLeftHandWeaponIndex = 0;
 
-		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Left Hand Weapon: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
 		return true;
 	}
 	
@@ -214,7 +214,7 @@ bool USNEquipmentComponent::SwitchEquippedRightHandWeapon(int16 Index)
 		CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[Index+1];
 		CurrentlyEquippedRightHandWeaponIndex = Index+1;
 
-		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Right Hand Weapon: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
 		return true;
 	}
 
@@ -223,7 +223,7 @@ bool USNEquipmentComponent::SwitchEquippedRightHandWeapon(int16 Index)
 		CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[0];
 		CurrentlyEquippedRightHandWeaponIndex = 0;
 
-		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Right Hand Weapon: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
 		return true;
 	}
 	
@@ -242,7 +242,7 @@ bool USNEquipmentComponent::SwitchEquippedMagic(int16 Index)
 		CurrentlyEquippedMagic = EquippedMagic[Index+1];
 		CurrentlyEquippedMagicIndex = Index+1;
 
-		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedMagic->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Magic: %s"), *CurrentlyEquippedMagic->GetName());
 		return true;
 	}
 
@@ -251,7 +251,7 @@ bool USNEquipmentComponent::SwitchEquippedMagic(int16 Index)
 		CurrentlyEquippedMagic = EquippedMagic[0];
 		CurrentlyEquippedMagicIndex = 0;
 
-		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedMagic->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Magic: %s"), *CurrentlyEquippedMagic->GetName());
 		return true;
 	}
 	

@@ -252,8 +252,6 @@ void ASNHero::LookStick(const FInputActionValue& Value)
 
 void ASNHero::SwitchItemRight_Weapon()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in right weapon slot"));
-
 	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
 	if(Equipment)
 	{
@@ -271,6 +269,8 @@ void ASNHero::SwitchItemRight_Weapon()
 			if(HUD)
 			{
 				HUD->SetRightHandWeaponEquippedItemDisplay(Equipment->CurrentlyEquippedRightHandWeapon);
+
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in right weapon slot"));
 			}
 		}	
 	}
@@ -278,8 +278,6 @@ void ASNHero::SwitchItemRight_Weapon()
 
 void ASNHero::SwitchItemLeft_Weapon()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in left weapon slot"));
-
 	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
 	if(Equipment)
 	{
@@ -297,6 +295,8 @@ void ASNHero::SwitchItemLeft_Weapon()
 			if(HUD)
 			{
 				HUD->SetLeftHandWeaponEquippedItemDisplay(Equipment->CurrentlyEquippedLeftHandWeapon);
+
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in left weapon slot"));
 			}
 		}	
 	}
@@ -304,8 +304,6 @@ void ASNHero::SwitchItemLeft_Weapon()
 
 void ASNHero::SwitchItemDown_Consumable()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in consumable slot"));
-
 	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
 	if(Equipment)
 	{
@@ -323,6 +321,8 @@ void ASNHero::SwitchItemDown_Consumable()
 			if(HUD)
 			{
 				HUD->SetConsumableEquippedItemDisplay(Equipment->CurrentlyEquippedConsumable);
+
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in consumable slot"));
 			}
 		}	
 	}
@@ -330,8 +330,6 @@ void ASNHero::SwitchItemDown_Consumable()
 
 void ASNHero::SwitchItemUp_Magic()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in magic slot"));
-
 	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
 	if(Equipment)
 	{
@@ -349,6 +347,8 @@ void ASNHero::SwitchItemUp_Magic()
 			if(HUD)
 			{
 				HUD->SetMagicEquippedItemDisplay(Equipment->CurrentlyEquippedMagic);
+
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in magic slot"));
 			}
 		}	
 	}

@@ -11,6 +11,7 @@
 UENUM(BlueprintType)
 enum class ESlotCategory : uint8
 {
+	None,
 	LeftHandWeaponSlot,
 	RightHandWeaponSlot,
 	ConsumableSlot,

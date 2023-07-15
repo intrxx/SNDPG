@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UI/Inventory/SNEquipmentSlotButton.h"
 #include "SNItemBase.generated.h"
 
 enum class ESlotCategory : uint8;
@@ -10,15 +11,16 @@ enum class ESlotCategory : uint8;
 UENUM(BlueprintType)
 enum class EItemCategory : uint8
 {
-	LeftHandWeapon,
-	RightHandWeapon,
+	Weapon,
 	Consumable,
 	Helmet,
 	BodyArmour,
 	Gloves,
 	Boots,
 	Talisman,
-	Magic
+	Magic,
+	Arrow,
+	Bolt
 };
 
 /**
@@ -71,7 +73,7 @@ public:
 	EItemCategory ItemCategory;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
-	ESlotCategory SlotCategoryEquippedTo;
+	ESlotCategory SlotCategoryEquippedTo = ESlotCategory::None;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
 	bool bIsItemEquipped = false;
