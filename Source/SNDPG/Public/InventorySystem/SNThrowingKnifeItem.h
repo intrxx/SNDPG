@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "InventorySystem/SNItemBase.h"
-#include "SNWeaponItem.generated.h"
+#include "SNThrowingKnifeItem.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SNDPG_API USNWeaponItem : public USNItemBase
+class SNDPG_API USNThrowingKnifeItem : public USNItemBase
 {
 	GENERATED_BODY()
 
 public:
-	USNWeaponItem();
+	USNThrowingKnifeItem();
 
 protected:
 	virtual void Use(ASNHero* Hero) override;
