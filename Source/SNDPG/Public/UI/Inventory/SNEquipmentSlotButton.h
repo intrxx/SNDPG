@@ -32,4 +32,7 @@ class SNDPG_API USNEquipmentSlotButton : public UUserWidget
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI|SlotCategory")
 	ESlotCategory SlotCategory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|UI|Item")
+	bool bHasEquippedItem = false;
 };
