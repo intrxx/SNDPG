@@ -2,6 +2,9 @@
 
 
 #include "InventorySystem/SNEquipmentComponent.h"
+#include "GAS/SNAbilitySet.h"
+#include "AbilitySystemGlobals.h"
+#include "GAS/SNAbilitySystemComponent.h"
 #include "InventorySystem/SNItemBase.h"
 
 USNEquipmentComponent::USNEquipmentComponent()
@@ -155,18 +158,26 @@ bool USNEquipmentComponent::SwitchEquippedConsumable(int16 Index)
 	
 	if(Index+1 < EquippedConsumables.Num())
 	{
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedConsumable);
+		
 		CurrentlyEquippedConsumable = EquippedConsumables[Index+1];
 		CurrentlyEquippedConsumableIndex = Index+1;
 
+		AddEquippedItemAbilitySet(CurrentlyEquippedConsumable);
+		
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedConsumable->GetName());
 		return true;
 	}
 
 	if(Index+1 == EquippedConsumables.Num())
 	{
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedConsumable);
+		
 		CurrentlyEquippedConsumable = EquippedConsumables[0];
 		CurrentlyEquippedConsumableIndex = 0;
 
+		AddEquippedItemAbilitySet(CurrentlyEquippedConsumable);
+		
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedConsumable->GetName());
 		return true;
 	}
@@ -183,8 +194,13 @@ bool USNEquipmentComponent::SwitchEquippedLeftHandWeapon(int16 Index)
 	
 	if(Index+1 < EquippedLeftHandWeapon.Num())
 	{
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
+		
 		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[Index+1];
 		CurrentlyEquippedLeftHandWeaponIndex = Index+1;
+
+		AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
+		
 
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Left Hand Weapon: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
 		return true;
@@ -192,8 +208,12 @@ bool USNEquipmentComponent::SwitchEquippedLeftHandWeapon(int16 Index)
 
 	if(Index+1 == EquippedLeftHandWeapon.Num())
 	{
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
+		
 		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
 		CurrentlyEquippedLeftHandWeaponIndex = 0;
+
+		AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
 
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Left Hand Weapon: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
 		return true;
@@ -211,18 +231,26 @@ bool USNEquipmentComponent::SwitchEquippedRightHandWeapon(int16 Index)
 	
 	if(Index+1 < EquippedRightHandWeapon.Num())
 	{
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedRightHandWeapon);
+		
 		CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[Index+1];
 		CurrentlyEquippedRightHandWeaponIndex = Index+1;
 
+		AddEquippedItemAbilitySet(CurrentlyEquippedRightHandWeapon);
+		
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Right Hand Weapon: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
 		return true;
 	}
 
 	if(Index+1 == EquippedRightHandWeapon.Num())
 	{
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedRightHandWeapon);
+		
 		CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[0];
 		CurrentlyEquippedRightHandWeaponIndex = 0;
 
+		AddEquippedItemAbilitySet(CurrentlyEquippedRightHandWeapon);
+		
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Right Hand Weapon: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
 		return true;
 	}
@@ -239,18 +267,26 @@ bool USNEquipmentComponent::SwitchEquippedMagic(int16 Index)
 	
 	if(Index+1 < EquippedMagic.Num())
 	{
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedMagic);
+		
 		CurrentlyEquippedMagic = EquippedMagic[Index+1];
 		CurrentlyEquippedMagicIndex = Index+1;
 
+		AddEquippedItemAbilitySet(CurrentlyEquippedMagic);
+		
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Magic: %s"), *CurrentlyEquippedMagic->GetName());
 		return true;
 	}
 
 	if(Index+1 == EquippedMagic.Num())
 	{
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedMagic);
+		
 		CurrentlyEquippedMagic = EquippedMagic[0];
 		CurrentlyEquippedMagicIndex = 0;
 
+		AddEquippedItemAbilitySet(CurrentlyEquippedMagic);
+		
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Magic: %s"), *CurrentlyEquippedMagic->GetName());
 		return true;
 	}
@@ -262,5 +298,32 @@ void USNEquipmentComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+USNAbilitySystemComponent* USNEquipmentComponent::GetAbilitySystemComponent() const
+{
+	AActor* OwningActor = GetOwner();
+	return Cast<USNAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(OwningActor));
+}
+
+void USNEquipmentComponent::AddEquippedItemAbilitySet(USNItemBase* Item)
+{
+	USNAbilitySet* AbilitySetToGive = Item->AbilitySet;
+
+	if(USNAbilitySystemComponent* ASC = GetAbilitySystemComponent())
+	{
+		if(AbilitySetToGive)
+		{
+			AbilitySetToGive->GiveToAbilitySystem(ASC, &Item->GrantedHandles, Item);
+		}
+	}
+}
+
+void USNEquipmentComponent::RemoveUnequippedItemAbilitySet(USNItemBase* Item)
+{
+	if(USNAbilitySystemComponent* ASC = GetAbilitySystemComponent())
+	{
+		Item->GrantedHandles.TakeFromAbilitySystem(ASC);
+	}
 }
 

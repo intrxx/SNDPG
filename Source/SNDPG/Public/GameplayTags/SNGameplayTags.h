@@ -26,6 +26,7 @@ public:
 	FGameplayTag Input_ItemSwitch_WeaponLeftSlot;
 	FGameplayTag Input_ItemSwitch_ConsumableDownSlot;
 	FGameplayTag Input_ItemSwitch_MagicUpSlot;
+	FGameplayTag Input_UseConsumableItem;
 
 	// Events
 	FGameplayTag GameplayEvent_Death;

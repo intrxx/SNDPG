@@ -22,9 +22,5 @@ public:
 	float HealingAmount = 0.0f;
 
 protected:
-	UPROPERTY(EditDefaultsOnly, Category = "SN|HealingItem")
-	TSubclassOf<USNGameplayAbility> AbilityToUse = nullptr;
-	
-protected:
 	virtual void Use(ASNHero* Hero) override;
 };

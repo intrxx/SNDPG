@@ -7,8 +7,10 @@
 #include "UI/Inventory/SNEquipmentSlotButton.h"
 #include "SNEquipmentComponent.generated.h"
 
+class USNAbilitySystemComponent;
 enum class EItemCategory : uint8;
 class USNItemBase;
+class USNAbilitySet;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEquipmentUpdate);
 
@@ -34,6 +36,8 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "SN|EquipmentComponent")
 	static USNEquipmentComponent* FindEquipmentComponent(const AActor* Actor)  {return (Actor ? Actor->FindComponentByClass<USNEquipmentComponent>() : nullptr);}
+
+	
 
 	UFUNCTION()
 	bool SwitchEquippedConsumable(int16 Index);
@@ -71,6 +75,11 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	
+	USNAbilitySystemComponent* GetAbilitySystemComponent() const;
+	
+	void AddEquippedItemAbilitySet(USNItemBase* Item);
+	void RemoveUnequippedItemAbilitySet(USNItemBase* Item);
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, Instanced, Category = "SN|EquipmentComponent")

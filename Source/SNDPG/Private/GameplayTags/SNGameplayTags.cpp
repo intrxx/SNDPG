@@ -48,6 +48,7 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Input_ItemSwitch_WeaponLeftSlot, "Input.ItemSwitch.WeaponLeftSlot", "Change item in the Left Slot Weapon");
 	AddTag(Input_ItemSwitch_ConsumableDownSlot, "Input.ItemSwitch.ConsumableDownSlot", "Change item in the Consumable Slot");
 	AddTag(Input_ItemSwitch_MagicUpSlot, "Input.ItemSwitch.MagicUpSlot", "Change item in the Magic Slot");
+	AddTag(Input_UseConsumableItem, "Input.UseConsumableItem", "Use consumable item input");
 
 	// Events
 	AddTag(GameplayEvent_Death, "GameplayEvent.Death", "Event that fires on Death");
@@ -59,7 +60,6 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	// Ability Input
 	AddTag(Ability_Input_LightMelee, "Ability.Input.Melee.Light", "Melee ability input.");
 	AddTag(Ability_Input_HeavyMelee, "Ability.Input.Melee.Heavy", "Melee ability input.");
-	AddTag(Ability_Input_Healing, "Ability.Input.Healing", "Healing ability input.");
 	AddTag(Ability_Input_Dash, "Ability.Input.Dash", "Dash ability input.");
 	AddTag(Ability_Input_Swirl, "Ability.Input.Swirl", "Swirl ability input.");
 	AddTag(Ability_Input_KnifeThrow, "Ability.Input.KnifeThrow", "Knife Throw ability input.");
