@@ -41,7 +41,6 @@ public:
 	FGameplayTag Ability_Input_Healing;
 	FGameplayTag Ability_Input_Swirl;
 	FGameplayTag Ability_Input_Dash;
-	FGameplayTag Ability_Input_KnifeThrow;
 	FGameplayTag Ability_Input_TargetLock;
 
 	// Ability tags

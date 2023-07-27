@@ -78,65 +78,57 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* InASC,
 	}
 
 	// Grant the gameplay abilities.
-	if(InASC->bAbilitiesGiven == false)
+	for (int32 AbilityIndex = 0; AbilityIndex < GrantedGameplayAbilities.Num(); ++AbilityIndex)
 	{
-		for (int32 AbilityIndex = 0; AbilityIndex < GrantedGameplayAbilities.Num(); ++AbilityIndex)
+		const FSNAbilitySet_GameplayAbility& AbilityToGrant = GrantedGameplayAbilities[AbilityIndex];
+
+		if (!IsValid(AbilityToGrant.Ability))
 		{
-			const FSNAbilitySet_GameplayAbility& AbilityToGrant = GrantedGameplayAbilities[AbilityIndex];
+			UE_LOG(LogTemp, Error, TEXT("GrantedGameplayAbilities[%d] on ability set [%s] is not valid."), AbilityIndex, *GetNameSafe(this));
+			continue;
+		}
 
-			if (!IsValid(AbilityToGrant.Ability))
-			{
-				UE_LOG(LogTemp, Error, TEXT("GrantedGameplayAbilities[%d] on ability set [%s] is not valid."), AbilityIndex, *GetNameSafe(this));
-				continue;
-			}
+		USNGameplayAbility* AbilityCDO = AbilityToGrant.Ability->GetDefaultObject<USNGameplayAbility>();
 
-			USNGameplayAbility* AbilityCDO = AbilityToGrant.Ability->GetDefaultObject<USNGameplayAbility>();
-
-			FGameplayAbilitySpec AbilitySpec(AbilityCDO, AbilityToGrant.AbilityLevel);
-			AbilitySpec.SourceObject = SourceObject;
-			AbilitySpec.DynamicAbilityTags.AddTag(AbilityToGrant.InputTag);
+		FGameplayAbilitySpec AbilitySpec(AbilityCDO, AbilityToGrant.AbilityLevel);
+		AbilitySpec.SourceObject = SourceObject;
+		AbilitySpec.DynamicAbilityTags.AddTag(AbilityToGrant.InputTag);
 
 			
-			UE_LOG(LogTemp, Error, TEXT("------------------ Binding Tags to Abilities------------------"));
-			UE_LOG(LogTemp, Warning, TEXT("Ability: %s"), *AbilityToGrant.Ability->GetName());
-			UE_LOG(LogTemp, Warning, TEXT("Input Tag: %s"), *AbilityToGrant.InputTag.ToString());
-			UE_LOG(LogTemp, Warning, TEXT("Input Tag On Spec: %s"), *AbilitySpec.DynamicAbilityTags.GetByIndex(0).ToString());
+		UE_LOG(LogTemp, Error, TEXT("------------------ Binding Tags to Abilities------------------"));
+		UE_LOG(LogTemp, Warning, TEXT("Ability: %s"), *AbilityToGrant.Ability->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Input Tag: %s"), *AbilityToGrant.InputTag.ToString());
+		UE_LOG(LogTemp, Warning, TEXT("Input Tag On Spec: %s"), *AbilitySpec.DynamicAbilityTags.GetByIndex(0).ToString());
 			
 			
-			const FGameplayAbilitySpecHandle AbilitySpecHandle = InASC->GiveAbility(AbilitySpec);
+		const FGameplayAbilitySpecHandle AbilitySpecHandle = InASC->GiveAbility(AbilitySpec);
 
-			if (OutGrantedHandles)
-			{
-				OutGrantedHandles->AddAbilitySpecHandle(AbilitySpecHandle);
-			}
+		if (OutGrantedHandles)
+		{
+			OutGrantedHandles->AddAbilitySpecHandle(AbilitySpecHandle);
 		}
 	}
-	InASC->bAbilitiesGiven = true;
 	
 	// Grant the attribute sets.
-	if(InASC->bAttributesGiven == false)
+	for (int32 SetIndex = 0; SetIndex < GrantedAttributes.Num(); ++SetIndex)
 	{
-		for (int32 SetIndex = 0; SetIndex < GrantedAttributes.Num(); ++SetIndex)
+		const FSNAbilitySet_AttributeSet& SetToGrant = GrantedAttributes[SetIndex];
+
+		if (!IsValid(SetToGrant.AttributeSet))
 		{
-			const FSNAbilitySet_AttributeSet& SetToGrant = GrantedAttributes[SetIndex];
+			UE_LOG(LogTemp, Error, TEXT("GrantedAttributes[%d] on ability set [%s] is not valid"), SetIndex, *GetNameSafe(this));
+			continue;
+		}
 
-			if (!IsValid(SetToGrant.AttributeSet))
-			{
-				UE_LOG(LogTemp, Error, TEXT("GrantedAttributes[%d] on ability set [%s] is not valid"), SetIndex, *GetNameSafe(this));
-				continue;
-			}
+		UAttributeSet* NewSet = NewObject<UAttributeSet>(InASC->GetOwner(), SetToGrant.AttributeSet);
+		InASC->AddAttributeSetSubobject(NewSet);
 
-			UAttributeSet* NewSet = NewObject<UAttributeSet>(InASC->GetOwner(), SetToGrant.AttributeSet);
-			InASC->AddAttributeSetSubobject(NewSet);
-
-			if (OutGrantedHandles)
-			{
-				//OutGrantedHandles->AddAttributeSet(NewSet);
-			}
+		if (OutGrantedHandles)
+		{
+			//OutGrantedHandles->AddAttributeSet(NewSet);
 		}
 	}
-	InASC->bAttributesGiven = true;
-
+	
 	// Grant the gameplay effects.
 	for (int32 EffectIndex = 0; EffectIndex < GrantedGameplayEffects.Num(); ++EffectIndex)
 	{

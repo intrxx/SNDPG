@@ -27,10 +27,8 @@ public:
 	
 	virtual void ReceivedDamage(USNAbilitySystemComponent* SourceASC, float UnmitigatedDamage, float MitigatedDamage);
 	virtual void ReceivedHeal(USNAbilitySystemComponent* SourceASC, float HealingDone);
-public:
-	bool bAbilitiesGiven = false;
-	bool bAttributesGiven = false;
 	
+public:
 	FReceivedDamageDelegate ReceivedDamageDelegate;
 	FReceivedHealDelegate ReceivedHealDelegate;
 

@@ -455,37 +455,31 @@ void USNBasicAttributesComponent::HealthChanged(const FOnAttributeChangeData& Da
 	
 	if(ASNEnemy* EnemyOwner = Cast<ASNEnemy>(GetOwner()))
 	{
-		USNHealthBarWidget* HealthBarWidget = EnemyOwner->GetHealthBarWidget();
-		if(HealthBarWidget)
+		if(USNHealthBarWidget* HealthBarWidget = EnemyOwner->GetHealthBarWidget())
 		{
 			HealthBarWidget->SetHealthPercentage(Health / GetMaxHealth());
 		}
 	}
 	else if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			if(USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD()))
 			{
 				HeroHUD->SetHealthPercentage(Health / GetMaxHealth());
 			}
-
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetHealth(Health, GetMaxHealth());
 			}
 			
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetHealth(Health, GetMaxHealth());
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetHealth(Health, GetMaxHealth());
 			}
@@ -499,38 +493,32 @@ void USNBasicAttributesComponent::MaxHealthChanged(const FOnAttributeChangeData&
 	
 	if(ASNEnemy* EnemyOwner = Cast<ASNEnemy>(GetOwner()))
 	{
-		USNHealthBarWidget* HealthBarWidget = EnemyOwner->GetHealthBarWidget();
-		if(HealthBarWidget)
+		if(USNHealthBarWidget* HealthBarWidget = EnemyOwner->GetHealthBarWidget())
 		{
 			HealthBarWidget->SetHealthPercentage(GetHealth() / MaxHealth);
 		}
 	}
 	else if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			if(USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD()))
 			{
 				HeroHUD->SetMaxHealth(MaxHealth);
 				HeroHUD->SetHealthPercentage(GetHealth() / MaxHealth);
 			}
-
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetHealth(GetHealth(), MaxHealth);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetHealth(GetHealth(), MaxHealth);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetHealth(GetHealth(), MaxHealth);
 			}
@@ -544,29 +532,24 @@ void USNBasicAttributesComponent::ResourceChanged(const FOnAttributeChangeData& 
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			if(USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD()))
 			{
 				HeroHUD->SetResourcePercentage(Resource / GetMaxResource());
 			}
-
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetResource(Resource, GetMaxResource());
 			}
 			
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetResource(Resource, GetMaxResource());
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetResource(Resource, GetMaxResource());
 			}
@@ -580,30 +563,25 @@ void USNBasicAttributesComponent::MaxResourceChanged(const FOnAttributeChangeDat
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			if(USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD()))
 			{
 				HeroHUD->SetMaxResource(MaxResource);
 				HeroHUD->SetResourcePercentage(GetResource() / MaxResource);
 			}
-
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetResource(GetResource(), MaxResource);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetResource(GetResource(), MaxResource);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetResource(GetResource(), MaxResource);
 			}
@@ -617,11 +595,9 @@ void USNBasicAttributesComponent::StaminaChanged(const FOnAttributeChangeData& D
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			if(USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD()))
 			{
 				HeroHUD->SetStaminaPercentage(Stamina / GetMaxStamina());
 			}
@@ -635,30 +611,25 @@ void USNBasicAttributesComponent::MaxStaminaChanged(const FOnAttributeChangeData
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			if(USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD()))
 			{
 				HeroHUD->SetMaxStamina(MaxStamina);
 				HeroHUD->SetStaminaPercentage(GetStamina() / MaxStamina);
 			}
-
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetMaxStamina(MaxStamina);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetMaxStamina(MaxStamina);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetMaxStamina(MaxStamina);
 			}
@@ -672,23 +643,19 @@ void USNBasicAttributesComponent::ExperienceChanged(const FOnAttributeChangeData
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetExperience(Experience);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetExperience(Experience);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetExperience(Experience);
 			}
@@ -702,11 +669,9 @@ void USNBasicAttributesComponent::MaxExperienceChanged(const FOnAttributeChangeD
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetMaxExperience(MaxExperience);
 			}
@@ -720,23 +685,19 @@ void USNBasicAttributesComponent::CharacterLevelChanged(const FOnAttributeChange
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetCharacterLevel(CharacterLevel);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetCharacterLevel(CharacterLevel);
 			}
 			
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetCharacterLevel(CharacterLevel);
 			}
@@ -750,23 +711,19 @@ void USNBasicAttributesComponent::ArmourChanged(const FOnAttributeChangeData& Da
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetArmour(Armour);
 			}
 			
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetArmour(Armour);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetArmour(Armour);
 			}
@@ -780,26 +737,22 @@ void USNBasicAttributesComponent::StrengthChanged(const FOnAttributeChangeData& 
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetStrength(Strength);
 				Status->SetR1Range(HeroOwner->R1BaseDamage, Strength);
 				Status->SetR2Range(HeroOwner->R2BaseDamage, Strength);
 				Status->SetL1Range(HeroOwner->L1BaseDamage, Strength);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetStrength(Strength);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetStrength(Strength);
 			}
@@ -813,23 +766,19 @@ void USNBasicAttributesComponent::EnduranceChanged(const FOnAttributeChangeData&
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetEndurance(Endurance);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetEndurance(Endurance);
 			}
 			
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetEndurance(Endurance);
 			}
@@ -846,22 +795,19 @@ void USNBasicAttributesComponent::FaithChanged(const FOnAttributeChangeData& Dat
 		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
 		if(PC)
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetFaith(Faith);
 				Status->SetHealingRange(GetHealing(), Faith);
 				Status->SetReplenishingRange(GetReplenishing(), Faith);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetFaith(Faith);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetFaith(Faith);
 			}
@@ -875,11 +821,9 @@ void USNBasicAttributesComponent::HealingChanged(const FOnAttributeChangeData& D
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetHealingRange(Healing, GetFaith());
 			}
@@ -893,11 +837,9 @@ void USNBasicAttributesComponent::ReplenishingChanged(const FOnAttributeChangeDa
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetHealingRange(Replenishing, GetFaith());
 			}
@@ -911,23 +853,19 @@ void USNBasicAttributesComponent::GoldChanged(const FOnAttributeChangeData& Data
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD());
-			if(HeroHUD)
+			if(USNHeroHUD* HeroHUD = Cast<USNHeroHUD>(PC->GetHeroHUD()))
 			{
 				HeroHUD->SetGold(Gold);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetGold(Gold);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetGold(Gold);
 			}
@@ -941,11 +879,9 @@ void USNBasicAttributesComponent::LevelUpPointsChanged(const FOnAttributeChangeD
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetLevelUpPoints(LevelUpPoints);
 			}
@@ -959,23 +895,19 @@ void USNBasicAttributesComponent::VitalityChanged(const FOnAttributeChangeData& 
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetVitality(Vitality);
 			}
 			
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetVitality(Vitality);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetVitality(Vitality);
 			}
@@ -989,24 +921,20 @@ void USNBasicAttributesComponent::ArcaneChanged(const FOnAttributeChangeData& Da
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetArcane(Arcane);
 				Status->SetWeaponSpellDamage(HeroOwner->WeaponSpellDamage, Arcane);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetArcane(Arcane);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetArcane(Arcane);
 			}
@@ -1020,23 +948,19 @@ void USNBasicAttributesComponent::MindChanged(const FOnAttributeChangeData& Data
 	
 	if(ASNHero* HeroOwner = Cast<ASNHero>(GetOwner()))
 	{
-		ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController());
-		if(PC)
+		if(ASNHeroController* PC = Cast<ASNHeroController>(HeroOwner->GetController()))
 		{
-			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
-			if(Status)
+			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetMind(Mind);
 			}
-
-			USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI());
-			if(Inventory)
+			
+			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
 			{
 				Inventory->SetMind(Mind);
 			}
-
-			USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI());
-			if(Equipment)
+			
+			if(USNEquipmentWidget* Equipment = Cast<USNEquipmentWidget>(PC->GetEquipmentUI()))
 			{
 				Equipment->SetMind(Mind);
 			}

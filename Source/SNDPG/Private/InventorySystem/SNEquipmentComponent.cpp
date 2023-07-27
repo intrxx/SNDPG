@@ -30,25 +30,44 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCate
 	case ESlotCategory::LeftHandWeaponSlot:
 		EquippedLeftHandWeapon.Add(ItemToAdd);
 
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
 		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
+		AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
+		
 		OnEquippedLeftHandWeaponUpdateDelegate.Broadcast();
 		break;
 		
 	case ESlotCategory::RightHandWeaponSlot:
 		EquippedRightHandWeapon.Add(ItemToAdd);
 
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
 		CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[0];
+		AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
+		
 		OnEquippedRightHandWeaponUpdateDelegate.Broadcast();
 		break;
 		
 	case ESlotCategory::ConsumableSlot:
 		EquippedConsumables.Add(ItemToAdd);
-		UE_LOG(LogTemp, Warning, TEXT("Adding item to consumable slot: %s"), *ItemToAdd->GetName());
 		
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedConsumable);
+		UE_LOG(LogTemp, Warning, TEXT("Adding item to consumable slot: %s"), *ItemToAdd->GetName());
 		CurrentlyEquippedConsumable = EquippedConsumables[0];
+		AddEquippedItemAbilitySet(CurrentlyEquippedConsumable);
+		
 		OnEquippedConsumableUpdateDelegate.Broadcast();
 		break;
 
+	case ESlotCategory::MagicSlot:
+		EquippedMagic.Add(ItemToAdd);
+
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedMagic);
+		CurrentlyEquippedMagic = EquippedMagic[0];
+		AddEquippedItemAbilitySet(CurrentlyEquippedMagic);
+
+		OnEquippedMagicUpdateDelegate.Broadcast();
+		break;
+		
 	case ESlotCategory::ArmourSlot:
 		//TODO Do something when we equip armour
 		break;
@@ -56,11 +75,7 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCate
 	case ESlotCategory::TalismanSlot:
 		//TODO Do something when we equip Talisman
 		break;
-
-	case ESlotCategory::MagicSlot:
-		//TODO Do something when we equip Magic
-		break;
-		
+	
 	default:
 		OnEquipmentUpdatedDelegate.Broadcast();
 		break;
@@ -79,15 +94,17 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove, E
 	ItemToRemove->OwningEquipment = nullptr;
 	ItemToRemove->World = nullptr;
 	EquippedItems.RemoveSingle(ItemToRemove);
-
+	RemoveUnequippedItemAbilitySet(ItemToRemove);
+	
 	switch (SlotCategory)
 	{
 	case ESlotCategory::LeftHandWeaponSlot:
 		EquippedLeftHandWeapon.RemoveSingle(ItemToRemove);
-
+		
 		if (!EquippedLeftHandWeapon.IsEmpty())
 		{
 			CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
+			AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
 		}
 		else
 		{
@@ -99,10 +116,11 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove, E
 		
 	case ESlotCategory::RightHandWeaponSlot:
 		EquippedRightHandWeapon.RemoveSingle(ItemToRemove);
-
+		
 		if (!EquippedRightHandWeapon.IsEmpty())
 		{
 			CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[0];
+			AddEquippedItemAbilitySet(CurrentlyEquippedRightHandWeapon);
 		}
 		else
 		{
@@ -115,10 +133,11 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove, E
 	case ESlotCategory::ConsumableSlot:
 		EquippedConsumables.RemoveSingle(ItemToRemove);
 		UE_LOG(LogTemp, Warning, TEXT("Removing item from consumable slot: %s"), *ItemToRemove->GetName());
-
+		
 		if (!EquippedConsumables.IsEmpty())
 		{
 			CurrentlyEquippedConsumable = EquippedConsumables[0];
+			AddEquippedItemAbilitySet(CurrentlyEquippedConsumable);
 		}
 		else
 		{
@@ -128,6 +147,22 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove, E
 		OnEquippedConsumableUpdateDelegate.Broadcast();
 		break;
 
+	case ESlotCategory::MagicSlot:
+		EquippedMagic.RemoveSingle(ItemToRemove);
+
+		if (!EquippedConsumables.IsEmpty())
+		{
+			CurrentlyEquippedMagic = EquippedMagic[0];
+			AddEquippedItemAbilitySet(CurrentlyEquippedMagic);
+		}
+		else
+		{
+			CurrentlyEquippedMagic = nullptr;
+		}
+		
+		OnEquippedMagicUpdateDelegate.Broadcast();
+		break;
+		
 	case ESlotCategory::ArmourSlot:
 		//TODO Remove armour
 		break;
@@ -135,16 +170,10 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove, E
 	case ESlotCategory::TalismanSlot:
 		//TODO Remove Talisman
 		break;
-
-	case ESlotCategory::MagicSlot:
-		//TODO Remove Magic
-		break;
-		
+	
 	default:
 		OnEquipmentUpdatedDelegate.Broadcast();
-		break;
 	}
-	
 	
 	return true;
 }
@@ -308,19 +337,26 @@ USNAbilitySystemComponent* USNEquipmentComponent::GetAbilitySystemComponent() co
 
 void USNEquipmentComponent::AddEquippedItemAbilitySet(USNItemBase* Item)
 {
-	USNAbilitySet* AbilitySetToGive = Item->AbilitySet;
-
 	if(USNAbilitySystemComponent* ASC = GetAbilitySystemComponent())
 	{
-		if(AbilitySetToGive)
+		if(Item->AbilitySet)
 		{
-			AbilitySetToGive->GiveToAbilitySystem(ASC, &Item->GrantedHandles, Item);
+			Item->AbilitySet->GiveToAbilitySystem(ASC, &Item->GrantedHandles, Item);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("AbilitySet on the item is not valid, check if it is added to the item"));
 		}
 	}
 }
 
 void USNEquipmentComponent::RemoveUnequippedItemAbilitySet(USNItemBase* Item)
 {
+	if(!Item)
+	{
+		return;
+	}
+	
 	if(USNAbilitySystemComponent* ASC = GetAbilitySystemComponent())
 	{
 		Item->GrantedHandles.TakeFromAbilitySystem(ASC);

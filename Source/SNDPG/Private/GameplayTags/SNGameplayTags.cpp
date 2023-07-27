@@ -62,7 +62,6 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Ability_Input_HeavyMelee, "Ability.Input.Melee.Heavy", "Melee ability input.");
 	AddTag(Ability_Input_Dash, "Ability.Input.Dash", "Dash ability input.");
 	AddTag(Ability_Input_Swirl, "Ability.Input.Swirl", "Swirl ability input.");
-	AddTag(Ability_Input_KnifeThrow, "Ability.Input.KnifeThrow", "Knife Throw ability input.");
 	AddTag(Ability_Input_TargetLock, "Ability.Input.TargetLock", "Target Lock ability input.");
 
 	// Ability tags
