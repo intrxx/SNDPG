@@ -40,9 +40,9 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCate
 	case ESlotCategory::RightHandWeaponSlot:
 		EquippedRightHandWeapon.Add(ItemToAdd);
 
-		RemoveUnequippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
+		RemoveUnequippedItemAbilitySet(CurrentlyEquippedRightHandWeapon);
 		CurrentlyEquippedRightHandWeapon = EquippedRightHandWeapon[0];
-		AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
+		AddEquippedItemAbilitySet(CurrentlyEquippedRightHandWeapon);
 		
 		OnEquippedRightHandWeaponUpdateDelegate.Broadcast();
 		break;
@@ -306,7 +306,7 @@ bool USNEquipmentComponent::SwitchEquippedMagic(int16 Index)
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Magic: %s"), *CurrentlyEquippedMagic->GetName());
 		return true;
 	}
-
+                                                                                                                   
 	if(Index+1 == EquippedMagic.Num())
 	{
 		RemoveUnequippedItemAbilitySet(CurrentlyEquippedMagic);
