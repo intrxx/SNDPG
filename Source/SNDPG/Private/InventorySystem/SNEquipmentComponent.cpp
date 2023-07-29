@@ -71,11 +71,11 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCate
 		break;
 		
 	case ESlotCategory::ArmourSlot:
-		//TODO Do something when we equip armour
+		AddEquippedItemAbilitySet(ItemToAdd);
 		break;
 
 	case ESlotCategory::TalismanSlot:
-		//TODO Do something when we equip Talisman
+		AddEquippedItemAbilitySet(ItemToAdd);
 		break;
 	
 	default:
@@ -166,11 +166,11 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove, E
 		break;
 		
 	case ESlotCategory::ArmourSlot:
-		//TODO Remove armour
+		RemoveUnequippedItemAbilitySet(ItemToRemove);
 		break;
 
 	case ESlotCategory::TalismanSlot:
-		//TODO Remove Talisman
+		RemoveUnequippedItemAbilitySet(ItemToRemove);
 		break;
 	
 	default:
