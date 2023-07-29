@@ -36,9 +36,7 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "SN|EquipmentComponent")
 	static USNEquipmentComponent* FindEquipmentComponent(const AActor* Actor)  {return (Actor ? Actor->FindComponentByClass<USNEquipmentComponent>() : nullptr);}
-
 	
-
 	UFUNCTION()
 	bool SwitchEquippedConsumable(int16 Index);
 
@@ -50,6 +48,25 @@ public:
 
 	UFUNCTION()
 	bool SwitchEquippedMagic(int16 Index);
+
+	/*
+	 *  Damage getters from equipped weapon items
+	 */
+
+	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
+	bool IsUnarmed();
+	
+	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
+	float GetEquippedWeaponDamage();
+	
+	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
+	float GetEquippedWeaponSpellDamage();
+
+	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
+	float GetEquippedThrowingWeaponDamage();
+
+	/*
+	 */
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent")
@@ -101,19 +118,19 @@ protected:
 	UPROPERTY(BlueprintAssignable, Category = "SN|EquipmentComponent")
 	FOnEquippedMagicUpdate OnEquippedMagicUpdateDelegate;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|InventoryComponent|Items")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent|Items")
 	TArray<class USNItemBase*> EquippedItems;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|InventoryComponent|Items")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent|Items")
 	TArray<class USNItemBase*> EquippedConsumables;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|InventoryComponent|Items")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent|Items")
 	TArray<class USNItemBase*> EquippedLeftHandWeapon;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|InventoryComponent|Items")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent|Items")
 	TArray<class USNItemBase*> EquippedRightHandWeapon;
 
 	// For the time being unused, but have plans to implement magic in the future
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|InventoryComponent|Items")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|EquipmentComponent|Items")
 	TArray<class USNItemBase*> EquippedMagic;
 };

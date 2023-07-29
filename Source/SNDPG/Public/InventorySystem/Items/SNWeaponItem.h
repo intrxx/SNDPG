@@ -17,6 +17,13 @@ class SNDPG_API USNWeaponItem : public USNItemBase
 public:
 	USNWeaponItem();
 
+public:
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SN|Item|Weapon")
+	float WeaponDamage = 0.0f;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SN|Item|Weapon")
+	float WeaponSpellDamage = 0.0f;
+	
 protected:
 	virtual void Use(ASNHero* Hero) override;
 	

@@ -39,9 +39,9 @@ public:
 	FGameplayTag Ability_Input_LightMelee;
 	FGameplayTag Ability_Input_HeavyMelee;
 	FGameplayTag Ability_Input_Healing;
-	FGameplayTag Ability_Input_Swirl;
 	FGameplayTag Ability_Input_Dash;
 	FGameplayTag Ability_Input_TargetLock;
+	FGameplayTag Ability_Input_UseWeaponSpell;
 
 	// Ability tags
 	FGameplayTag Ability_LightMelee;

@@ -17,6 +17,9 @@ class SNDPG_API USNThrowingKnifeItem : public USNItemBase
 public:
 	USNThrowingKnifeItem();
 
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SN|Item|ThrowingDagger")
+	float ThrowingWeaponDamage = 0.0f;
+
 protected:
 	virtual void Use(ASNHero* Hero) override;
 	

@@ -48,28 +48,28 @@ public:
 	UPROPERTY(Transient)
 	class UWorld* World;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
 	class UStaticMesh* PickupMesh;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
 	class UTexture2D* Thumbnail;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item", meta = (ClampMin = 0.0f))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults", meta = (ClampMin = 0.0f))
 	float Weight;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
 	EItemCategory ItemCategory;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
 	FText ItemDisplayName;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item", meta = (MultiLine = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults", meta = (MultiLine = true))
 	FText ItemDescription;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
 	FText UseActionText;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Item|AbilitySet")
 	USNAbilitySet* AbilitySet;
 
 	UPROPERTY()
@@ -81,12 +81,12 @@ public:
 	UPROPERTY()
 	class USNEquipmentComponent* OwningEquipment;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
 	ESlotCategory SlotCategoryEquippedTo = ESlotCategory::None;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
 	bool bIsItemEquipped = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
 	UUserWidget* ItemEquipmentSlot;
 };
