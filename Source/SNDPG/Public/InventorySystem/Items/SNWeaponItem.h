@@ -19,7 +19,10 @@ public:
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SN|Item|Weapon")
-	float WeaponDamage = 0.0f;
+	float LightAttackDamage = 0.0f;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SN|Item|Weapon")
+	float HeavyAttackDamage = 0.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "SN|Item|Weapon")
 	float WeaponSpellDamage = 0.0f;

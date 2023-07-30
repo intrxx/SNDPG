@@ -94,12 +94,12 @@ void USNAbilitySet::GiveToAbilitySystem(USNAbilitySystemComponent* InASC,
 		AbilitySpec.SourceObject = SourceObject;
 		AbilitySpec.DynamicAbilityTags.AddTag(AbilityToGrant.InputTag);
 
-			
+		/*	
 		UE_LOG(LogTemp, Error, TEXT("------------------ Binding Tags to Abilities------------------"));
 		UE_LOG(LogTemp, Warning, TEXT("Ability: %s"), *AbilityToGrant.Ability->GetName());
 		UE_LOG(LogTemp, Warning, TEXT("Input Tag: %s"), *AbilityToGrant.InputTag.ToString());
 		UE_LOG(LogTemp, Warning, TEXT("Input Tag On Spec: %s"), *AbilitySpec.DynamicAbilityTags.GetByIndex(0).ToString());
-			
+		*/	
 			
 		const FGameplayAbilitySpecHandle AbilitySpecHandle = InASC->GiveAbility(AbilitySpec);
 

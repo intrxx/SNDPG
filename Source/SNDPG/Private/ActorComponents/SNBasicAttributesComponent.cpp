@@ -8,6 +8,7 @@
 #include "GameplayTags/SNGameplayTags.h"
 #include "GAS/Attributes/SNBasicAttributes.h"
 #include "GAS/SNAbilitySystemComponent.h"
+#include "InventorySystem/SNEquipmentComponent.h"
 #include "UI/HeroHUD/SNCharacterStatusWidget.h"
 #include "UI/EnemyUI/SNHealthBarWidget.h"
 #include "UI/HeroHUD/SNHeroHUD.h"
@@ -742,9 +743,13 @@ void USNBasicAttributesComponent::StrengthChanged(const FOnAttributeChangeData& 
 			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetStrength(Strength);
-				Status->SetR1Range(HeroOwner->R1BaseDamage, Strength);
-				Status->SetR2Range(HeroOwner->R2BaseDamage, Strength);
-				Status->SetL1Range(HeroOwner->L1BaseDamage, Strength);
+
+				const USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(HeroOwner);
+				check(Equipment);
+				
+				Status->SetLightAttackRange(Equipment->GetEquippedLightAttackWeaponDamage(), Strength);
+				Status->SetHeavyAttackRange(Equipment->GetEquippedHeavyAttackWeaponDamage(), Strength);
+				Status->SetItemDamageRange(Equipment->GetEquippedThrowingWeaponDamage(), Strength);
 			}
 			
 			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))
@@ -926,7 +931,11 @@ void USNBasicAttributesComponent::ArcaneChanged(const FOnAttributeChangeData& Da
 			if(USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI()))
 			{
 				Status->SetArcane(Arcane);
-				Status->SetWeaponSpellDamage(HeroOwner->WeaponSpellDamage, Arcane);
+
+				const USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(HeroOwner);
+				check(Equipment);
+				
+				Status->SetWeaponSpellDamage(Equipment->GetEquippedWeaponSpellDamage(), Arcane);
 			}
 			
 			if(USNInventoryWidget* Inventory = Cast<USNInventoryWidget>(PC->GetInventoryUI()))

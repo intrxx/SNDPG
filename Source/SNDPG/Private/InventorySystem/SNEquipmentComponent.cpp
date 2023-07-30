@@ -4,16 +4,23 @@
 #include "InventorySystem/SNEquipmentComponent.h"
 #include "GAS/SNAbilitySet.h"
 #include "AbilitySystemGlobals.h"
+#include "ActorComponents/SNBasicAttributesComponent.h"
+#include "Characters/Hero/SNHero.h"
+#include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "GAS/SNAbilitySystemComponent.h"
 #include "InventorySystem/SNItemBase.h"
 #include "InventorySystem/SNThrowingKnifeItem.h"
 #include "InventorySystem/Items/SNWeaponItem.h"
+#include "UI/HeroHUD/SNCharacterStatusWidget.h"
 
 USNEquipmentComponent::USNEquipmentComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	PrimaryComponentTick.bStartWithTickEnabled = false;
-	
+
+	OnEquippedLeftHandWeaponUpdateDelegate.AddDynamic(this, &ThisClass::UpdateWeaponDamageStats);
+	OnEquippedRightHandWeaponUpdateDelegate.AddDynamic(this, &ThisClass::UpdateWeaponDamageStats);
+	OnEquippedConsumableUpdateDelegate.AddDynamic(this, &ThisClass::UpdateThrowingItemDamageStats);
 }
 
 bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCategory SlotCategory)
@@ -31,10 +38,8 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCate
 	{
 	case ESlotCategory::LeftHandWeaponSlot:
 		EquippedLeftHandWeapon.Add(ItemToAdd);
-
-		//RemoveUnequippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
+		
 		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
-		//AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
 		
 		OnEquippedLeftHandWeaponUpdateDelegate.Broadcast();
 		break;
@@ -106,7 +111,6 @@ bool USNEquipmentComponent::RemoveFromEquippedItems(USNItemBase* ItemToRemove, E
 		if (!EquippedLeftHandWeapon.IsEmpty())
 		{
 			CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
-			//AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
 		}
 		else
 		{
@@ -195,7 +199,8 @@ bool USNEquipmentComponent::SwitchEquippedConsumable(int16 Index)
 		CurrentlyEquippedConsumableIndex = Index+1;
 
 		AddEquippedItemAbilitySet(CurrentlyEquippedConsumable);
-		
+
+		OnEquippedConsumableUpdateDelegate.Broadcast();
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedConsumable->GetName());
 		return true;
 	}
@@ -208,7 +213,8 @@ bool USNEquipmentComponent::SwitchEquippedConsumable(int16 Index)
 		CurrentlyEquippedConsumableIndex = 0;
 
 		AddEquippedItemAbilitySet(CurrentlyEquippedConsumable);
-		
+
+		OnEquippedConsumableUpdateDelegate.Broadcast();
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Consumable: %s"), *CurrentlyEquippedConsumable->GetName());
 		return true;
 	}
@@ -225,27 +231,20 @@ bool USNEquipmentComponent::SwitchEquippedLeftHandWeapon(int16 Index)
 	
 	if(Index+1 < EquippedLeftHandWeapon.Num())
 	{
-		//RemoveUnequippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
-		
 		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[Index+1];
 		CurrentlyEquippedLeftHandWeaponIndex = Index+1;
-
-		//AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
 		
-
+		OnEquippedLeftHandWeaponUpdateDelegate.Broadcast();
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Left Hand Weapon: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
 		return true;
 	}
 
 	if(Index+1 == EquippedLeftHandWeapon.Num())
 	{
-		//RemoveUnequippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
-		
 		CurrentlyEquippedLeftHandWeapon = EquippedLeftHandWeapon[0];
 		CurrentlyEquippedLeftHandWeaponIndex = 0;
-
-		//AddEquippedItemAbilitySet(CurrentlyEquippedLeftHandWeapon);
-
+		
+		OnEquippedLeftHandWeaponUpdateDelegate.Broadcast();
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Left Hand Weapon: %s"), *CurrentlyEquippedLeftHandWeapon->GetName());
 		return true;
 	}
@@ -268,7 +267,8 @@ bool USNEquipmentComponent::SwitchEquippedRightHandWeapon(int16 Index)
 		CurrentlyEquippedRightHandWeaponIndex = Index+1;
 
 		AddEquippedItemAbilitySet(CurrentlyEquippedRightHandWeapon);
-		
+
+		OnEquippedRightHandWeaponUpdateDelegate.Broadcast();
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Right Hand Weapon: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
 		return true;
 	}
@@ -281,7 +281,8 @@ bool USNEquipmentComponent::SwitchEquippedRightHandWeapon(int16 Index)
 		CurrentlyEquippedRightHandWeaponIndex = 0;
 
 		AddEquippedItemAbilitySet(CurrentlyEquippedRightHandWeapon);
-		
+
+		OnEquippedRightHandWeaponUpdateDelegate.Broadcast();
 		UE_LOG(LogTemp, Warning, TEXT("Curentely Equipped Right Hand Weapon: %s"), *CurrentlyEquippedRightHandWeapon->GetName());
 		return true;
 	}
@@ -325,7 +326,7 @@ bool USNEquipmentComponent::SwitchEquippedMagic(int16 Index)
 	return false;
 }
 
-bool USNEquipmentComponent::IsUnarmed()
+bool USNEquipmentComponent::IsUnarmed() const
 {
 	if(!CurrentlyEquippedLeftHandWeapon && !CurrentlyEquippedRightHandWeapon)
 	{
@@ -334,7 +335,7 @@ bool USNEquipmentComponent::IsUnarmed()
 	return false;
 }
 
-float USNEquipmentComponent::GetEquippedWeaponDamage()
+float USNEquipmentComponent::GetEquippedLightAttackWeaponDamage() const
 {
 	float Damage = 0.0f;
 
@@ -345,18 +346,40 @@ float USNEquipmentComponent::GetEquippedWeaponDamage()
 	
 	if(USNWeaponItem* RightHandWeapon = Cast<USNWeaponItem>(CurrentlyEquippedRightHandWeapon))
 	{
-		Damage += RightHandWeapon->WeaponDamage;
+		Damage += RightHandWeapon->LightAttackDamage;
 	}
 	
 	if(USNWeaponItem* LeftHandWeapon = Cast<USNWeaponItem>(CurrentlyEquippedLeftHandWeapon))
 	{
-		Damage +=LeftHandWeapon->WeaponDamage;
+		Damage +=LeftHandWeapon->LightAttackDamage;
 	}
 	
 	return Damage;
 }
 
-float USNEquipmentComponent::GetEquippedWeaponSpellDamage()
+float USNEquipmentComponent::GetEquippedHeavyAttackWeaponDamage() const
+{
+	float Damage = 0.0f;
+
+	if(IsUnarmed())
+	{
+		return Damage = 20.0f;
+	}
+	
+	if(USNWeaponItem* RightHandWeapon = Cast<USNWeaponItem>(CurrentlyEquippedRightHandWeapon))
+	{
+		Damage += RightHandWeapon->HeavyAttackDamage;
+	}
+	
+	if(USNWeaponItem* LeftHandWeapon = Cast<USNWeaponItem>(CurrentlyEquippedLeftHandWeapon))
+	{
+		Damage +=LeftHandWeapon->HeavyAttackDamage;
+	}
+	
+	return Damage;
+}
+
+float USNEquipmentComponent::GetEquippedWeaponSpellDamage() const
 {
 	float Damage = 0.0f;
 
@@ -373,7 +396,7 @@ float USNEquipmentComponent::GetEquippedWeaponSpellDamage()
 	return Damage;
 }
 
-float USNEquipmentComponent::GetEquippedThrowingWeaponDamage()
+float USNEquipmentComponent::GetEquippedThrowingWeaponDamage() const
 {
 	float Damage = 0.0f;
 
@@ -424,4 +447,48 @@ void USNEquipmentComponent::RemoveUnequippedItemAbilitySet(USNItemBase* Item)
 		Item->GrantedHandles.TakeFromAbilitySystem(ASC);
 	}
 }
+
+void USNEquipmentComponent::UpdateWeaponDamageStats()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Entered updating"));
+	ASNHero* Hero = Cast<ASNHero>(GetOwner());
+	if (Hero)
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(Hero->GetController());
+		if(PC)
+		{
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
+			{
+				const USNBasicAttributesComponent* Attributes = USNBasicAttributesComponent::FindAttributeComponent(Hero);
+				check(Attributes);
+				
+				Status->SetLightAttackRange(GetEquippedLightAttackWeaponDamage(), Attributes->GetStrength());
+				Status->SetHeavyAttackRange(GetEquippedHeavyAttackWeaponDamage(), Attributes->GetStrength());
+				Status->SetWeaponSpellDamage(GetEquippedWeaponSpellDamage(), Attributes->GetArcane());
+			}
+		}
+	}
+}
+
+void USNEquipmentComponent::UpdateThrowingItemDamageStats()
+{
+	ASNHero* Hero = Cast<ASNHero>(GetOwner());
+	if (Hero)
+	{
+		ASNHeroController* PC = Cast<ASNHeroController>(Hero->GetController());
+		if(PC)
+		{
+			USNCharacterStatusWidget* Status = Cast<USNCharacterStatusWidget>(PC->GetCharacterStatusUI());
+			if(Status)
+			{
+				const USNBasicAttributesComponent* Attributes = USNBasicAttributesComponent::FindAttributeComponent(Hero);
+				check(Attributes);
+				
+				Status->SetItemDamageRange(GetEquippedThrowingWeaponDamage(), Attributes->GetStrength());
+			}
+		}
+	}
+}
+
 

@@ -25,13 +25,13 @@ public:
 	void SetReplenishingRange(float Replenishing, float Faith);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Status|CombatRanges")
-	void SetR1Range(float R1Damage, float Strength);
+	void SetLightAttackRange(float LightAttackDamage, float Strength);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Status|CombatRanges")
-	void SetR2Range(float R2Damage, float Strength);
+	void SetHeavyAttackRange(float HeavyAttackDamage, float Strength);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Status|CombatRanges")
-	void SetL1Range(float L1Damage, float Strength);
+	void SetItemDamageRange(float ItemDamage, float Strength);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SN|UI|Status|CombatRanges")
 	void SetWeaponSpellDamage(float WeaponSpellDamage, float Arcane);

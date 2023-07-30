@@ -5,6 +5,7 @@
 #include "UI/Inventory/SNInventoryWidget.h"
 #include "Characters/Hero/SNHero.h"
 #include "ActorComponents/SNBasicAttributesComponent.h"
+#include "InventorySystem/SNEquipmentComponent.h"
 #include "UI/HeroHUD/SNHeroHUD.h"
 #include "UI/Menus/SNInGameMenu.h"
 #include "UI/Inventory/SNEquipmentWidget.h"
@@ -159,13 +160,17 @@ void ASNHeroController::CreateCharacterStatusUI(const USNBasicAttributesComponen
 	CharacterStatusWidget->SetArcane(AttributesComp->GetArcane());
 	CharacterStatusWidget->SetMind(AttributesComp->GetMind());
 
+	const USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(Hero);
+	check(Equipment);
+	
 	// Set Damage/Healing ranges
 	CharacterStatusWidget->SetHealingRange(AttributesComp->GetHealing(), AttributesComp->GetFaith());
 	CharacterStatusWidget->SetReplenishingRange(AttributesComp->GetReplenishing(), AttributesComp->GetFaith());
-	CharacterStatusWidget->SetR1Range(Hero->R1BaseDamage, AttributesComp->GetStrength());
-	CharacterStatusWidget->SetR2Range(Hero->R2BaseDamage, AttributesComp->GetStrength());
-	CharacterStatusWidget->SetL1Range(Hero->L1BaseDamage, AttributesComp->GetStrength());
-	CharacterStatusWidget->SetWeaponSpellDamage(Hero->WeaponSpellDamage, AttributesComp->GetArcane());
+	
+	CharacterStatusWidget->SetLightAttackRange(Equipment->GetEquippedLightAttackWeaponDamage(), AttributesComp->GetStrength());
+	CharacterStatusWidget->SetHeavyAttackRange(Equipment->GetEquippedHeavyAttackWeaponDamage(), AttributesComp->GetStrength());
+	CharacterStatusWidget->SetItemDamageRange(Equipment->GetEquippedThrowingWeaponDamage(), AttributesComp->GetStrength());
+	CharacterStatusWidget->SetWeaponSpellDamage(Equipment->GetEquippedWeaponSpellDamage(), AttributesComp->GetArcane());
 }
 
 void ASNHeroController::CreateEquipmentUI(const USNBasicAttributesComponent* AttributesComp)

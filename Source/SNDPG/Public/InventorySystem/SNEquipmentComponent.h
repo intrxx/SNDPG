@@ -54,16 +54,19 @@ public:
 	 */
 
 	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
-	bool IsUnarmed();
+	bool IsUnarmed() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
-	float GetEquippedWeaponDamage();
-	
-	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
-	float GetEquippedWeaponSpellDamage();
+	float GetEquippedLightAttackWeaponDamage() const;
 
 	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
-	float GetEquippedThrowingWeaponDamage();
+	float GetEquippedHeavyAttackWeaponDamage() const;
+	
+	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
+	float GetEquippedWeaponSpellDamage() const;
+
+	UFUNCTION(BlueprintCallable, Category = "SN|EquipmentComponent")
+	float GetEquippedThrowingWeaponDamage() const;
 
 	/*
 	 */
@@ -97,7 +100,14 @@ protected:
 	
 	void AddEquippedItemAbilitySet(USNItemBase* Item);
 	void RemoveUnequippedItemAbilitySet(USNItemBase* Item);
+
+	// Functions to update UI
+	UFUNCTION()
+	void UpdateWeaponDamageStats();
 	
+	UFUNCTION()
+	void UpdateThrowingItemDamageStats();
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Instanced, Category = "SN|EquipmentComponent")
 	TArray<class USNItemBase*> DefaultEquippedItems;
