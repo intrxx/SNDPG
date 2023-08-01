@@ -21,19 +21,6 @@ USNBasicAttributes::USNBasicAttributes()
 	bOutOfHealth = false;
 }
 
-void USNBasicAttributes::AdjustAttributeForMaxChange(FGameplayAttributeData& AffectedAttribute,
-	const FGameplayAttributeData& MaxAttribute, float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty)
-{
-	UAbilitySystemComponent* AbilityComp = GetOwningAbilitySystemComponent();
-	const float CurrentMaxValue = MaxAttribute.GetCurrentValue();
-	if (!FMath::IsNearlyEqual(CurrentMaxValue, NewMaxValue) && AbilityComp)
-	{
-		float NewValue =  NewMaxValue;
-
-		AbilityComp->ApplyModToAttributeUnsafe(AffectedAttributeProperty, EGameplayModOp::Override, NewValue);
-	}
-}
-
 bool USNBasicAttributes::PreGameplayEffectExecute(FGameplayEffectModCallbackData& Data)
 {
 	return Super::PreGameplayEffectExecute(Data);
