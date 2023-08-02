@@ -42,6 +42,7 @@ public:
 	FGameplayTag Ability_Input_Dash;
 	FGameplayTag Ability_Input_TargetLock;
 	FGameplayTag Ability_Input_UseWeaponSpell;
+	FGameplayTag Ability_Input_Interact;
 
 	// Ability tags
 	FGameplayTag Ability_LightMelee;

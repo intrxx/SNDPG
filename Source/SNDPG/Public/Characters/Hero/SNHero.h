@@ -78,8 +78,6 @@ protected:
 	
 	void ToggleInGameMenu();
 
-	void SetGamePause(bool bIsPaused);
-
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
 	USNAbilitySet* AbilitySet;
@@ -95,9 +93,6 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
 	class UInputMappingContext* HUDMappingContext;
-
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "SN|Attributes")
-	TSubclassOf<class UGameplayEffect> DefaultAttributeEffect;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))

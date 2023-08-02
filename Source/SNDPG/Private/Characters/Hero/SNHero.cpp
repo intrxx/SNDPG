@@ -373,16 +373,6 @@ void ASNHero::ToggleInGameMenu()
 	}
 }
 
-void ASNHero::SetGamePause(bool bIsPaused)
-{
-	ASNHeroController* PC = Cast<ASNHeroController>(GetController());
-	if(PC)
-	{
-		PC->SetPause(bIsPaused);
-	}
-}
-
-
 
 
 

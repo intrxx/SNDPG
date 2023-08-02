@@ -63,6 +63,7 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(Ability_Input_Dash, "Ability.Input.Dash", "Dash ability input.");
 	AddTag(Ability_Input_UseWeaponSpell, "Ability.Input.UseWeaponSpell", "Weapon Spell ability input.");
 	AddTag(Ability_Input_TargetLock, "Ability.Input.TargetLock", "Target Lock ability input.");
+	AddTag(Ability_Input_Interact, "Ability.Input.Interact", "Input Tag used for interact ability");
 
 	// Ability tags
 	AddTag(Ability_Dash, "Ability.Owned.Dash", "Dash owned tag.");
