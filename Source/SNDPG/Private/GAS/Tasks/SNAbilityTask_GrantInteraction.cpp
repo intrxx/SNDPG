@@ -12,6 +12,7 @@
 #include "Physics/SNDPGCollisionChannels.h"
 #include "TimerManager.h"
 
+
 USNAbilityTask_GrantInteraction::USNAbilityTask_GrantInteraction(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
