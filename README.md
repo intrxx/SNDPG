@@ -14,12 +14,13 @@ Engineering Thesis ARPG project in Unreal Engine 5.1 using Gameplay Ability Syst
 - **D** - Move Right
 - **Mouse** - Control Camera
 - **Space** - Dodge / Dash
+- **E** - Interact
 
 ### Combat
 - **Left Click** - Attack
 - **Shift + Left Click** - Heavy Attack
 - **R** - Weapon Skill
-- **E** - Use Item
+- **Q** - Use Item
 - **Middle Mouse Button** - Lock onto target
 
 ### Menu
@@ -32,6 +33,7 @@ Engineering Thesis ARPG project in Unreal Engine 5.1 using Gameplay Ability Syst
 - **Left Stick** - Move Around
 - **Right Stick** - Control Camera
 - **B** - Dodge / Dash
+- **A** - Interact
 
 ### Combat
 - **RB** - Attack
