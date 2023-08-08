@@ -2,8 +2,9 @@
 
 
 #include "PickupSystem/Pickupable.h"
-
+#include "GameFramework/Actor.h"
 #include "InventorySystem/SNInventoryComponent.h"
+#include "UObject/ScriptInterface.h"
 
 // Add default functionality here for any IPickupable functions that are not pure virtual.
 UPickupableStatics::UPickupableStatics()

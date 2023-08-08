@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GAS/Tasks/SNAbilityTask_GrantInteraction.h"
+#include "PickupSystem/Tasks/SNAbilityTask_GrantInteraction.h"
 #include "Engine/World.h"
 #include "GameFramework/Controller.h"
 #include "AbilitySystemComponent.h"
@@ -55,6 +55,7 @@ void USNAbilityTask_GrantInteraction::QueryInteractables()
 		FCollisionQueryParams Params(SCENE_QUERY_STAT(UAbilityTask_GrantNearbyInteraction), false);
 
 		TArray<FOverlapResult> OverlapResults;
+		
 		World->OverlapMultiByChannel(OUT OverlapResults, ActorOwner->GetActorLocation(), FQuat::Identity, SNDPG_TraceChannel_Interaction, FCollisionShape::MakeSphere(InteractionScanRange), Params);
 
 		if (OverlapResults.Num() > 0)

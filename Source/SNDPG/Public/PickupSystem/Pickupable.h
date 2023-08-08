@@ -6,7 +6,6 @@
 #include "UObject/Interface.h"
 #include "Pickupable.generated.h"
 
-class USNItemBase;
 class USNInventoryComponent;
 
 USTRUCT(BlueprintType)
@@ -16,7 +15,7 @@ struct FPickupableItem
 
 public:
 	UPROPERTY(EditAnywhere)
-	USNItemBase* ItemDef;
+	class USNItemBase* ItemDef;
 };
 
 USTRUCT(BlueprintType)

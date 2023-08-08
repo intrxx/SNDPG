@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GAS/Abilities/GameplayAbility_Interact.h"
+#include "PickupSystem//Abilities/GameplayAbility_Interact.h"
 #include "AbilitySystemComponent.h"
 #include "PickupSystem/InteractionStatics.h"
 #include "PickupSystem/InteractionOption.h"
