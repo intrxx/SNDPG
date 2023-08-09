@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PickupSystem//Abilities/GameplayAbility_Interact.h"
+#include "..\..\..\Public\PickupSystem\Abilities\SNGameplayAbility_Interact.h"
 #include "AbilitySystemComponent.h"
-#include "PickupSystem/InteractionStatics.h"
-#include "PickupSystem/InteractionOption.h"
-#include "PickupSystem/InteractableTarget.h"
+#include "..\..\..\Public\PickupSystem\SNInteractionStatics.h"
+#include "..\..\..\Public\PickupSystem\SNInteractionOption.h"
+#include "..\..\..\Public\PickupSystem\SNInteractableTarget.h"
 #include "NativeGameplayTags.h"
 #include "GAS/SNGameplayAbility.h"
-#include "GAS/Tasks/SNAbilityTask_GrantInteraction.h"
+#include "PickupSystem//Tasks/SNAbilityTask_GrantInteraction.h"
 
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Ability_Interaction_Activate, "Ability.Interaction.Activate");
 
@@ -32,7 +32,7 @@ void UGameplayAbility_Interact::ActivateAbility(const FGameplayAbilitySpecHandle
 	}
 }
 
-void UGameplayAbility_Interact::UpdateInteractions(const TArray<FInteractionOption>& InteractiveOptions)
+void UGameplayAbility_Interact::UpdateInteractions(const TArray<FSNInteractionOption>& InteractiveOptions)
 {
 }
 
@@ -46,10 +46,10 @@ void UGameplayAbility_Interact::TriggerInteraction()
 	UAbilitySystemComponent* AbilitySystem = GetAbilitySystemComponentFromActorInfo();
 	if (AbilitySystem)
 	{
-		const FInteractionOption& InteractionOption = CurrentOptions[0];
+		const FSNInteractionOption& InteractionOption = CurrentOptions[0];
 
 		AActor* Instigator = GetAvatarActorFromActorInfo();
-		AActor* InteractableTargetActor = UInteractionStatics::GetActorFromInteractableTarget(InteractionOption.InteractableTarget);
+		AActor* InteractableTargetActor = USNInteractionStatics::GetActorFromInteractableTarget(InteractionOption.InteractableTarget);
 
 		// Allow the target to customize the event data we're about to pass in, in case the ability needs custom data
 		// that only the actor knows.

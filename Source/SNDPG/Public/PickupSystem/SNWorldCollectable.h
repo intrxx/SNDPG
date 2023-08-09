@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InteractableTarget.h"
-#include "Pickupable.h"
+#include "SNInteractableTarget.h"
+#include "SNPickupable.h"
 #include "GameFramework/Actor.h"
 #include "SNWorldCollectable.generated.h"
 
 UCLASS()
-class SNDPG_API ASNWorldCollectable : public AActor, public IInteractableTarget, public IPickupable
+class SNDPG_API ASNWorldCollectable : public AActor, public ISNInteractableTarget, public ISNPickupable
 {
 	GENERATED_BODY()
 	
@@ -17,15 +17,15 @@ public:
 	// Sets default values for this actor's properties
 	ASNWorldCollectable();
 	
-	virtual void GatherInteractionOptions(const FInteractionQuery& InteractQuery, FInteractionOptionBuilder& InteractionBuilder) override;
-	virtual FInventoryPickup GetPickupInventory() const override;
+	virtual void GatherInteractionOptions(const FSNInteractionQuery& InteractQuery, FSNInteractionOptionBuilder& InteractionBuilder) override;
+	virtual FSNInventoryPickup GetPickupInventory() const override;
 	
 protected:
 	UPROPERTY(EditAnywhere, Category = "SN|Pickup")
-	FInteractionOption Option;
+	FSNInteractionOption Option;
 
 	UPROPERTY(EditAnywhere, Category = "SN|Pickup")
-	FInventoryPickup StaticInventory;
+	FSNInventoryPickup StaticInventory;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Pickup", meta = (AllowPrivateAccess = "true"))

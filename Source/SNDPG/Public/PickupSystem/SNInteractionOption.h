@@ -2,20 +2,20 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
-#include "InteractionOption.generated.h"
+#include "SNInteractionOption.generated.h"
 
-class IInteractableTarget;
+class ISNInteractableTarget;
 class UUserWidget;
 
 USTRUCT(BlueprintType)
-struct FInteractionOption
+struct FSNInteractionOption
 {
 	GENERATED_BODY()
 
 public:
 	/** The interactable target */
 	UPROPERTY(BlueprintReadWrite)
-	TScriptInterface<IInteractableTarget> InteractableTarget;
+	TScriptInterface<ISNInteractableTarget> InteractableTarget;
 
 	/** Simple text the interaction might return */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -51,7 +51,7 @@ public:
 	TSoftClassPtr<UUserWidget> InteractionWidgetClass;
 
 public:
-	FORCEINLINE bool operator==(const FInteractionOption& Other) const
+	FORCEINLINE bool operator==(const FSNInteractionOption& Other) const
 	{
 		return InteractableTarget == Other.InteractableTarget &&
 			InteractionAbilityToGrant == Other.InteractionAbilityToGrant&&
@@ -62,12 +62,12 @@ public:
 			SubText.IdenticalTo(Other.SubText);
 	}
 
-	FORCEINLINE bool operator!=(const FInteractionOption& Other) const
+	FORCEINLINE bool operator!=(const FSNInteractionOption& Other) const
 	{
 		return !operator==(Other);
 	}
 
-	FORCEINLINE bool operator<(const FInteractionOption& Other) const
+	FORCEINLINE bool operator<(const FSNInteractionOption& Other) const
 	{
 		return InteractableTarget.GetInterface() < Other.InteractableTarget.GetInterface();
 	}

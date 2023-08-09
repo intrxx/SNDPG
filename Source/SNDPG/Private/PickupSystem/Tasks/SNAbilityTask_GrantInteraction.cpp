@@ -5,10 +5,10 @@
 #include "Engine/World.h"
 #include "GameFramework/Controller.h"
 #include "AbilitySystemComponent.h"
-#include "PickupSystem/InteractableTarget.h"
-#include "PickupSystem/InteractionOption.h"
-#include "PickupSystem/InteractionQuery.h"
-#include "PickupSystem/InteractionStatics.h"
+#include "..\..\..\Public\PickupSystem\SNInteractableTarget.h"
+#include "..\..\..\Public\PickupSystem\SNInteractionOption.h"
+#include "..\..\..\Public\PickupSystem\SNInteractionQuery.h"
+#include "..\..\..\Public\PickupSystem\SNInteractionStatics.h"
 #include "Physics/SNDPGCollisionChannels.h"
 #include "TimerManager.h"
 
@@ -60,22 +60,22 @@ void USNAbilityTask_GrantInteraction::QueryInteractables()
 
 		if (OverlapResults.Num() > 0)
 		{
-			TArray<TScriptInterface<IInteractableTarget>> InteractableTargets;
-			UInteractionStatics::AppendInteractableTargetsFromOverlapResults(OverlapResults, OUT InteractableTargets);
+			TArray<TScriptInterface<ISNInteractableTarget>> InteractableTargets;
+			USNInteractionStatics::AppendInteractableTargetsFromOverlapResults(OverlapResults, OUT InteractableTargets);
 			
-			FInteractionQuery InteractionQuery;
+			FSNInteractionQuery InteractionQuery;
 			InteractionQuery.RequestingAvatar = ActorOwner;
 			InteractionQuery.RequestingController = Cast<AController>(ActorOwner->GetOwner());
 
-			TArray<FInteractionOption> Options;
-			for (TScriptInterface<IInteractableTarget>& InteractiveTarget : InteractableTargets)
+			TArray<FSNInteractionOption> Options;
+			for (TScriptInterface<ISNInteractableTarget>& InteractiveTarget : InteractableTargets)
 			{
-				FInteractionOptionBuilder InteractionBuilder(InteractiveTarget, Options);
+				FSNInteractionOptionBuilder InteractionBuilder(InteractiveTarget, Options);
 				InteractiveTarget->GatherInteractionOptions(InteractionQuery, InteractionBuilder);
 			}
 
 			// Check if any of the options need to grant the ability to the user before they can be used.
-			for (FInteractionOption& Option : Options)
+			for (FSNInteractionOption& Option : Options)
 			{
 				if (Option.InteractionAbilityToGrant)
 				{

@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
 #include "GAS/SNGameplayAbility.h"
-#include "GameplayAbility_Interact.generated.h"
+#include "SNGameplayAbility_Interact.generated.h"
 
 /**
  * 
@@ -22,14 +22,14 @@ public:
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 	UFUNCTION(BlueprintCallable)
-	void UpdateInteractions(const TArray<FInteractionOption>& InteractiveOptions);
+	void UpdateInteractions(const TArray<FSNInteractionOption>& InteractiveOptions);
 
 	UFUNCTION(BlueprintCallable)
 	void TriggerInteraction();
 
 protected:
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FInteractionOption> CurrentOptions;
+	TArray<FSNInteractionOption> CurrentOptions;
 
 	//UPROPERTY()
 	//TArray<TObjectPtr<UIndicatorDescriptor>> Indicators;

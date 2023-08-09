@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "InteractionQuery.generated.h"
+#include "SNInteractionQuery.generated.h"
 
 USTRUCT(BlueprintType)
-struct FInteractionQuery
+struct FSNInteractionQuery
 {
 	GENERATED_BODY()
 

@@ -10,13 +10,13 @@ ASNWorldCollectable::ASNWorldCollectable()
 	StaticMesh->SetupAttachment(RootComponent);
 }
 
-void ASNWorldCollectable::GatherInteractionOptions(const FInteractionQuery& InteractQuery,
-	FInteractionOptionBuilder& InteractionBuilder)
+void ASNWorldCollectable::GatherInteractionOptions(const FSNInteractionQuery& InteractQuery,
+	FSNInteractionOptionBuilder& InteractionBuilder)
 {
 	InteractionBuilder.AddInteractionOption(Option);
 }
 
-FInventoryPickup ASNWorldCollectable::GetPickupInventory() const
+FSNInventoryPickup ASNWorldCollectable::GetPickupInventory() const
 {
 	return StaticInventory;
 }

@@ -4,12 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "Pickupable.generated.h"
+#include "SNPickupable.generated.h"
 
 class USNInventoryComponent;
 
 USTRUCT(BlueprintType)
-struct FPickupableItem
+struct FSNPickupableItem
 {
 	GENERATED_BODY()
 
@@ -19,18 +19,18 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FInventoryPickup
+struct FSNInventoryPickup
 {
 	GENERATED_BODY()
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<FPickupableItem> Instances;
+	TArray<FSNPickupableItem> Instances;
 };
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI, BlueprintType, meta = (CannotImplementInterfaceInBlueprint))
-class UPickupable : public UInterface
+class USNPickupable : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -38,28 +38,28 @@ class UPickupable : public UInterface
 /**
  * 
  */
-class SNDPG_API IPickupable
+class SNDPG_API ISNPickupable
 {
 	GENERATED_BODY()
 
 public:
 	UFUNCTION(BlueprintCallable)
-	 virtual FInventoryPickup GetPickupInventory() const = 0;
+	 virtual FSNInventoryPickup GetPickupInventory() const = 0;
 };
 
 /**  */
 UCLASS()
-class UPickupableStatics : public UBlueprintFunctionLibrary
+class USNPickupableStatics : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
 public:
-	UPickupableStatics();
+	USNPickupableStatics();
 
 public:
 	UFUNCTION(BlueprintPure)
-	static TScriptInterface<IPickupable> GetFirstPickupableFromActor(AActor* Actor);
+	static TScriptInterface<ISNPickupable> GetFirstPickupableFromActor(AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, meta = (WorldContext = "Ability"))
-	static void AddPickupToInventory(USNInventoryComponent* InventoryComponent, TScriptInterface<IPickupable> Pickup);
+	static void AddPickupToInventory(USNInventoryComponent* InventoryComponent, TScriptInterface<ISNPickupable> Pickup);
 };

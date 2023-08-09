@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "NSGameMode.generated.h"
+#include "SNGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SNDPG_API ANSGameMode : public AGameModeBase
+class SNDPG_API ASNGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 public:
-	ANSGameMode();
+	ASNGameMode();
 	
 };
