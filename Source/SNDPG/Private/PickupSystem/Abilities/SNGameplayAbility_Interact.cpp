@@ -1,14 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "..\..\..\Public\PickupSystem\Abilities\SNGameplayAbility_Interact.h"
+#include "PickupSystem/Abilities/SNGameplayAbility_Interact.h"
 #include "AbilitySystemComponent.h"
-#include "..\..\..\Public\PickupSystem\SNInteractionStatics.h"
-#include "..\..\..\Public\PickupSystem\SNInteractionOption.h"
-#include "..\..\..\Public\PickupSystem\SNInteractableTarget.h"
+#include "PickupSystem/SNInteractionStatics.h"
+#include "PickupSystem/SNInteractionOption.h"
+#include "PickupSystem/SNInteractableTarget.h"
 #include "NativeGameplayTags.h"
+#include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "GAS/SNGameplayAbility.h"
-#include "PickupSystem//Tasks/SNAbilityTask_GrantInteraction.h"
+#include "PickupSystem/Tasks/SNAbilityTask_GrantInteraction.h"
 
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Ability_Interaction_Activate, "Ability.Interaction.Activate");
 
@@ -34,12 +35,47 @@ void UGameplayAbility_Interact::ActivateAbility(const FGameplayAbilitySpecHandle
 
 void UGameplayAbility_Interact::UpdateInteractions(const TArray<FSNInteractionOption>& InteractiveOptions)
 {
+	if (ASNHeroController* PC = GetSNPlayerControllerFromActorInfo())
+	{
+		/*
+		if (ULyraIndicatorManagerComponent* IndicatorManager = ULyraIndicatorManagerComponent::GetComponent(PC))
+		{
+			for (UIndicatorDescriptor* Indicator : Indicators)
+			{
+				IndicatorManager->RemoveIndicator(Indicator);
+			}
+			Indicators.Reset();
+			*/
+
+			for (const FSNInteractionOption& InteractionOption : InteractiveOptions)
+			{
+				AActor* InteractableTargetActor = USNInteractionStatics::GetActorFromInteractableTarget(InteractionOption.InteractableTarget);
+
+				TSoftClassPtr<UUserWidget> InteractionWidgetClass = 
+					InteractionOption.InteractionWidgetClass.IsNull() ? DefaultInteractionWidgetClass : InteractionOption.InteractionWidgetClass;
+
+				/*
+				UIndicatorDescriptor* Indicator = NewObject<UIndicatorDescriptor>();
+				Indicator->SetDataObject(InteractableTargetActor);
+				Indicator->SetSceneComponent(InteractableTargetActor->GetRootComponent());
+				Indicator->SetIndicatorClass(InteractionWidgetClass);
+				IndicatorManager->AddIndicator(Indicator);
+
+				Indicators.Add(Indicator);
+				
+			}
+				*/
+		}
+	}
+
+	CurrentOptions = InteractiveOptions;
 }
 
 void UGameplayAbility_Interact::TriggerInteraction()
 {
 	if (CurrentOptions.Num() == 0)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("zero options"));
 		return;
 	}
 
@@ -71,6 +107,7 @@ void UGameplayAbility_Interact::TriggerInteraction()
 		FGameplayAbilityActorInfo ActorInfo;
 		ActorInfo.InitFromActor(InteractableTargetActor, TargetActor, InteractionOption.TargetAbilitySystem);
 
+		UE_LOG(LogTemp, Warning, TEXT("Trying to activate collect from event"));
 		// Trigger the ability using event tag.
 		const bool bSuccess = InteractionOption.TargetAbilitySystem->TriggerAbilityFromGameplayEvent(
 			InteractionOption.TargetInteractionAbilityHandle,
@@ -79,5 +116,9 @@ void UGameplayAbility_Interact::TriggerInteraction()
 			&Payload,
 			*InteractionOption.TargetAbilitySystem
 		);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BAD ASC SMH"));
 	}
 }
