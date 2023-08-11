@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include "InventorySystem/SNItemBase.h"
 #include "SNPickupable.generated.h"
 
 class USNInventoryComponent;
@@ -14,8 +15,11 @@ struct FSNPickupableItem
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditDefaultsOnly, Instanced)
+	USNItemBase* ItemDef;
+
 	UPROPERTY(EditAnywhere)
-	class USNItemBase* ItemDef;
+	TSubclassOf<USNItemBase> TestItemDef;
 };
 
 USTRUCT(BlueprintType)

@@ -117,8 +117,4 @@ void UGameplayAbility_Interact::TriggerInteraction()
 			*InteractionOption.TargetAbilitySystem
 		);
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("BAD ASC SMH"));
-	}
 }

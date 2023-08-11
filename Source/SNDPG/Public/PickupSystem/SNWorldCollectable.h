@@ -5,10 +5,14 @@
 #include "CoreMinimal.h"
 #include "SNInteractableTarget.h"
 #include "SNPickupable.h"
+#include "SNInteractionOption.h"
 #include "GameFramework/Actor.h"
 #include "SNWorldCollectable.generated.h"
 
-UCLASS()
+class UObject;
+struct FSNInteractionQuery;
+
+UCLASS(Abstract, Blueprintable)
 class SNDPG_API ASNWorldCollectable : public AActor, public ISNInteractableTarget, public ISNPickupable
 {
 	GENERATED_BODY()
