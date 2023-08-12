@@ -7,7 +7,7 @@
 ASNWorldCollectable::ASNWorldCollectable()
 {
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-	StaticMesh->SetupAttachment(RootComponent);
+	SetRootComponent(StaticMesh);
 }
 
 void ASNWorldCollectable::GatherInteractionOptions(const FSNInteractionQuery& InteractQuery,

@@ -75,7 +75,6 @@ void UGameplayAbility_Interact::TriggerInteraction()
 {
 	if (CurrentOptions.Num() == 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("zero options"));
 		return;
 	}
 

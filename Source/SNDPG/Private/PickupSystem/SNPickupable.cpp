@@ -34,25 +34,13 @@ TScriptInterface<ISNPickupable> USNPickupableStatics::GetFirstPickupableFromActo
 void USNPickupableStatics::AddPickupToInventory(USNInventoryComponent* InventoryComponent,
 	TScriptInterface<ISNPickupable> Pickup)
 {
-	if(Pickup)
+	if(Pickup && InventoryComponent)
 	{
-		if(InventoryComponent)
-		{
-			const FSNInventoryPickup& PickupInventory = Pickup->GetPickupInventory();
+		const FSNInventoryPickup& PickupInventory = Pickup->GetPickupInventory();
 
-			for(const FSNPickupableItem& Instances : PickupInventory.Instances)
-			{
-				InventoryComponent->AddItem(Instances.ItemDef);
-				UE_LOG(LogTemp, Error, TEXT("Adding item"));
-			}
-		}
-		else
+		for(const FSNPickupableItem& Instances : PickupInventory.Instances)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Inventory Component is invalid"));
+			InventoryComponent->AddItem(Instances.ItemDef);
 		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Pickup is invalid"));
 	}
 }
