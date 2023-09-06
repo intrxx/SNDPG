@@ -26,12 +26,6 @@ ASNEnemy::ASNEnemy(const FObjectInitializer& ObjectInitializer)
 	HealthBarWidgetComponent->SetRelativeLocation(HealthBarPosition);
 	HealthBarWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
 	HealthBarWidgetComponent->SetDrawSize(FVector2D(500, 500));
-
-	HealthBarWidgetClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/UI/Enemy/WBP_EnemyHealthBar.WBP_EnemyHealthBar_C"));
-	if (!HealthBarWidgetClass)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%s() Failed to find DamageNumberClass. If it was moved, please update the reference location in C++."), *FString(__FUNCTION__));
-	}
 }
 
 USNAbilitySystemComponent* ASNEnemy::GetEnemyAbilitySystemComponent() const

@@ -62,7 +62,6 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FSNInteractionOp
 				IndicatorManager->AddIndicator(Indicator);
 
 				Indicators.Add(Indicator);
-				
 			}
 				*/
 		}
