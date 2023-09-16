@@ -1,10 +1,9 @@
-// Copyright 2023 Michal Oginski.
+// Copyright 2023 Michał Ogiński.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Characters/SNCharacterBase.h"
-#include "GameplayEffectTypes.h"
 #include "SNEnemy.generated.h"
 
 class UWidgetComponent;
