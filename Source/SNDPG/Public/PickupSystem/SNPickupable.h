@@ -16,7 +16,7 @@ struct FSNPickupableItem
 
 public:
 	UPROPERTY(EditDefaultsOnly, Instanced)
-	USNItemBase* ItemDef;
+	TObjectPtr<USNItemBase> ItemDef;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<USNItemBase> TestItemDef;
