@@ -84,6 +84,7 @@ void FSNGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	// Notifiers Hit Tags
 	AddTag(HitTag_HeroMelee, "Ability.Data.HitTag.HeroMelee", "Tag used by notify to trigger event.");
 	AddTag(HitTag_BarghestBite, "Ability.Data.HitTag.BarghestBite", "Tag used by notify to trigger event.");
+	AddTag(HitTag_DragonBite, "Ability.Data.HitTag.DragonBite", "Tag used by notify to trigger event.");
 }
 
 void FSNGameplayTags::AddTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment)

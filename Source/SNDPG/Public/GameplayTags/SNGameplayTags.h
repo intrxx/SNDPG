@@ -63,6 +63,7 @@ public:
 	// Data
 	FGameplayTag HitTag_HeroMelee;
 	FGameplayTag HitTag_BarghestBite;
+	FGameplayTag HitTag_DragonBite;
 
 protected:
 	void AddAllTags(UGameplayTagsManager& Manager);
