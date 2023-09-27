@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "NotUsingAnymore/PickupSystem/Tasks/SNAbilityTask_ScanForInteract.h"
-#include "NotUsingAnymore/PickupSystem/SNInteractableTarget.h"
+#include "PickupSystem/Tasks/SNAbilityTask_ScanForInteract.h"
+#include "PickupSystem/SNInteractableTarget.h"
 #include "AbilitySystemComponent.h"
 
 

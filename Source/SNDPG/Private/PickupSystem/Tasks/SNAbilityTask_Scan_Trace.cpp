@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "NotUsingAnymore/PickupSystem/Tasks/SNAbilityTask_Scan_Trace.h"
+#include "PickupSystem/Tasks/SNAbilityTask_Scan_Trace.h"
 
-#include "NotUsingAnymore/PickupSystem/SNInteractionStatics.h"
+#include "PickupSystem/SNInteractionStatics.h"
 
 void USNAbilityTask_Scan_Trace::Activate()
 {
