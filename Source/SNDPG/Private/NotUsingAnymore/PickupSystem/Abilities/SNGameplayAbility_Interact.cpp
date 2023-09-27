@@ -1,15 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PickupSystem/Abilities/SNGameplayAbility_Interact.h"
+#include "NotUsingAnymore/PickupSystem/Abilities/SNGameplayAbility_Interact.h"
 #include "AbilitySystemComponent.h"
-#include "PickupSystem/SNInteractionStatics.h"
-#include "PickupSystem/SNInteractionOption.h"
-#include "PickupSystem/SNInteractableTarget.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractionStatics.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractionOption.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractableTarget.h"
 #include "NativeGameplayTags.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "GAS/SNGameplayAbility.h"
-#include "PickupSystem/Tasks/SNAbilityTask_GrantInteraction.h"
+#include "NotUsingAnymore/PickupSystem/Tasks/SNAbilityTask_GrantInteraction.h"
 
 UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Ability_Interaction_Activate, "Ability.Interaction.Activate");
 

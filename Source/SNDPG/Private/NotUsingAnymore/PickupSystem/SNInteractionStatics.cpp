@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-#include "PickupSystem/SNInteractionStatics.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractionStatics.h"
 #include "Components/PrimitiveComponent.h"
 #include "Engine/OverlapResult.h"
-#include "PickupSystem/SNInteractableTarget.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractableTarget.h"
 #include "UObject/ScriptInterface.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(SNInteractionStatics)

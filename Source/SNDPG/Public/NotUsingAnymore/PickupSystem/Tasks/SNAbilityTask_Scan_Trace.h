@@ -4,8 +4,8 @@
 
 
 #include "CoreMinimal.h"
-#include "PickupSystem/SNInteractionQuery.h"
-#include "PickupSystem/Tasks/SNAbilityTask_ScanForInteract.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractionQuery.h"
+#include "NotUsingAnymore/PickupSystem/Tasks/SNAbilityTask_ScanForInteract.h"
 #include "SNAbilityTask_Scan_Trace.generated.h"
 
 /**

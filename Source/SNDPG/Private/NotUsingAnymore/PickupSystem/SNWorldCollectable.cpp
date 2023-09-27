@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PickupSystem/SNWorldCollectable.h"
+#include "NotUsingAnymore/PickupSystem/SNWorldCollectable.h"
 
 
 ASNWorldCollectable::ASNWorldCollectable()

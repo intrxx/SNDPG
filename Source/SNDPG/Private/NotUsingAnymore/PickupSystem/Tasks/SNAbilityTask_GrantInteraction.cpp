@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PickupSystem/Tasks/SNAbilityTask_GrantInteraction.h"
+#include "NotUsingAnymore/PickupSystem/Tasks/SNAbilityTask_GrantInteraction.h"
 #include "Engine/World.h"
 #include "GameFramework/Controller.h"
 #include "AbilitySystemComponent.h"
-#include "..\..\..\Public\PickupSystem\SNInteractableTarget.h"
-#include "..\..\..\Public\PickupSystem\SNInteractionOption.h"
-#include "..\..\..\Public\PickupSystem\SNInteractionQuery.h"
-#include "..\..\..\Public\PickupSystem\SNInteractionStatics.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractableTarget.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractionOption.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractionQuery.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractionStatics.h"
 #include "Physics/SNDPGCollisionChannels.h"
 #include "TimerManager.h"
 

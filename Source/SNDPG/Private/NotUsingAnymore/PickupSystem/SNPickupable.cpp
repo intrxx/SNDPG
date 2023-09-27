@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "..\..\Public\PickupSystem\SNPickupable.h"
+#include "NotUsingAnymore/PickupSystem/SNPickupable.h"
 #include "GameFramework/Actor.h"
 #include "InventorySystem/SNInventoryComponent.h"
 #include "UObject/ScriptInterface.h"

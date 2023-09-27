@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/Tasks/AbilityTask.h"
-#include "PickupSystem/SNInteractionOption.h"
+#include "NotUsingAnymore/PickupSystem/SNInteractionOption.h"
 
 #include "SNAbilityTask_ScanForInteract.generated.h"
 
