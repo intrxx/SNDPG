@@ -83,6 +83,28 @@ void USNAbilityTask_ScanForInteract::UpdateInteractableOptions(const FSNInteract
 	}
 }
 
+void USNAbilityTask_ScanForInteract::BoxTrace(FHitResult& OutHitResult, const UWorld* World, const FVector& Start,
+	const FVector& End, FName ProfileName, TArray<AActor*>& ActorsToIgnore)
+{
+	check(World);
+
+	OutHitResult = FHitResult();
+	TArray<FHitResult> HitResults;
+	/* Line Trace 
+	World->LineTraceMultiByProfile(HitResults, Start, End, ProfileName, Params);
+	*/
+	UKismetSystemLibrary::BoxTraceMultiByProfile(World, Start, End, FVector(50), FRotator(),
+		ProfileName, true, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResults, true);
+	
+	OutHitResult.TraceStart = Start;
+	OutHitResult.TraceEnd = End;
+
+	if (HitResults.Num() > 0)
+	{
+		OutHitResult = HitResults[0];
+	}
+}
+
 void USNAbilityTask_ScanForInteract::LineTrace(FHitResult& OutHitResult, const UWorld* World, const FVector& Start,
 	const FVector& End, FName ProfileName, const FCollisionQueryParams Params)
 {
@@ -90,9 +112,8 @@ void USNAbilityTask_ScanForInteract::LineTrace(FHitResult& OutHitResult, const U
 
 	OutHitResult = FHitResult();
 	TArray<FHitResult> HitResults;
+	
 	World->LineTraceMultiByProfile(HitResults, Start, End, ProfileName, Params);
-
-	//UKismetSystemLibrary::BoxTraceMultiByProfile(World, Start, End, 5, ProfileName, OutHitResult, true)
 	
 	OutHitResult.TraceStart = Start;
 	OutHitResult.TraceEnd = End;

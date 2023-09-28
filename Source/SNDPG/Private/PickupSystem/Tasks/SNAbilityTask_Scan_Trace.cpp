@@ -67,7 +67,9 @@ void USNAbilityTask_Scan_Trace::PerformTrace()
 	//TraceEnd.Z = TraceEnd.Z - 50;
 	
 	FHitResult OutHitResult;
-	LineTrace(OutHitResult, World, TraceStart, TraceEnd, TraceProfile.Name, Params);
+	BoxTrace(OutHitResult, World, TraceStart, TraceEnd, TraceProfile.Name,ActorsToIgnore);
+	
+	//LineTrace(OutHitResult, World, TraceStart, TraceEnd, TraceProfile.Name, Params);
 	
 	TArray<TScriptInterface<ISNInteractableTarget>> InteractableTargets;
 	USNInteractionStatics::AppendInteractableTargetsFromHitResult(OutHitResult, InteractableTargets);
@@ -82,12 +84,12 @@ void USNAbilityTask_Scan_Trace::PerformTrace()
 		//DrawDebugLine(World, TraceStart, TraceEnd, DebugColor, false, InteractionScanRate);
 		if (OutHitResult.bBlockingHit)
 		{
-			DrawDebugLine(World, TraceStart, OutHitResult.Location, DebugColor, false, InteractionScanRate);
-			DrawDebugSphere(World, OutHitResult.Location, 5, 16, DebugColor, false, InteractionScanRate);
+			//DrawDebugLine(World, TraceStart, OutHitResult.Location, DebugColor, false, InteractionScanRate);
+			DrawDebugSphere(World, OutHitResult.Location, 5, 16, FColor::Red, false, InteractionScanRate);
 		}
 		else
 		{
-			DrawDebugLine(World, TraceStart, TraceEnd, DebugColor, false, InteractionScanRate);
+			//DrawDebugLine(World, TraceStart, TraceEnd, DebugColor, false, InteractionScanRate);
 		}
 	}
 }
