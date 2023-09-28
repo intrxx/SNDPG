@@ -3,10 +3,11 @@
 #include "PickupSystem/Tasks/SNAbilityTask_ScanForInteract.h"
 #include "PickupSystem/SNInteractableTarget.h"
 #include "AbilitySystemComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 void USNAbilityTask_ScanForInteract::UpdateInteractableOptions(const FSNInteractionQuery& InteractQuery,
-	const TArray<TScriptInterface<ISNInteractableTarget>>& InteractableTargets)
+                                                               const TArray<TScriptInterface<ISNInteractableTarget>>& InteractableTargets)
 {
 	TArray<FSNInteractionOption> NewOptions;
 
@@ -91,6 +92,8 @@ void USNAbilityTask_ScanForInteract::LineTrace(FHitResult& OutHitResult, const U
 	TArray<FHitResult> HitResults;
 	World->LineTraceMultiByProfile(HitResults, Start, End, ProfileName, Params);
 
+	//UKismetSystemLibrary::BoxTraceMultiByProfile(World, Start, End, 5, ProfileName, OutHitResult, true)
+	
 	OutHitResult.TraceStart = Start;
 	OutHitResult.TraceEnd = End;
 

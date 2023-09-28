@@ -34,7 +34,7 @@ private:
 	UPROPERTY()
 	FGameplayAbilityTargetingLocationInfo StartLocation;
 
-	float InteractionScanRange = 100;
+	float InteractionScanRange = 250.f;
 	float InteractionScanRate = 0.100;
 	bool bShowDebug = false;
 

@@ -24,6 +24,7 @@
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
+	//TODO Change later
 	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;
 	

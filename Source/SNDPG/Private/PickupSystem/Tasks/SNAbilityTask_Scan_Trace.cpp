@@ -3,6 +3,8 @@
 
 #include "PickupSystem/Tasks/SNAbilityTask_Scan_Trace.h"
 
+#include "Characters/SNCharacterMovementComponent.h"
+#include "Misc/TextFilterExpressionEvaluator.h"
 #include "PickupSystem/SNInteractionStatics.h"
 
 void USNAbilityTask_Scan_Trace::Activate()
@@ -46,7 +48,7 @@ void USNAbilityTask_Scan_Trace::PerformTrace()
 	{
 		return;
 	}
-
+	
 	UWorld* World = GetWorld();
 
 	TArray<AActor*> ActorsToIgnore;
@@ -56,11 +58,14 @@ void USNAbilityTask_Scan_Trace::PerformTrace()
 	FCollisionQueryParams Params(SCENE_QUERY_STAT(USNAbilityTask_Scan_Trace), bTraceComplex);
 	Params.AddIgnoredActors(ActorsToIgnore);
 	
-	FVector TraceStart = StartLocation.GetTargetingTransform().GetLocation();
-	FVector TraceEnd;
-
-	TraceEnd = TraceStart - InteractionScanRange;
-
+	FVector TraceStart = AvatarActor->GetActorLocation();
+	FVector Direction = AvatarActor->GetActorForwardVector();
+	Direction = Direction * InteractionScanRange;
+	
+	FVector TraceEnd = FVector(TraceStart.X, TraceStart.Y, TraceStart.Z - 100);
+	//TraceEnd = Direction + TraceStart;
+	//TraceEnd.Z = TraceEnd.Z - 50;
+	
 	FHitResult OutHitResult;
 	LineTrace(OutHitResult, World, TraceStart, TraceEnd, TraceProfile.Name, Params);
 	
@@ -72,6 +77,9 @@ void USNAbilityTask_Scan_Trace::PerformTrace()
 	if (bShowDebug)
 	{
 		FColor DebugColor = OutHitResult.bBlockingHit ? FColor::Red : FColor::Green;
+
+		//DrawDebugBox(World, TraceStart, FVector(75), DebugColor, false, InteractionScanRate, 1,5);
+		//DrawDebugLine(World, TraceStart, TraceEnd, DebugColor, false, InteractionScanRate);
 		if (OutHitResult.bBlockingHit)
 		{
 			DrawDebugLine(World, TraceStart, OutHitResult.Location, DebugColor, false, InteractionScanRate);
