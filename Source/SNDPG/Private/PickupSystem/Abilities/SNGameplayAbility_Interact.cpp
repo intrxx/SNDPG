@@ -7,6 +7,7 @@
 #include "PickupSystem/SNInteractionOption.h"
 #include "PickupSystem/SNInteractableTarget.h"
 #include "NativeGameplayTags.h"
+#include "Blueprint/UserWidget.h"
 #include "Characters/Hero/Miscellaneous/SNHeroController.h"
 #include "GAS/SNGameplayAbility.h"
 #include "PickupSystem/Tasks/SNAbilityTask_GrantInteraction.h"
@@ -37,33 +38,31 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FSNInteractionOp
 {
 	if (ASNHeroController* PC = GetSNPlayerControllerFromActorInfo())
 	{
-		/*
-		if (ULyraIndicatorManagerComponent* IndicatorManager = ULyraIndicatorManagerComponent::GetComponent(PC))
+		if(!Widgets.IsEmpty())
 		{
-			for (UIndicatorDescriptor* Indicator : Indicators)
+			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, FString::Printf(TEXT("Lengh of the array: %d"),Widgets.Num()));
+			for(int32 i = 0; i < Widgets.Num(); i++)
 			{
-				IndicatorManager->RemoveIndicator(Indicator);
+				Widgets[i]->RemoveFromParent();
 			}
-			Indicators.Reset();
-			*/
+		}
+		Widgets.Reset();
+		
+		for (const FSNInteractionOption& InteractionOption : InteractiveOptions)
+		{
+			AActor* InteractableTargetActor = USNInteractionStatics::GetActorFromInteractableTarget(InteractionOption.InteractableTarget);
+			
+			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Yellow,
+				FString::Printf(TEXT("Interaction Target: %s"), *InteractableTargetActor->GetName()));
 
-			for (const FSNInteractionOption& InteractionOption : InteractiveOptions)
+			TSoftClassPtr<UUserWidget> InteractionWidgetClass = 
+				InteractionOption.InteractionWidgetClass.IsNull() ? DefaultInteractionWidgetClass : InteractionOption.InteractionWidgetClass;
+
+			if(InteractionWidgetClass.IsValid())
 			{
-				AActor* InteractableTargetActor = USNInteractionStatics::GetActorFromInteractableTarget(InteractionOption.InteractableTarget);
-
-				TSoftClassPtr<UUserWidget> InteractionWidgetClass = 
-					InteractionOption.InteractionWidgetClass.IsNull() ? DefaultInteractionWidgetClass : InteractionOption.InteractionWidgetClass;
-
-				/*
-				UIndicatorDescriptor* Indicator = NewObject<UIndicatorDescriptor>();
-				Indicator->SetDataObject(InteractableTargetActor);
-				Indicator->SetSceneComponent(InteractableTargetActor->GetRootComponent());
-				Indicator->SetIndicatorClass(InteractionWidgetClass);
-				IndicatorManager->AddIndicator(Indicator);
-
-				Indicators.Add(Indicator);
+				Widgets.Add(CreateWidget(GetWorld(), InteractionWidgetClass.Get()));
+				Widgets.Last()->AddToViewport();
 			}
-				*/
 		}
 	}
 

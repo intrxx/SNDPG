@@ -7,6 +7,8 @@
 #include "GAS/SNGameplayAbility.h"
 #include "SNGameplayAbility_Interact.generated.h"
 
+class USNInteractionWidgetComponent;
+
 /**
  * 
  */
@@ -26,23 +28,24 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void TriggerInteraction();
+	
+public:
+	
 
 protected:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FSNInteractionOption> CurrentOptions;
 
-	//UPROPERTY()
-	//TArray<TObjectPtr<UIndicatorDescriptor>> Indicators;
+	UPROPERTY()
+	TArray<TObjectPtr<UUserWidget>> Widgets;
 
 protected:
-
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Ability|Settings")
 	float InteractionScanRate = 0.1f;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Ability|Settings")
 	float InteractionScanRange = 500;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Ability|UI")
 	TSoftClassPtr<UUserWidget> DefaultInteractionWidgetClass;
-	
 };

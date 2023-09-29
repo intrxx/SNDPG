@@ -59,6 +59,7 @@ public:
 	FGameplayTag Ability_CD_SwirlSwing;
 	FGameplayTag Ability_CD_KnifeThrow;
 	FGameplayTag Ability_CD_Dash;
+	FGameplayTag Ability_CD_Interaction;
 
 	// Data
 	FGameplayTag HitTag_HeroMelee;
