@@ -6,6 +6,8 @@
 #include "Characters/SNCharacterBase.h"
 #include "SNEnemy.generated.h"
 
+class ASNWorldCollectable;
+class USNLootSet;
 class UWidgetComponent;
 class USNHealthBarWidget;
 class USNBasicAttributes;
@@ -37,6 +39,9 @@ public:
 public:
 	UPROPERTY(EditAnywhere, Category = "Enemy|UI")
 	FVector HealthBarPosition = FVector(0.0f, 0.0f, 120.0f);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Enemy|Loot")
+	TSubclassOf<ASNWorldCollectable> ItemToDrop;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -47,7 +52,10 @@ protected:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy|Abilities")
-	USNAbilitySet* AbilitySet;
+	TObjectPtr<USNAbilitySet> AbilitySet;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy|LootSet")
+	TObjectPtr<USNLootSet> LootSet;
 	
 	UPROPERTY()
 	USNAbilitySystemComponent* EnemyAbilitySystemComponent;

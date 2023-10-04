@@ -6,6 +6,8 @@
 #include "UI/EnemyUI/SNHealthBarWidget.h"
 #include "ActorComponents/SNBasicAttributesComponent.h"
 #include "Components/WidgetComponent.h"
+#include "DropSystem/SNLootSet.h"
+#include "DropSystem/SNRegularLootList.h"
 #include "GAS/SNAbilitySystemComponent.h"
 
 ASNEnemy::ASNEnemy(const FObjectInitializer& ObjectInitializer)
@@ -36,6 +38,8 @@ USNAbilitySystemComponent* ASNEnemy::GetEnemyAbilitySystemComponent() const
 void ASNEnemy::OnDeathStarted(AActor* OwningActor)
 {
 	DisableMovementAndCollision();
+	
+	LootSet->FindItemToDrop(ItemToDrop);
 }
 
 void ASNEnemy::OnDeathFinished(AActor* OwningActor)

@@ -94,7 +94,7 @@ void USNAbilityTask_ScanForInteract::BoxTrace(FHitResult& OutHitResult, const UW
 	World->LineTraceMultiByProfile(HitResults, Start, End, ProfileName, Params);
 	*/
 	UKismetSystemLibrary::BoxTraceMultiByProfile(World, Start, End, FVector(50), FRotator(),
-		ProfileName, true, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResults, true);
+		ProfileName, true, ActorsToIgnore, EDrawDebugTrace::None, HitResults, true);
 	
 	OutHitResult.TraceStart = Start;
 	OutHitResult.TraceEnd = End;
