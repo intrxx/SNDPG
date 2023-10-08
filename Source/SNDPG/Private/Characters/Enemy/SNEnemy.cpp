@@ -47,6 +47,11 @@ void ASNEnemy::OnDeathFinished(AActor* OwningActor)
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::DestroyDueToDeath);
 }
 
+void ASNEnemy::SetDropSystemHeroData(float Level)
+{
+	LootSet->FillTheHeroCharacterData(Level);
+}
+
 void ASNEnemy::BeginPlay()
 {
 	Super::BeginPlay();
@@ -58,6 +63,8 @@ void ASNEnemy::BeginPlay()
 		AttributesComponent->InitializeWithAbilitySystem(AbilitySystemComponent.Get());
 
 		InitializeHealthBar();
+
+		LootSet->FillTheEnemyCharacterData(AttributesComponent->GetCharacterLevel());
 	}
 }
 

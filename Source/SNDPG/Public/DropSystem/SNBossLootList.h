@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SNLootSet.h"
 #include "Engine/DataAsset.h"
 #include "SNBossLootList.generated.h"
 
@@ -22,12 +23,12 @@ public:
  * 
  */
 UCLASS(BlueprintType)
-class SNDPG_API USNBossLootList : public UDataAsset
+class SNDPG_API USNBossLootList : public USNLootSet
 {
 	GENERATED_BODY()
 
 public:
-	void FindBossItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem);
+	void FindBossItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem, ESNLootSet_RollingForLootType RollType);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Loot List")

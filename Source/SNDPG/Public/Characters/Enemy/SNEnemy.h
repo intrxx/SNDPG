@@ -36,6 +36,9 @@ public:
 	UFUNCTION()
 	virtual void OnDeathFinished(AActor* OwningActor);
 
+	UFUNCTION(BlueprintCallable, Category = "SN|DropSystem")
+	void SetDropSystemHeroData(float Level);
+
 public:
 	UPROPERTY(EditAnywhere, Category = "Enemy|UI")
 	FVector HealthBarPosition = FVector(0.0f, 0.0f, 120.0f);

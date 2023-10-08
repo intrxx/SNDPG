@@ -57,9 +57,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults", meta = (ClampMin = 0.0f))
 	float Weight;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
-	EItemCategory ItemCategory;
-	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
 	FText ItemDisplayName;
 
@@ -68,6 +65,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
 	FText UseActionText;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
+	float DropWeight = 0.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Item|AbilitySet")
 	USNAbilitySet* AbilitySet;
@@ -81,12 +81,15 @@ public:
 	UPROPERTY()
 	class USNEquipmentComponent* OwningEquipment;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
 	ESlotCategory SlotCategoryEquippedTo = ESlotCategory::None;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
 	bool bIsItemEquipped = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "SN|Item|Data")
 	UUserWidget* ItemEquipmentSlot;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Data")
+	EItemCategory ItemCategory;
 };

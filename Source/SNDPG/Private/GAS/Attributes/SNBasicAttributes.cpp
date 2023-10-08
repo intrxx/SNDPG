@@ -17,6 +17,7 @@ USNBasicAttributes::USNBasicAttributes()
 	, MaxResource(100.f)
 	, Stamina(150.f)
 	, MaxStamina(150.f)
+	, CharacterLevel(1.f)
 {
 	bOutOfHealth = false;
 }

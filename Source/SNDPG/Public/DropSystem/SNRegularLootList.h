@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SNLootSet.h"
 #include "Engine/DataAsset.h"
 #include "SNRegularLootList.generated.h"
 
@@ -37,12 +38,12 @@ public:
  * 
  */
 UCLASS(BlueprintType)
-class SNDPG_API USNRegularLootList : public UDataAsset
+class SNDPG_API USNRegularLootList : public USNLootSet
 {
 	GENERATED_BODY()
 	
 public:
-	void FindRegularItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem);
+	void FindRegularItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem, ESNLootSet_RollingForLootType RollType);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Loot List")
