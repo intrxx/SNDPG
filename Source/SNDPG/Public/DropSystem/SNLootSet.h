@@ -6,8 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "SNLootSet.generated.h"
 
-class USNBossLootList;
-class USNRegularLootList;
+class USNLootList;
 class ASNWorldCollectable;
 
 UENUM(BlueprintType)
@@ -32,11 +31,11 @@ public:
 	void FillTheHeroCharacterData(float Level);
 
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Loot")
-	TObjectPtr<USNBossLootList> BossLootList;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Loot Lists")
+	TObjectPtr<USNLootList> BossLootList;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Loot")
-	TObjectPtr<USNRegularLootList> RegularLootList;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Loot Lists")
+	TObjectPtr<USNLootList> RegularLootList;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Loot rolling type")
 	ESNLootSet_RollingForLootType RollingForLootType = ESNLootSet_RollingForLootType::None;
@@ -46,8 +45,9 @@ protected:
 	 * Before rolling for items we take into account:
 	 * @param PlayerLevel We decrease the chance of dropping weaker items as the PlayerLevel gets bigger
 	 * @param EnemyLevel We increase the chance of dropping stronger items as the EnemyLevel gets bigger
+	 * @param LootList LootList, idk If I will stick to it here
 	 */
-	void ModifyWeightsBasedOnPlayerProgress(float PlayerLevel, float EnemyLevel, TObjectPtr<TSubclassOf<UDataAsset>> LootList);
+	void ModifyWeightsBasedOnPlayerProgress(float PlayerLevel, float EnemyLevel, TObjectPtr<USNLootList> LootList);
 
 protected:
 	float EnemyCharacterLevel;

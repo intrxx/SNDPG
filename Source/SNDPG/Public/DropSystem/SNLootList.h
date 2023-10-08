@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "SNLootSet.h"
 #include "Engine/DataAsset.h"
-#include "SNRegularLootList.generated.h"
+#include "SNLootList.generated.h"
 
 class ASNWorldCollectable;
 
@@ -31,19 +31,19 @@ public:
 	ESNRegularLootList_ItemTier ItemTier;
 
 	UPROPERTY(EditDefaultsOnly)
-	float RequiredItemLevel = 0.0f;
+	float ItemDropWeight = 0.0f;
 };
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class SNDPG_API USNRegularLootList : public USNLootSet
+class SNDPG_API USNLootList : public UDataAsset
 {
 	GENERATED_BODY()
 	
 public:
-	void FindRegularItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem, ESNLootSet_RollingForLootType RollType);
+	void RollForItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem, ESNLootSet_RollingForLootType RollType);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Loot List")

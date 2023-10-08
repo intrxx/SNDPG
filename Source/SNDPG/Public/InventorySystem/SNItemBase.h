@@ -65,10 +65,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
 	FText UseActionText;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
-	float DropWeight = 0.0f;
-
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Item|AbilitySet")
 	USNAbilitySet* AbilitySet;
 

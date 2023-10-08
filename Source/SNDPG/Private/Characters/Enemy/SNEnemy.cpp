@@ -7,7 +7,7 @@
 #include "ActorComponents/SNBasicAttributesComponent.h"
 #include "Components/WidgetComponent.h"
 #include "DropSystem/SNLootSet.h"
-#include "DropSystem/SNRegularLootList.h"
+#include "..\..\..\Public\DropSystem\SNLootList.h"
 #include "GAS/SNAbilitySystemComponent.h"
 
 ASNEnemy::ASNEnemy(const FObjectInitializer& ObjectInitializer)

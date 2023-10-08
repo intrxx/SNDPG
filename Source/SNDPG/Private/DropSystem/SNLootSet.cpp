@@ -2,10 +2,9 @@
 
 
 #include "DropSystem/SNLootSet.h"
-#include "DropSystem/SNBossLootList.h"
-#include "DropSystem/SNRegularLootList.h"
+#include "DropSystem/SNLootList.h"
 
-void USNLootSet::ModifyWeightsBasedOnPlayerProgress(float PlayerLevel, float EnemyLevel, TObjectPtr<TSubclassOf<UDataAsset>> LootList)
+void USNLootSet::ModifyWeightsBasedOnPlayerProgress(float PlayerLevel, float EnemyLevel, TObjectPtr<USNLootList> LootList)
 {
 	
 }
@@ -17,20 +16,20 @@ void USNLootSet::FindItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem)
 		if (FMath::RandBool())
 		{
 			ModifyWeightsBasedOnPlayerProgress(HeroCharacterLevel, EnemyCharacterLevel, BossLootList);
-			BossLootList->FindBossItemToDrop(OutItem, RollingForLootType);
+			BossLootList->RollForItemToDrop(OutItem, RollingForLootType);
 			return;
 		}
 	}
 	
 	if(IsValid(RegularLootList))
 	{
-		RegularLootList->FindRegularItemToDrop(OutItem, RollingForLootType);
+		RegularLootList->RollForItemToDrop(OutItem, RollingForLootType);
 		return;
 	}
 
 	if (IsValid(BossLootList))
 	{
-		BossLootList->FindBossItemToDrop(OutItem, RollingForLootType);
+		BossLootList->RollForItemToDrop(OutItem, RollingForLootType);
 	}
 }
 
