@@ -46,6 +46,10 @@ public:
 	void RollForItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem, ESNLootSet_RollingForLootType RollType);
 
 protected:
+	TSubclassOf<ASNWorldCollectable> RandomRollForItem();
+	TSubclassOf<ASNWorldCollectable> RandomWithWeightRollForItem();
+
+protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Loot List")
 	TArray<FSNRegularLootList_LootList> LootList;
 };
