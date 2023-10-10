@@ -50,6 +50,9 @@ protected:
 	TSubclassOf<ASNWorldCollectable> RandomWithWeightRollForItem();
 
 protected:
+	UPROPERTY(EditDefaultsOnly, Category = "No Drop Weight")
+	float NoDropWeight = 100.0f;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Loot List")
 	TArray<FSNRegularLootList_LootList> LootList;
 };
