@@ -12,8 +12,9 @@ class ASNWorldCollectable;
 UENUM(BlueprintType)
 enum class ESNRegularLootList_ItemTier : uint8
 {
+	NoDrop,
 	Common,
-	Rare,
+	Epic,
 	Legendary
 };
 
@@ -43,16 +44,38 @@ class SNDPG_API USNLootList : public UDataAsset
 	GENERATED_BODY()
 	
 public:
-	void RollForItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem, ESNLootSet_RollingForLootType RollType);
+	void RollForItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem, ESNLootSet_RollingForLootType RollType, float PlayerLevel, float EnemyLevel);
+
+	/**
+	 * Before rolling for items we take into account:
+	 * @param PlayerLevel We decrease the chance of dropping weaker items as the PlayerLevel gets bigger,
+	 * @param EnemyLevel We increase the chance of dropping stronger items as the EnemyLevel gets bigger.
+	 * @param TempItemDropList Temporary array that holds all the items with Item Weights to modify.
+	 * Modifiers are additive.
+	 */
+	void ModifyWeightsBasedOnPlayerProgress(float PlayerLevel, float EnemyLevel, TArray<FSNRegularLootList_LootList>& TempItemDropList);
 
 protected:
 	TSubclassOf<ASNWorldCollectable> RandomRollForItem();
-	TSubclassOf<ASNWorldCollectable> RandomWithWeightRollForItem();
+	TSubclassOf<ASNWorldCollectable> RandomWithWeightRollForItem(TArray<FSNRegularLootList_LootList> TempItemDropList);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "No Drop Weight")
 	float NoDropWeight = 100.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Drop Modifier")
+	float LegendaryPercentDropModifier = 0.025f;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Drop Modifier")
+	float EpicPercentDropModifier = 0.05f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Drop Modifier")
+	float CommonPercentDropModifier = 0.25f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Drop Modifier")
+	float ConstLevelDifference = 2.0f;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Loot List")
-	TArray<FSNRegularLootList_LootList> LootList;
+	TArray<FSNRegularLootList_LootList> ItemDropList;
+	
 };
