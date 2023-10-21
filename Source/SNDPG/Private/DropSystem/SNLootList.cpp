@@ -45,9 +45,6 @@ TSubclassOf<ASNWorldCollectable> USNLootList::RandomWithWeightRollForItem(TArray
 		WeightSum += InItemDropList[ItemIndex].ItemDropWeight;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Yellow,
-		FString::Printf(TEXT("Items Weight: %f"), WeightSum));
-	
 	float RandomNumber = FMath::FRandRange(0, WeightSum);
 
 	// Loop through all the items until one is picked based on its weight (the higher the weight the more likely to get picked)

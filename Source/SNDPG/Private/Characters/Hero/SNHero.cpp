@@ -24,7 +24,6 @@
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	//TODO Change later
 	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;
 	
@@ -86,17 +85,6 @@ void ASNHero::PossessedBy(AController* NewController)
 	check(PC);
 	
 	PC->CreateHeroHUD();
-	
-	//FOR DEBUG
-	/*
-	TArray<FGameplayAbilitySpec> ActivableAbilities;
-	ActivableAbilities = AbilitySystemComponent->GetActivatableAbilities();
-	for(FGameplayAbilitySpec Abilities : ActivableAbilities)
-	{
-		FString AbilityName = Abilities.Ability->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("Active ability: %s"), *AbilityName);
-	}
-	*/
 }
 
 void ASNHero::OnDeathStarted(AActor* OwningActor)
@@ -254,13 +242,8 @@ void ASNHero::LookStick(const FInputActionValue& Value)
 void ASNHero::SwitchItemRight_Weapon()
 {
 	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
-	if(Equipment)
+	if(Equipment && Equipment->CurrentlyEquippedRightHandWeapon)
 	{
-		if(Equipment->CurrentlyEquippedRightHandWeapon == nullptr)
-		{
-			return;
-		}
-		
 		Equipment->SwitchEquippedRightHandWeapon(Equipment->CurrentlyEquippedRightHandWeaponIndex);
 		
 		ASNHeroController* PC = Cast<ASNHeroController>(GetController());
@@ -270,8 +253,6 @@ void ASNHero::SwitchItemRight_Weapon()
 			if(HUD)
 			{
 				HUD->SetRightHandWeaponEquippedItemDisplay(Equipment->CurrentlyEquippedRightHandWeapon);
-
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in right weapon slot"));
 			}
 		}	
 	}
@@ -280,13 +261,8 @@ void ASNHero::SwitchItemRight_Weapon()
 void ASNHero::SwitchItemLeft_Weapon()
 {
 	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
-	if(Equipment)
+	if(Equipment && Equipment->CurrentlyEquippedLeftHandWeapon)
 	{
-		if(Equipment->CurrentlyEquippedLeftHandWeapon == nullptr)
-		{
-			return;
-		}
-		
 		Equipment->SwitchEquippedLeftHandWeapon(Equipment->CurrentlyEquippedLeftHandWeaponIndex);
 		
 		ASNHeroController* PC = Cast<ASNHeroController>(GetController());
@@ -296,8 +272,6 @@ void ASNHero::SwitchItemLeft_Weapon()
 			if(HUD)
 			{
 				HUD->SetLeftHandWeaponEquippedItemDisplay(Equipment->CurrentlyEquippedLeftHandWeapon);
-
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in left weapon slot"));
 			}
 		}	
 	}
@@ -306,13 +280,8 @@ void ASNHero::SwitchItemLeft_Weapon()
 void ASNHero::SwitchItemDown_Consumable()
 {
 	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
-	if(Equipment)
+	if(Equipment && Equipment->CurrentlyEquippedConsumable)
 	{
-		if(Equipment->CurrentlyEquippedConsumable == nullptr)
-		{
-			return;
-		}
-		
 		Equipment->SwitchEquippedConsumable(Equipment->CurrentlyEquippedConsumableIndex);
 		
 		ASNHeroController* PC = Cast<ASNHeroController>(GetController());
@@ -322,8 +291,6 @@ void ASNHero::SwitchItemDown_Consumable()
 			if(HUD)
 			{
 				HUD->SetConsumableEquippedItemDisplay(Equipment->CurrentlyEquippedConsumable);
-
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in consumable slot"));
 			}
 		}	
 	}
@@ -332,13 +299,8 @@ void ASNHero::SwitchItemDown_Consumable()
 void ASNHero::SwitchItemUp_Magic()
 {
 	USNEquipmentComponent* Equipment = USNEquipmentComponent::FindEquipmentComponent(this);
-	if(Equipment)
+	if(Equipment && Equipment->CurrentlyEquippedMagic)
 	{
-		if(Equipment->CurrentlyEquippedMagic == nullptr)
-		{
-			return;
-		}
-		
 		Equipment->SwitchEquippedMagic(Equipment->CurrentlyEquippedMagicIndex);
 		
 		ASNHeroController* PC = Cast<ASNHeroController>(GetController());
@@ -348,8 +310,6 @@ void ASNHero::SwitchItemUp_Magic()
 			if(HUD)
 			{
 				HUD->SetMagicEquippedItemDisplay(Equipment->CurrentlyEquippedMagic);
-
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Switched item in magic slot"));
 			}
 		}	
 	}
