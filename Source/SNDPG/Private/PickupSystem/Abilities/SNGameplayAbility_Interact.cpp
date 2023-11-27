@@ -18,6 +18,12 @@ UGameplayAbility_Interact::UGameplayAbility_Interact(const FObjectInitializer& O
 	: Super(ObjectInitializer)
 {
 	ActivationPolicy = ESNAbilityActivationPolicy::OnSpawn;
+
+	DefaultInteractionWidgetClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/SNDPG/UI/Hero/Interact/Pickup/WBP_PickupPopup"));
+	if(!DefaultInteractionWidgetClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s Failed to find DefaultInteractionWidgetClass."), *FString(__FUNCTION__));
+	}
 }
 
 void UGameplayAbility_Interact::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -40,7 +46,7 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FSNInteractionOp
 	{
 		if(!Widgets.IsEmpty())
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, FString::Printf(TEXT("Lengh of the array: %d"),Widgets.Num()));
+			//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, FString::Printf(TEXT("Lengh of the array: %d"),Widgets.Num()));
 			for(int32 i = 0; i < Widgets.Num(); i++)
 			{
 				Widgets[i]->RemoveFromParent();
@@ -51,10 +57,11 @@ void UGameplayAbility_Interact::UpdateInteractions(const TArray<FSNInteractionOp
 		for (const FSNInteractionOption& InteractionOption : InteractiveOptions)
 		{
 			AActor* InteractableTargetActor = USNInteractionStatics::GetActorFromInteractableTarget(InteractionOption.InteractableTarget);
-			
+
+			/*
 			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Yellow,
 				FString::Printf(TEXT("Interaction Target: %s"), *InteractableTargetActor->GetName()));
-
+			*/
 			TSoftClassPtr<UUserWidget> InteractionWidgetClass = 
 				InteractionOption.InteractionWidgetClass.IsNull() ? DefaultInteractionWidgetClass : InteractionOption.InteractionWidgetClass;
 

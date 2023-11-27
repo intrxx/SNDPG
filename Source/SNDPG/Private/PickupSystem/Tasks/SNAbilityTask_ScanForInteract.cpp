@@ -36,7 +36,6 @@ void USNAbilityTask_ScanForInteract::UpdateInteractableOptions(const FSNInteract
 
 				if (InteractionAbilitySpec)
 				{
-					UE_LOG(LogTemp, Warning, TEXT("Giving ability"))
 					// update the option
 					Option.TargetAbilitySystem = AbilitySystemComponent.Get();
 					Option.TargetInteractionAbilityHandle = InteractionAbilitySpec->Handle;
