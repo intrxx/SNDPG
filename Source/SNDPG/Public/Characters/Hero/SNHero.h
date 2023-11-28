@@ -6,7 +6,6 @@
 #include "Characters/SNCharacterBase.h"
 #include "GameplayTagContainer.h"
 #include "InputActionValue.h"
-#include "GAS/SNGameplayAbility.h"
 #include "SNHero.generated.h"
 
 class USNEquipmentComponent;
@@ -18,6 +17,7 @@ class UCameraComponent;
 class USNAbilitySet;
 class USpringArmComponent;
 class USNBasicAttributesComponent;
+class USceneCaptureComponent2D;
 
 namespace Hero
 {
@@ -110,4 +110,13 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USNEquipmentComponent> EquipmentComponent;
+	
+	/**
+	 *	Minimap
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USpringArmComponent> MinimapSpringArm;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneCaptureComponent2D> MinimapCamera;
 };

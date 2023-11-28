@@ -19,6 +19,7 @@
 #include "InventorySystem/SNEquipmentComponent.h"
 #include "InventorySystem/SNInventoryComponent.h"
 #include "InventorySystem/SNItemBase.h"
+#include "Components/SceneCaptureComponent2D.h"
 #include "UI/HeroHUD/SNHeroHUD.h"
 
 ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
@@ -46,12 +47,25 @@ ASNHero::ASNHero(const FObjectInitializer& ObjectInitializer)
 
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	SpringArmComp->SetupAttachment(RootComponent);
-	SpringArmComp->TargetArmLength = 600;
+	SpringArmComp->TargetArmLength = 600.f;
 	SpringArmComp->bUsePawnControlRotation = true;
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComp, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
+
+	MinimapSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MinimapSpringArmComp"));
+	MinimapSpringArm->SetupAttachment(RootComponent);
+	MinimapSpringArm->TargetArmLength = 900.f;
+	MinimapSpringArm->SetRelativeRotation(FRotator(90.f, 0.f, 0.f));
+	MinimapSpringArm->bUsePawnControlRotation = false;
+	MinimapSpringArm->bInheritPitch = false;
+	MinimapSpringArm->bInheritRoll = false;
+	MinimapSpringArm->bInheritYaw = false;
+	MinimapSpringArm->bDoCollisionTest = false;
+
+	MinimapCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MinimapCameraComp"));
+	MinimapCamera->SetupAttachment(MinimapSpringArm, USpringArmComponent::SocketName);
 
 	CombatComponent = CreateDefaultSubobject<USNCombatComponent>(TEXT("CombatComponent"));
 	CombatComponent->AddTraceMesh(MeshComp);
