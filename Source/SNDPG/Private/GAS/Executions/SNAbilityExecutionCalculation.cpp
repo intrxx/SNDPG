@@ -61,7 +61,8 @@ void USNAbilityExecutionCalculation::Execute_Implementation(const FGameplayEffec
 	
 	float Damage = 0.0f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(AbilityStatics().DamageDef, EvaluateParameters, Damage);
-	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Ability.Data.Damage")), true, -1.0f), 0.0f);
+	Damage += FMath::Max<float>(Spec.GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Ability.Data.Damage")),
+		true, -1.0f), 0.0f);
 	
 	float Endurance = 0.0f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(AbilityStatics().EnduranceDef, EvaluateParameters, Endurance);
