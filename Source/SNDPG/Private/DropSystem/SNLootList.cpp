@@ -47,7 +47,7 @@ TSubclassOf<ASNWorldCollectable> USNLootList::RandomWithWeightRollForItem(TArray
 
 	float RandomNumber = FMath::FRandRange(0, WeightSum);
 
-	// Loop through all the items until one is picked based on its weight (the higher the weight the more likely to get picked)
+	// Loop over all the items until one is picked based on its weight (the higher the weight the more likely to get picked)
 	for(int32 ItemIndex = 0; ItemIndex < InItemDropList.Num(); ++ItemIndex)
 	{
 		RandomNumber -= InItemDropList[ItemIndex].ItemDropWeight;

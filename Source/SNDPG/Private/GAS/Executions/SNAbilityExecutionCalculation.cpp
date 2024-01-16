@@ -3,8 +3,11 @@
 
 #include "GAS/Executions/SNAbilityExecutionCalculation.h"
 
+#include "Engine/ICookInfo.h"
 #include "GAS/SNAbilitySystemComponent.h"
 #include "GAS/Attributes/SNBasicAttributes.h"
+#include "Kismet/GameplayStatics.h"
+#include "Widgets/Text/ISlateEditableTextWidget.h"
 
 struct SNAbilityStatics
 {

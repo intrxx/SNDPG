@@ -77,9 +77,6 @@ protected:
 	void ToggleInGameMenu();
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
-	TObjectPtr<USNAbilitySet> AbilitySet;
-	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
 	TObjectPtr<USNInputConfig> InputConfig;
 
@@ -92,16 +89,20 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Input")
 	TObjectPtr<UInputMappingContext> HUDMappingContext;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SN|Abilities")
+	TObjectPtr<USNAbilitySet> AbilitySet;
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> CameraComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USNBasicAttributesComponent> AttributesComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> SpringArmComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<USNBasicAttributesComponent> AttributesComponent;
-
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SN|Character", Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USNCombatComponent> CombatComponent;
 

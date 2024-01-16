@@ -4,13 +4,11 @@
 #include "DropSystem/SNLootSet.h"
 #include "DropSystem/SNLootList.h"
 
-
-
 void USNLootSet::FindItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem)
 {
 	if (IsValid(RegularLootList) && IsValid(BossLootList))
 	{
-		if (FMath::RandBool())
+		if (FMath::RandRange(1, 100) <= 35)
 		{
 			BossLootList->RollForItemToDrop(OutItem, RollingForLootType, HeroCharacterLevel, EnemyCharacterLevel);
 			return;

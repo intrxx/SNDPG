@@ -49,9 +49,6 @@ public:
 	class UWorld* World;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
-	class UStaticMesh* PickupMesh;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
 	class UTexture2D* Thumbnail;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults", meta = (ClampMin = 0.0f))
