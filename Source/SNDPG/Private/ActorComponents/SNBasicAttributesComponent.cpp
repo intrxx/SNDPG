@@ -395,7 +395,8 @@ void USNBasicAttributesComponent::LevelUpVitality(float Amount)
 	AddLeveledUpAttribute(Amount, GetVitalityAttribute());
 
 	// Increase Health by 5 for every added point to Vitality
-	AddLeveledUpAttribute(FMath::RoundToFloat((GetMaxHealth() / 50.0f) + Amount * 5.0f), GetMaxHealthAttribute());
+	const float HealthToAdd = FMath::RoundToFloat((20.f / GetVitality()) * Amount * 10.f);
+	AddLeveledUpAttribute(HealthToAdd, GetMaxHealthAttribute());
 }
 
 void USNBasicAttributesComponent::LevelUpEndurance(float Amount)
@@ -404,7 +405,8 @@ void USNBasicAttributesComponent::LevelUpEndurance(float Amount)
 	AddLeveledUpAttribute(Amount, GetEnduranceAttribute());
 
 	// Increase Stamina based on endurance
-	AddLeveledUpAttribute(FMath::RoundToFloat((GetStamina() / 75.0f) + Amount * 3.0f), GetMaxStaminaAttribute());
+	const float StaminaToAdd = FMath::RoundToFloat((15.f / GetEndurance()) * Amount * 5.f);
+	AddLeveledUpAttribute(StaminaToAdd, GetMaxStaminaAttribute());
 }
 
 void USNBasicAttributesComponent::LevelUpMind(float Amount)
@@ -413,7 +415,8 @@ void USNBasicAttributesComponent::LevelUpMind(float Amount)
 	AddLeveledUpAttribute(Amount, GetMindAttribute());
 
 	// Increase mana based on mind
-	AddLeveledUpAttribute(FMath::RoundToFloat((GetResource() / 75.0f) + Amount * 5.0f), GetMaxResourceAttribute());
+	const float StaminaToAdd = FMath::RoundToFloat((20.f / GetMind()) * Amount * 10.f);
+	AddLeveledUpAttribute(StaminaToAdd, GetMaxResourceAttribute());
 }
 
 void USNBasicAttributesComponent::SubtractLevelUpPoints(float Amount)
