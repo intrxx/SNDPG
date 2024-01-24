@@ -29,6 +29,20 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCate
 	{
 		return false;
 	}
+
+	ASNHero* HeroOwner = Cast<ASNHero>(GetOwner());
+	if(HeroOwner)
+	{
+		const USNBasicAttributesComponent* AttributesComp = USNBasicAttributesComponent::FindAttributeComponent(HeroOwner);
+		if(AttributesComp)
+		{
+			float CharacterLevel = AttributesComp->GetCharacterLevel();
+			if(ItemToAdd->LevelRequirement > CharacterLevel)
+			{
+				return false;
+			}
+		}
+	}
 	
 	ItemToAdd->OwningEquipment = this;
 	ItemToAdd->World = GetWorld();
@@ -58,7 +72,6 @@ bool USNEquipmentComponent::AddToEquippedItems(USNItemBase* ItemToAdd, ESlotCate
 		EquippedConsumables.Add(ItemToAdd);
 		
 		RemoveUnequippedItemAbilitySet(CurrentlyEquippedConsumable);
-		UE_LOG(LogTemp, Warning, TEXT("Adding item to consumable slot: %s"), *ItemToAdd->GetName());
 		CurrentlyEquippedConsumable = EquippedConsumables[0];
 		AddEquippedItemAbilitySet(CurrentlyEquippedConsumable);
 		

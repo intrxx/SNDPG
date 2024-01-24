@@ -53,6 +53,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults", meta = (ClampMin = 0.0f))
 	float Weight;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults", meta = (ClampMin = 0.0f))
+	int32 LevelRequirement;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SN|Item|Defaults")
 	FText ItemDisplayName;

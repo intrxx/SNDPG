@@ -170,16 +170,14 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 	{
 		if(GetExperience() > GetMaxExperience())
 		{
-			UE_LOG(LogTemp, Warning, TEXT("LEVEL UP %s"), *GetOwningActor()->GetName());
-			
 			float XPOverMax = GetExperience() - GetMaxExperience();
 			SetExperience(XPOverMax);
 			
-			float NewMaxXP = GetMaxExperience() * 2.0f;
-			SetMaxExperience(NewMaxXP);
-
 			float NewLevel = GetCharacterLevel()+1;
 			SetCharacterLevel(NewLevel);
+
+			float NewMaxXP = 0.35f * (GetMaxExperience() * GetCharacterLevel()) * 1.95f;
+			SetMaxExperience(NewMaxXP);
 
 			// Level up reward, giving a level up point and some health
 			UGameplayEffect* LevelUpReward = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("LevelUpReward")));
