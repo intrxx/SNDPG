@@ -463,7 +463,6 @@ void USNEquipmentComponent::RemoveUnequippedItemAbilitySet(USNItemBase* Item)
 
 void USNEquipmentComponent::UpdateWeaponDamageStats()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Entered updating"));
 	ASNHero* Hero = Cast<ASNHero>(GetOwner());
 	if (Hero)
 	{

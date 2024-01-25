@@ -3,6 +3,8 @@
 
 #include "DropSystem/SNLootList.h"
 
+#include "DSP/AudioDebuggingUtilities.h"
+
 
 void USNLootList::RollForItemToDrop(TSubclassOf<ASNWorldCollectable>& OutItem, ESNLootSet_RollingForLootType RollType, float PlayerLevel, float EnemyLevel)
 {
@@ -61,32 +63,38 @@ TSubclassOf<ASNWorldCollectable> USNLootList::RandomWithWeightRollForItem(TArray
 	return nullptr;
 }
 
-void USNLootList::ModifyWeightsBasedOnPlayerProgress(float PlayerLevel, float EnemyLevel, TArray<FSNRegularLootList_LootList>& TempItemDropList)
+void USNLootList::ModifyWeightsBasedOnPlayerProgress(float PlayerLevel, float EnemyLevel,
+	TArray<FSNRegularLootList_LootList>& TempItemDropList)
 {
-	//TODO Probably needs rethinking
-	
-	float LegendaryDropModifier = FMath::RoundToFloat(EnemyLevel * LegendaryPercentDropModifier);
-	float EpicDropModifier = FMath::RoundToFloat(EnemyLevel * EpicPercentDropModifier);
-	float CommonDropModifier = FMath::RoundToFloat(PlayerLevel * CommonPercentDropModifier);
+	float NewCommonWeight;
+	float NewEpicWeight;
+	float NewLegendaryWeight;
 	
 	for(int32 ItemIndex = 0; ItemIndex < TempItemDropList.Num(); ++ItemIndex)
 	{
-		if (TempItemDropList[ItemIndex].ItemTier == ESNRegularLootList_ItemTier::Legendary)
+		switch (TempItemDropList[ItemIndex].ItemTier)
 		{
-			TempItemDropList[ItemIndex].ItemDropWeight += LegendaryDropModifier;
-		}
-		else if(TempItemDropList[ItemIndex].ItemTier == ESNRegularLootList_ItemTier::Epic)
-		{
-			TempItemDropList[ItemIndex].ItemDropWeight += EpicDropModifier;
-		}
-		else if (TempItemDropList[ItemIndex].ItemTier == ESNRegularLootList_ItemTier::Common)
-		{
-			TempItemDropList[ItemIndex].ItemDropWeight -= CommonDropModifier;
-		}
-		else 
-		{
-			// We increase the Weight of NoDrop so Epic and Legendary items won't get too popular
-			TempItemDropList[ItemIndex].ItemDropWeight += CommonDropModifier;
+		case ESNRegularLootList_ItemTier::Common:
+			NewCommonWeight = (0.62 * (TempItemDropList[ItemIndex].ItemDropWeight - EnemyLevel)) * 1.98;
+			
+			TempItemDropList[ItemIndex].ItemDropWeight = FMath::Clamp(NewCommonWeight, 0.0f,
+				TempItemDropList[ItemIndex].ItemDropWeight);
+			break;
+		case ESNRegularLootList_ItemTier::Epic:
+			NewEpicWeight = (0.52 * (TempItemDropList[ItemIndex].ItemDropWeight + PlayerLevel)) * 1.88;
+			
+			TempItemDropList[ItemIndex].ItemDropWeight = FMath::Max(NewEpicWeight,
+				TempItemDropList[ItemIndex].ItemDropWeight);
+			break;
+		case ESNRegularLootList_ItemTier::Legendary:
+			NewLegendaryWeight = (0.52 * (TempItemDropList[ItemIndex].ItemDropWeight + PlayerLevel)) * 1.55;
+			
+			TempItemDropList[ItemIndex].ItemDropWeight = FMath::Max(NewLegendaryWeight,
+				TempItemDropList[ItemIndex].ItemDropWeight);
+			break;
+		case ESNRegularLootList_ItemTier::NoDrop:
+			TempItemDropList[ItemIndex].ItemDropWeight += 5 * (int32)PlayerLevel % 10;
+			break;
 		}
 	}
 }
