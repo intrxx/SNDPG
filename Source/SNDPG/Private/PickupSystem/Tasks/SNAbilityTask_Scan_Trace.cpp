@@ -85,7 +85,7 @@ void USNAbilityTask_Scan_Trace::PerformTrace()
 		if (OutHitResult.bBlockingHit)
 		{
 			//DrawDebugLine(World, TraceStart, OutHitResult.Location, DebugColor, false, InteractionScanRate);
-			DrawDebugSphere(World, OutHitResult.Location, 5, 16, FColor::Red, false, InteractionScanRate);
+			//DrawDebugSphere(World, OutHitResult.Location, 5, 16, FColor::Red, false, InteractionScanRate);
 		}
 		else
 		{

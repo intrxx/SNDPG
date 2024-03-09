@@ -9,6 +9,7 @@
 #include "GameFramework/Actor.h"
 #include "SNWorldCollectable.generated.h"
 
+class UWidgetComponent;
 class UObject;
 struct FSNInteractionQuery;
 
@@ -23,6 +24,12 @@ public:
 	
 	virtual void GatherInteractionOptions(const FSNInteractionQuery& InteractQuery, FSNInteractionOptionBuilder& InteractionBuilder) override;
 	virtual FSNInventoryPickup GetPickupInventory() const override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UWidgetComponent> ItemNameWidgetComp;
+
+protected:
+	virtual void BeginPlay() override;
 	
 protected:
 	UPROPERTY(EditAnywhere, Category = "SN|Pickup")

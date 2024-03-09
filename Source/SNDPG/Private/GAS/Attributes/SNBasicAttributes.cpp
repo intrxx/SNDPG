@@ -27,7 +27,7 @@ bool USNBasicAttributes::PreGameplayEffectExecute(FGameplayEffectModCallbackData
 	return Super::PreGameplayEffectExecute(Data);
 }
 
-void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+void USNBasicAttributes:: PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
 
@@ -177,7 +177,7 @@ void USNBasicAttributes::PostGameplayEffectExecute(const FGameplayEffectModCallb
 			SetCharacterLevel(NewLevel);
 
 			float NewMaxXP = 0.35f * (GetMaxExperience() * GetCharacterLevel()) * 1.95f;
-			SetMaxExperience(NewMaxXP);
+			SetMaxExperience(FMath::RoundToFloat(NewMaxXP));
 
 			// Level up reward, giving a level up point and some health
 			UGameplayEffect* LevelUpReward = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("LevelUpReward")));
