@@ -1,7 +1,8 @@
 # Reward scaling based on player progress pl(Skalowanie nagrody do postępów gracza)
 
-Engineering Thesis ARPG project in Unreal Engine 5.1 using Gameplay Ability System with the premise of implementing interesting algorithms for droping items. Good drop good game get good noobs. 
+Engineering Thesis ARPG project in Unreal Engine 5.1 using Gameplay Ability System with the premise of implementing interesting algorithms for droping items. Good drop good game get good noobs.
 
+Small showcase can be found [here](https://www.youtube.com/watch?v=TOVTaAsnoBI). 
 
 # Controls 
 ## PC
