@@ -1,58 +1,6 @@
-# Reward scaling based on player progress pl(Skalowanie nagrody do postępów gracza)
+# Souls like Inventory and Equipment System 
 
-Engineering Thesis ARPG project in Unreal Engine 5.1 using Gameplay Ability System with the premise of implementing interesting algorithms for droping items. Good drop good game get good noobs.
+This project's main aim was to implement the Souls Inventory and Equipment System.
 
-Small showcase can be found [here](https://www.youtube.com/watch?v=TOVTaAsnoBI). 
-
-# Controls 
-## PC
-
-
-### Movement
-- **W** - Move Forward
-- **S** - Move Backwards
-- **A** - Move Left
-- **D** - Move Right
-- **Mouse** - Control Camera
-- **Space** - Dodge / Dash
-- **E** - Interact
-
-### Combat
-- **Left Click** - Attack
-- **Shift + Left Click** - Heavy Attack
-- **R** - Weapon Skill
-- **Q** - Use Item
-- **Middle Mouse Button** - Lock onto target
-
-### Menu
-- **ESC** - Main Menu
-- **ESC** - Exit any opened menu
-  
-## Xbox Series X
-
-### Movement
-- **Left Stick** - Move Around
-- **Right Stick** - Control Camera
-- **B** - Dodge / Dash
-- **A** - Interact
-
-### Combat
-- **RB** - Attack
-- **RT** - Heavy Attack
-- **LT** - Weapon Skill
-- **X** - Use Item
-- **Right Stick Press** - Lock onto target
-
-### Menu
-- **Menu button** - Main Menu
-- **Menu button** - Exit any opened menu
-
-# Used assets
-- Main Hero: [Paragon Kwang](https://www.unrealengine.com/marketplace/en-US/product/paragon-kwang)
-- Environmental assets: [Modular Gothic Temple](https://www.unrealengine.com/marketplace/en-US/product/modular-gothic-temple-medieval-winter-snow)
-- Enemies: [Quadruped Fantasy Creatures](https://www.unrealengine.com/marketplace/en-US/product/7f7775996f7442b187f6fa510ec9d289)
-- Equipment: [Free Fantasy Weapon Sample Pack](https://www.unrealengine.com/marketplace/en-US/product/e4494c76c3b348aba7ef9b263a6dd496)
-- UI: [DARK FANTASY UI](https://www.unrealengine.com/marketplace/en-US/product/dark-fantasy-ui)
-- Font: [Adobe Garamond](https://fonts.adobe.com/fonts/adobe-garamond)
-- Item Icons (AI generated): [OpenArt](https://openart.ai/)
+The whole User Interface design and its gameplay functionality were copied from Elden Ring. This Inventory system is also closely tied with the Player Character displaying its attributes and reacting to them changing.
  
