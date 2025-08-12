@@ -2,6 +2,8 @@
 
 This project's main aim was to implement the Souls Inventory/Character user interface and underlying systems.
 
+Quick video showcase can be found on [YouTube](https://www.youtube.com/watch?v=QQfPKQlr1i0).
+
 The whole User Interface design and its gameplay functionality were copied from Elden Ring. This Inventory system is also closely tied with the Player Character displaying its attributes and reacting to them changing.
 
 ## Player's Inventory
