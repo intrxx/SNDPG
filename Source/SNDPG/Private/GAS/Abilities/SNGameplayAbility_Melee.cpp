@@ -1,4 +1,4 @@
-// Copyright 2023 Michal Oginski.
+// Copyright 2026 out of sCope team - intrxx
 
 
 #include "GAS/Abilities/SNGameplayAbility_Melee.h"

@@ -1,4 +1,4 @@
-// Copyright 2023 Michal Oginski.
+// Copyright 2026 out of sCope team - intrxx
 
 #include "GAS/SNAbilitySet.h"
 #include "GAS/SNAbilitySystemComponent.h"
